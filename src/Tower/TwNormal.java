@@ -1,7 +1,7 @@
-package Element;
+package Tower;
 
 /**
  * Created by MFunction on 2017/4/19.
  */
-public class Block {
+public class TwNormal {
 }

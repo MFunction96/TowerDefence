@@ -11,6 +11,6 @@ import BaseClass.Location;
 public class PathSearch {
     private final static Location DP[]= {new Location(1, 0), new Location(1, 1), new Location(0, 1), new Location(-1, 0), new Location(0, -1), new Location(1, -1)};
     public PathSearch() {
-        
+
     }
 }

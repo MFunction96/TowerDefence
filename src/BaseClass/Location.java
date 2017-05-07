@@ -2,6 +2,7 @@ package BaseClass;
 
 /**
  * Created by MFunction on 2017/4/15.
+ * @author MFunction
  * 点类，描述某对象的坐标的基础类
  */
 public class Location {

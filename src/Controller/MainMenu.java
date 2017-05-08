@@ -5,5 +5,7 @@ package Controller;
  * This class is about game menu.
  */
 public class MainMenu {
+    public static void main(String args[]){
 
+    }
 }

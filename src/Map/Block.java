@@ -10,6 +10,7 @@ public class Block {
     protected Location _surlocal;
     protected Location _optlocal;
     protected boolean _pass;
+    protected boolean _ispath;
     protected Tower[] _tw = new Tower[6];
     public void Attack(){
 

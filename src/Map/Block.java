@@ -1,27 +1,113 @@
 package Map;
 
 import BaseClass.Location;
+import BaseClass.Monster;
 import BaseClass.Tower;
+
+import javax.lang.model.type.NullType;
 
 /**
  * Created by MFunction on 2017/4/19.
  */
 public class Block {
-    protected Location _surlocal;
-    protected Location _optlocal;
+    protected Location _surlocation;
+    protected Location _optlocation;
     protected boolean _pass;
     protected boolean _ispath;
-    protected Tower[] _tw = new Tower[6];
-    public void Attack(){
-
+    protected Tower[] _towers = new Tower[6];
+    protected Tower _tower;
+    /**
+     * 构造块对象
+     * @param surfaceLocation UI界面的位置
+     * @param operationLocation 后台操作的位置
+     * @param pass 判断是否能通过
+     * @param isPath 判断是否能做为路径
+     */
+    public Block(Location surfaceLocation,Location operationLocation,boolean pass,boolean isPath){
+        _surlocation=surfaceLocation;
+        _optlocation=operationLocation;
+        _pass=pass;
+        _ispath=isPath;
     }
-    public void Update(){
 
+    /**
+     * 获取模块的UI界面位置
+     * @return 返回模块的界面位置
+     */
+    public final Location GetSurfaceLocation(){
+        return _surlocation;
     }
+
+    /**
+     * 获取模块的后台操作位置
+     * @return 返回模块的后台操作位置
+     */
+    public final Location GetOperationLocation(){
+        return _optlocation;
+    }
+
+    /**
+     * 判断模块是否能够让塔通过
+     * @return 返回塔是否能让塔通过
+     */
+    public final boolean IsPass(){
+        return _pass;
+    }
+
+    /**
+     * 判断模块是否是塔的路径
+     * @return 返回模块是否为路径
+     */
+    public final boolean IsPath(){
+        return _ispath;
+    }
+
+    /**
+     * 攻击模块上的怪
+     * @param monster 被攻击的怪
+     */
+    public void Attack(Monster monster){
+        int damage=0;
+        for(int i=0;i<_towers.length;i++){
+            damage+=_towers[i].GetDamage();
+        }
+        monster.Hurt(damage);
+    }
+
+    /**
+     * 更新
+     * @param isPath 更新的路径
+     */
+    public void Update(boolean isPath){
+        _ispath=isPath;
+    }
+
+    /**
+     * 在模块上安装塔
+     * @param tw 该模块上安装的塔
+     */
     public void AddTower(Tower tw) {
-
+        _pass=false;
+        _ispath=false;
+        _tower=tw;
     }
-    public void DelTower(Tower tw){
 
+    /**
+     *摧毁当前模块的塔
+     */
+    public void DestroyTower(){
+        _pass=true;
+        _tower=null;
+    }
+
+    /**
+     * 判断模块上是否有塔
+     * @return 返回模块上是否有塔
+     */
+    public boolean HaveTower(){
+        if(_tower==null)
+            return false;
+        else
+            return true;
     }
 }

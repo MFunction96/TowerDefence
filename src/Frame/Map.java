@@ -14,6 +14,9 @@ public class Map {
     protected int _period;
     protected int _money;
     protected Block[][] _blocks;
+    public Map(String cfgpath){
+
+    }
     public void Damage(){
 
     }

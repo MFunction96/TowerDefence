@@ -2,14 +2,16 @@ package BaseClass;
 
 /**
  * Created by MFunction on 2017/4/15.
+ *
  * @author MFunction
- * 点类，描述某对象的坐标的基础类
+ *         点类，描述某对象的坐标的基础类
  */
 public class Location {
     private int _x, _y;
 
     /**
      * 构造点对象
+     *
      * @param x 点对象的横坐标
      * @param y 点对象的纵坐标
      */
@@ -20,6 +22,7 @@ public class Location {
 
     /**
      * 点对象的加操作
+     *
      * @param p 点对象的相加对象
      * @return 返回加操作后的点对象
      */
@@ -29,6 +32,7 @@ public class Location {
 
     /**
      * 判断两点坐标是否相同
+     *
      * @param p 另一点对象
      * @return 返回boolean类型，true为两点相同，否则两点不同
      */
@@ -38,6 +42,7 @@ public class Location {
 
     /**
      * 获取点对象横坐标
+     *
      * @return 点对象的横坐标
      */
     final public int x() {
@@ -46,6 +51,7 @@ public class Location {
 
     /**
      * 获取点对象纵坐标
+     *
      * @return 点对象的纵坐标
      */
     final public int y() {

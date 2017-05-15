@@ -1,5 +1,7 @@
 package BaseClass;
 
+import java.util.UUID;
+
 /**
  * Created by MFunction on 2017/4/17.
  * This class is about Monster.
@@ -20,7 +22,7 @@ abstract public class Monster {
     /**
      * 身份标识
      */
-    protected String _id;
+    protected UUID _uuid;
     /**
      * 名称
      */
@@ -46,7 +48,6 @@ abstract public class Monster {
      * 构造基础怪
      *
      * @param name             怪的名字
-     * @param id               怪的ID
      * @param hp               怪的生命值
      * @param speed            怪的速度
      * @param price            怪的价值
@@ -55,9 +56,9 @@ abstract public class Monster {
      * @param surfaceLocation  怪的UI位置
      * @param operatorLocation 怪的后台操作位置
      */
-    public Monster(String name, String id, int hp, int speed, int price, int upgradehp, int upgradePrice, Location surfaceLocation, Location operatorLocation) {
+    public Monster(String name, int hp, int speed, int price, int upgradehp, int upgradePrice, Location surfaceLocation, Location operatorLocation) {
         _name = name;
-        _id = id;
+        _uuid = UUID.randomUUID();
         _speed = speed;
         _price = price;
         _surlocation = surfaceLocation;
@@ -81,8 +82,8 @@ abstract public class Monster {
      *
      * @return 返回怪的ID
      */
-    public final String GetId() {
-        return _id;
+    public final UUID GetUUID() {
+        return _uuid;
     }
 
     /**

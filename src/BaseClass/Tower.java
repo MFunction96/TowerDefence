@@ -1,6 +1,6 @@
 package BaseClass;
 
-import java.io.StringReader;
+import java.util.UUID;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -44,7 +44,7 @@ abstract public class Tower {
     /**
      * 身份标识
      */
-    protected String _id;
+    protected UUID _uuid;
     /**
      * 表现层坐标
      */
@@ -62,7 +62,6 @@ abstract public class Tower {
      * 构造基础塔
      *
      * @param name              塔的名称
-     * @param id                塔的ID
      * @param level             塔的等级
      * @param damage            塔的伤害值
      * @param price             塔的价格
@@ -73,9 +72,9 @@ abstract public class Tower {
      * @param operationLocation 塔的后台操作位置
      * @param target            塔的目标对象
      */
-    public Tower(String name, String id, int level, int damage, int price, int upgradePrice, int upgradeTime, int attackArea, Location surfaceLocation, Location operationLocation, Object target) {
+    public Tower(String name, int level, int damage, int price, int upgradePrice, int upgradeTime, int attackArea, Location surfaceLocation, Location operationLocation, Object target) {
         _name = name;
-        _id = id;
+        _uuid = UUID.randomUUID();
         _level = level;
         _damage = damage;
         _price = price;
@@ -110,8 +109,8 @@ abstract public class Tower {
      *
      * @return 返回塔的ID
      */
-    public final String GetId() {
-        return _id;
+    public final UUID GetUUID() {
+        return _uuid;
     }
 
     /**

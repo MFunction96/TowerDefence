@@ -8,6 +8,12 @@ import Frame.Map;
  */
 public class MainMenu {
     public static void main(String args[]) {
-        GameController _gc = new GameController(new Map("map"));
+        String filename = "";
+        StartGame(filename);
+    }
+
+    private static void StartGame(String filename) {
+        GameController _gc = new GameController(new Map(filename));
+
     }
 }

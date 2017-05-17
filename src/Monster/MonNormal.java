@@ -5,5 +5,8 @@ package Monster;
  * 事件驱动类
  */
 public class MonNormal {
+    public MonNormal() {
+
+    }
 
 }

@@ -2,20 +2,23 @@ package Controller;
 
 import BaseClass.Monster;
 import Frame.Map;
+import java.util.LinkedList;
 
 /**
  * Created by MFunction on 2017/4/17.
  *
  * @author MFunction
  */
-public class GameController extends Thread {
+public class GameController {
     private Map m = new Map("Config.xml");
     private int _round;
     private Map _m;
-    private Monster[] _mon;
+    private Monster[] _montmp;
+    private LinkedList _monsters;
 
     GameController(Map m) {
         _m = m;
+        _montmp = _m.monster();
     }
 
     /**
@@ -50,5 +53,10 @@ public class GameController extends Thread {
 
     public void run() {
 
+    }
+
+    void GenMon() {
+        MonsterGenerator mg = new MonsterGenerator(_m.moninterval(), _m.monnumber(), _monsters, _montmp[0]);
+        mg.run();
     }
 }

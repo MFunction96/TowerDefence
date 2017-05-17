@@ -1,6 +1,8 @@
 package Frame;
 
 import BaseClass.Location;
+import BaseClass.Monster;
+import BaseClass.Tower;
 import Map.Block;
 
 /**
@@ -16,6 +18,14 @@ public class Map {
      * 关卡数
      */
     private int _total;
+    /**
+     * 怪物信息
+     */
+    private Monster[] _monster;
+    /**
+     * 塔信息
+     */
+    private Tower[] _tower;
     /**
      * 出怪数量
      */
@@ -124,6 +134,24 @@ public class Map {
      */
     public Location end() {
         return _end;
+    }
+
+    /**
+     * 获取怪物信息
+     *
+     * @return 怪物信息
+     */
+    public Monster[] monster() {
+        return _monster;
+    }
+
+    /**
+     * 获取塔信息
+     *
+     * @return 塔信息
+     */
+    public Tower[] tower() {
+        return _tower;
     }
 
     /**

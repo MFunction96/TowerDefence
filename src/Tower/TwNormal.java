@@ -10,7 +10,7 @@ public class TwNormal extends Tower {
 
 
     public TwNormal(){
-        super("炮塔",1,1,5,1,1,3 );
+        super("炮塔",1,2,6,1,1,3 );
     }
 
 

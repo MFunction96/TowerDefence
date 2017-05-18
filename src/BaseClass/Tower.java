@@ -6,7 +6,7 @@ import java.util.UUID;
  * Created by MFunction on 2017/4/17.
  * 塔类,描述塔的基本属性的基础类
  *
- * @author 甄焰鑫
+ * @author 杨桦桉
  */
 abstract public class Tower {
     /**
@@ -56,23 +56,19 @@ abstract public class Tower {
     /**
      * 攻击目标
      */
-    protected Object _target;
+     protected Object _target;
 
     /**
      * 构造基础塔
-     *
-     * @param name              塔的名称
+     *  @param name              塔的名称
      * @param level             塔的等级
      * @param damage            塔的伤害值
      * @param price             塔的价格
      * @param upgradePrice      塔的升级价格
      * @param upgradeTime       塔的升级时间
      * @param attackArea        塔的攻击范围
-     * @param surfaceLocation   塔的UI位置
-     * @param operationLocation 塔的后台操作位置
-     * @param target            塔的目标对象
      */
-    public Tower(String name, int level, int damage, int price, int upgradePrice, int upgradeTime, int attackArea, Location surfaceLocation, Location operationLocation, Object target) {
+    public Tower(String name, int level, int damage, int price, int upgradePrice, int upgradeTime, int attackArea) {
         _name = name;
         _uuid = UUID.randomUUID();
         _level = level;
@@ -81,9 +77,33 @@ abstract public class Tower {
         _upprice = upgradePrice;
         _uptime = upgradeTime;
         _atkarea = attackArea;
-        _surlocation = surfaceLocation;
-        _optlocation = operationLocation;
-        _target = target;
+
+    }
+
+    /**
+     * 设置塔的表现层坐标
+     *
+     * @param surflocation
+     */
+    public final void SetSurfaceLocation(Location surflocation){
+        _surlocation=surflocation;
+    }
+
+    /**
+     * 设置塔的业务逻辑层坐标
+     *
+     * @param optlocation
+     */
+    public final void SetOperateLocation(Location optlocation){
+        _optlocation=optlocation;
+    }
+
+    /**
+     * 设置攻击目标
+     * @param target
+     */
+    public void SetTarget(Object target){
+        _target=target;
     }
 
     /**
@@ -192,9 +212,8 @@ abstract public class Tower {
         _level++;
         _damage *= 2;
         _uptime *= 2;
-        _price += _uptime;
+        _price += _upprice;
         _upprice *= 2;
-        _atkarea += 1;
     }
 
     /**

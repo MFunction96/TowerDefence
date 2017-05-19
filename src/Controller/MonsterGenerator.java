@@ -2,7 +2,6 @@ package Controller;
 
 import BaseClass.Monster;
 import Monster.MonNormal;
-import java.util.LinkedList;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -14,24 +13,26 @@ public class MonsterGenerator extends Thread {
      */
     private int _stime;
     private int _cnt;
-    private LinkedList _monsters;
-    private Monster _monster;
+    private int _index;
+    private GameController _gc;
 
     /**
      * @param time 时间间隔
      */
-    public MonsterGenerator(int time, int cnt, LinkedList monsters, Monster monster) {
+    MonsterGenerator(int time, int cnt, GameController gc, int index) {
         _stime = time;
-        _monsters = monsters;
+        _gc = gc;
         _cnt = cnt;
-        _monster = monster;
+        _index = index;
     }
 
-    public void run() {
+    public synchronized void run() {
         try {
             for (int i = 0; i < _cnt; i++) {
-                _monsters.addLast(new MonNormal());
-                Thread.sleep(_stime);
+                if (_index == 0) {
+                    _gc._monsters.addLast(new MonNormal());
+                }
+                sleep(_stime);
             }
         } catch (InterruptedException e) {
             System.err.print(e.getMessage());

@@ -14,6 +14,6 @@ public class MainMenu {
 
     private static void StartGame(String filename) {
         GameController _gc = new GameController(new Map(filename));
-
+        _gc.start();
     }
 }

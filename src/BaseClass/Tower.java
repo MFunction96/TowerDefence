@@ -56,7 +56,7 @@ abstract public class Tower {
     /**
      * 攻击目标
      */
-    protected Object _target;
+     protected Object _target;
 
     /**
      * 标记塔是否可用
@@ -65,8 +65,7 @@ abstract public class Tower {
 
     /**
      * 构造基础塔
-     *
-     * @param name              塔的名称
+     *  @param name              塔的名称
      * @param level             塔的等级
      * @param damage            塔的伤害值
      * @param price             塔的价格

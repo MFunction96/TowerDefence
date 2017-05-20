@@ -6,7 +6,7 @@ import java.util.UUID;
  * Created by MFunction on 2017/4/17.
  * 塔类,描述塔的基本属性的基础类
  *
- * @author 甄焰鑫
+ * @author 杨桦桉 甄焰鑫
  */
 abstract public class Tower {
     /**
@@ -48,7 +48,7 @@ abstract public class Tower {
     /**
      * 表现层坐标
      */
-    protected Location _surlocation;
+    protected Location _surflocation;
     /**
      * 业务层坐标
      */
@@ -57,6 +57,11 @@ abstract public class Tower {
      * 攻击目标
      */
     protected Object _target;
+
+    /**
+     * 标记塔是否可用
+     */
+    protected  boolean _canattack;
 
     /**
      * 构造基础塔
@@ -68,11 +73,8 @@ abstract public class Tower {
      * @param upgradePrice      塔的升级价格
      * @param upgradeTime       塔的升级时间
      * @param attackArea        塔的攻击范围
-     * @param surfaceLocation   塔的UI位置
-     * @param operationLocation 塔的后台操作位置
-     * @param target            塔的目标对象
      */
-    public Tower(String name, int level, int damage, int price, int upgradePrice, int upgradeTime, int attackArea, Location surfaceLocation, Location operationLocation, Object target) {
+    public Tower(String name, int level, int damage, int price, int upgradePrice, int upgradeTime, int attackArea) {
         _name = name;
         _uuid = UUID.randomUUID();
         _level = level;
@@ -81,9 +83,28 @@ abstract public class Tower {
         _upprice = upgradePrice;
         _uptime = upgradeTime;
         _atkarea = attackArea;
-        _surlocation = surfaceLocation;
-        _optlocation = operationLocation;
-        _target = target;
+        _canattack=false;
+    }
+
+
+    /**
+     * 塔被放置后，调用此函数，设置塔的表现层和业务层坐标，并设置塔的状态为攻击。
+      * @param surfacelocation
+     * @param optlocation
+     */
+    public void SetTower(Location surfacelocation,Location optlocation){
+        _surflocation=surfacelocation;
+        _optlocation=optlocation;
+        _canattack=true;
+    }
+
+    /**
+     * 设置塔的攻击目标
+     *
+     * @param target
+     */
+    public void SetTarget(Object target){
+        _target=target;
     }
 
     /**
@@ -173,7 +194,7 @@ abstract public class Tower {
      * @return 返回塔的UI位置
      */
     public final Location GetSurfaceLocation() {
-        return _surlocation;
+        return _surflocation;
     }
 
     /**
@@ -186,15 +207,15 @@ abstract public class Tower {
     }
 
     /**
-     * 提升塔的等级
+     * 提升塔的等级,此时,塔不能攻击目标
      */
     public void Upgrade() {
+        _canattack=false;
         _level++;
         _damage *= 2;
         _uptime *= 2;
-        _price += _uptime;
+        _price += _upprice;
         _upprice *= 2;
-        _atkarea += 1;
     }
 
     /**

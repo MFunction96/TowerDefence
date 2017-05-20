@@ -22,7 +22,7 @@ public class Block {
     /**
      * 通行状态
      */
-    protected boolean _pass;
+    protected boolean _canpass;
     /**
      * 路径状态
      */
@@ -47,7 +47,7 @@ public class Block {
     public Block(Location surfaceLocation, Location operationLocation, boolean pass, boolean isPath) {
         _surlocation = surfaceLocation;
         _optlocation = operationLocation;
-        _pass = pass;
+        _canpass = pass;
         _ispath = isPath;
     }
 
@@ -74,8 +74,8 @@ public class Block {
      *
      * @return 返回塔是否能让塔通过
      */
-    public final boolean IsPass() {
-        return _pass;
+    public final boolean CanPass() {
+        return _canpass;
     }
 
     /**
@@ -115,7 +115,7 @@ public class Block {
      * @param tw 该模块上安装的塔
      */
     public void AddTower(Tower tw) {
-        _pass = false;
+        _canpass = false;
         _ispath = false;
         _tower = tw;
     }
@@ -124,7 +124,7 @@ public class Block {
      * 摧毁当前模块的塔
      */
     public void DestroyTower() {
-        _pass = true;
+        _canpass = true;
         _tower = null;
     }
 
@@ -133,7 +133,7 @@ public class Block {
      *
      * @return 返回模块上是否有塔
      */
-    public boolean HaveTower() {
+    public boolean HasTower() {
         return _tower == null;
     }
 }

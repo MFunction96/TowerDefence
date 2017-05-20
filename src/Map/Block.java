@@ -118,6 +118,8 @@ public class Block {
         _canpass = false;
         _ispath = false;
         _tower = tw;
+        _tower.SetTower(_surlocation,_optlocation);
+
     }
 
     /**

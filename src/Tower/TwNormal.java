@@ -7,7 +7,7 @@ import BaseClass.Tower;
  */
 public class TwNormal extends Tower {
     public TwNormal(){
-        super("炮塔",1,5,5,2,1,4);
+        super("炮塔",1,5,5,2,1,1);
 
     }
 }

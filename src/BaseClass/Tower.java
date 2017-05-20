@@ -207,6 +207,12 @@ abstract public class Tower {
     }
 
     /**
+     * 获取塔的状态
+     * @return
+     */
+    public final boolean GetCanAttack(){return _canattack;}
+
+    /**
      * 提升塔的等级,此时,塔不能攻击目标
      */
     public void Upgrade() {

@@ -2,6 +2,7 @@ package Controller;
 
 import BaseClass.Monster;
 import Frame.Map;
+
 import java.util.LinkedList;
 
 /**
@@ -9,16 +10,31 @@ import java.util.LinkedList;
  *
  * @author MFunction
  */
-public class GameController {
-    private Map m = new Map("Config.xml");
+public class GameController extends Thread {
     private int _round;
-    private Map _m;
-    private Monster[] _montmp;
-    private LinkedList _monsters;
+    private int _hp;
+    MonsterGenerator _mongen;
+    PeriodController _perctl;
+    Map _map;
+    Monster[] _montmp;
+    LinkedList _monsters;
 
-    GameController(Map m) {
-        _m = m;
-        _montmp = _m.monster();
+    /**
+     * @param map 地图
+     */
+    GameController(Map map) {
+        _map = map;
+        _hp = _map.HP();
+        _montmp = _map.monster();
+        _perctl = new PeriodController(_map.period(), _map.total(), this);
+    }
+
+    /**
+     *
+     */
+    void Start() {
+        run();
+        _perctl.run();
     }
 
     /**
@@ -33,7 +49,7 @@ public class GameController {
     /**
      *
      */
-    public void Win() {
+    private void Win() {
 
     }
 
@@ -47,16 +63,27 @@ public class GameController {
     /**
      *
      */
-    public void Lose() {
+    private void Lose() {
 
     }
 
-    public void run() {
-
-    }
-
-    void GenMon() {
-        MonsterGenerator mg = new MonsterGenerator(_m.moninterval(), _m.monnumber(), _monsters, _montmp[0]);
-        mg.run();
+    /**
+     *
+     */
+    public synchronized void run() {
+        while (true) {
+            if (_hp == 0) {
+                Lose();
+                break;
+            } else if (_monsters.size() == 0 && _round == _map.total()) {
+                Win();
+                break;
+            }
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                System.err.print(e.getMessage());
+            }
+        }
     }
 }

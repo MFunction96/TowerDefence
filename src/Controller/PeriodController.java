@@ -12,25 +12,22 @@ import java.util.LinkedList;
 public class PeriodController extends Thread {
     private int _stime;
     private int _cnt;
-    private LinkedList _monsters;
     private Monster _monster;
     private GameController _gc;
 
-    public PeriodController(int time, int cnt, LinkedList monsters, Monster monster,GameController gc) {
+    PeriodController(int time, int cnt, GameController gc) {
         _stime = time;
-        _monsters = monsters;
         _cnt = cnt;
-        _monster = monster;
-        _gc=gc;
+        _gc = gc;
     }
 
-    public void run() {
+    public synchronized void run() {
         try {
-            for (int i=0;i<_cnt;i++){
-                _gc.GenMon();
+            for (int i = 0; i < _cnt; i++) {
+                _gc._mongen.run();
                 sleep(_stime);
             }
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             System.err.print(e.getMessage());
         }
     }

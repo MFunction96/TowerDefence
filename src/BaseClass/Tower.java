@@ -6,7 +6,7 @@ import java.util.UUID;
  * Created by MFunction on 2017/4/17.
  * 塔类,描述塔的基本属性的基础类
  *
- * @author 杨桦桉
+ * @author 杨桦桉 甄焰鑫
  */
 abstract public class Tower {
     /**
@@ -48,7 +48,7 @@ abstract public class Tower {
     /**
      * 表现层坐标
      */
-    protected Location _surlocation;
+    protected Location _surflocation;
     /**
      * 业务层坐标
      */
@@ -57,6 +57,11 @@ abstract public class Tower {
      * 攻击目标
      */
      protected Object _target;
+
+    /**
+     * 标记塔是否可用
+     */
+    protected  boolean _canattack;
 
     /**
      * 构造基础塔
@@ -77,29 +82,24 @@ abstract public class Tower {
         _upprice = upgradePrice;
         _uptime = upgradeTime;
         _atkarea = attackArea;
-
+        _canattack=false;
     }
 
-    /**
-     * 设置塔的表现层坐标
-     *
-     * @param surflocation
-     */
-    public final void SetSurfaceLocation(Location surflocation){
-        _surlocation=surflocation;
-    }
 
     /**
-     * 设置塔的业务逻辑层坐标
-     *
+     * 塔被放置后，调用此函数，设置塔的表现层和业务层坐标，并设置塔的状态为攻击。
+      * @param surfacelocation
      * @param optlocation
      */
-    public final void SetOperateLocation(Location optlocation){
+    public void SetTower(Location surfacelocation,Location optlocation){
+        _surflocation=surfacelocation;
         _optlocation=optlocation;
+        _canattack=true;
     }
 
     /**
-     * 设置攻击目标
+     * 设置塔的攻击目标
+     *
      * @param target
      */
     public void SetTarget(Object target){
@@ -193,7 +193,7 @@ abstract public class Tower {
      * @return 返回塔的UI位置
      */
     public final Location GetSurfaceLocation() {
-        return _surlocation;
+        return _surflocation;
     }
 
     /**
@@ -206,9 +206,16 @@ abstract public class Tower {
     }
 
     /**
-     * 提升塔的等级
+     * 获取塔的状态
+     * @return
+     */
+    public final boolean GetCanAttack(){return _canattack;}
+
+    /**
+     * 提升塔的等级,此时,塔不能攻击目标
      */
     public void Upgrade() {
+        _canattack=false;
         _level++;
         _damage *= 2;
         _uptime *= 2;

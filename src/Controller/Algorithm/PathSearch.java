@@ -1,6 +1,6 @@
 package Algorithm;
 
-import BaseClass.Location;
+import Model.BaseClass.Location;
 
 /**
  * Created by MFunction on 2017/4/15.

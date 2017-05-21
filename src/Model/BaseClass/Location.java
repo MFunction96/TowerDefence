@@ -1,4 +1,4 @@
-package BaseClass;
+package Model.BaseClass;
 
 /**
  * Created by MFunction on 2017/4/15.

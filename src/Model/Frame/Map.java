@@ -1,9 +1,9 @@
-package Frame;
+package Model.Frame;
 
-import BaseClass.Location;
-import BaseClass.Monster;
-import BaseClass.Tower;
-import Map.Block;
+import Model.BaseClass.Location;
+import Model.BaseClass.Monster;
+import Model.BaseClass.Tower;
+import Model.Map.Block;
 
 /**
  * Created by MFunction on 2017/4/17.

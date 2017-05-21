@@ -1,6 +1,7 @@
-package Controller;
+package Controller.Menu;
 
-import Frame.Map;
+import Controller.Thread.GameController;
+import Model.Frame.Map;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -14,6 +15,6 @@ public class MainMenu {
 
     private static void StartGame(String filename) {
         GameController _gc = new GameController(new Map(filename));
-        _gc.start();
+        _gc.Start();
     }
 }

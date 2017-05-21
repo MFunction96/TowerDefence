@@ -1,4 +1,4 @@
-package Monster;
+package Model.Monster;
 
 /**
  * Created by MFunction on 2017/4/19.

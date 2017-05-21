@@ -1,4 +1,4 @@
-package BaseClass;
+package Model.BaseClass;
 
 import java.util.UUID;
 

@@ -1,8 +1,8 @@
-package Map;
+package Model.Map;
 
-import BaseClass.Location;
-import BaseClass.Monster;
-import BaseClass.Tower;
+import Model.BaseClass.Location;
+import Model.BaseClass.Monster;
+import Model.BaseClass.Tower;
 
 /**
  * Created by MFunction on 2017/4/19.

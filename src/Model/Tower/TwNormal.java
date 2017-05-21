@@ -1,6 +1,6 @@
-package Tower;
+package Model.Tower;
 
-import BaseClass.Tower;
+import Model.BaseClass.Tower;
 
 /**
  * Created by MFunction on 2017/4/19.

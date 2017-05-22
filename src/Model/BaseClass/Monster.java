@@ -1,5 +1,7 @@
 package Model.BaseClass;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.UUID;
 
 /**
@@ -43,7 +45,10 @@ abstract public class Monster {
      * 升级加价值
      */
     protected int _upprice;
-
+    /**
+     * 怪物行进路径
+     */
+    protected ArrayDeque<Location> _ad = new ArrayDeque<>();
     /**
      * 构造基础怪
      *
@@ -159,8 +164,8 @@ abstract public class Monster {
      * 怪在后台操作的移动
      * @param l
      */
-    public void OperationMove(Location l) {
-        _optlocation = _optlocation.Add(l);
+    public void OptMove() {
+        _optlocation = _ad.removeFirst();
     }
 
     /**
@@ -178,5 +183,13 @@ abstract public class Monster {
     public void Upgrade() {
         _price += _upprice;
         _hp += _uphp;
+    }
+
+    /**
+     * 怪物行进路径
+     * @param ad 行进路径
+     */
+    public void UpdatePath(ArrayDeque<Location> ad){
+        _ad = ad;
     }
 }

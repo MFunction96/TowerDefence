@@ -1,7 +1,7 @@
 package Controller.Thread;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+import Model.BaseClass.Location;
+import Model.BaseClass.Monster;
 
 /**
  * Created by MFunction on 2017/5/21.
@@ -11,34 +11,29 @@ import java.util.LinkedList;
  */
 public class MonsterController extends Thread {
     /**
-     *
+     * 游戏控制器线程对象
      */
     private GameController _gc;
     /**
-     *
+     * 路径控制器线程组
      */
-    private LinkedList _monster;
     private PathController[] _pc;
-
     /**
+     * 怪物控制器线程构造函数
      *
-     * @param gc
+     * @param gc 游戏控制器线程对象
      */
     MonsterController(GameController gc) {
         _gc = gc;
-        _monster = _gc._monsters;
-        _pc = new PathController[_monster.size()];
+        _pc = new PathController[_gc._monsters.size()];
     }
 
     /**
-     *
+     * 怪物控制器主线程
      */
     public synchronized void run() {
-        int i=0;
-        for (Iterator it = _monster.iterator();it.hasNext();){
-            it.next();
-            i++;
-
+        for (Monster monster : _gc._monsters) {
+            monster.OptMove();
         }
     }
 }

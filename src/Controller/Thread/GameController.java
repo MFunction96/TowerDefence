@@ -1,4 +1,5 @@
 package Controller.Thread;
+import Model.BaseClass.Monster;
 import Model.Frame.Map;
 
 import java.util.LinkedList;
@@ -33,7 +34,7 @@ public class GameController extends Thread {
     /**
      * 在场怪物
      */
-    volatile LinkedList _monsters;
+    volatile LinkedList<Monster> _monsters;
 
     /**
      * 构造游戏控制器

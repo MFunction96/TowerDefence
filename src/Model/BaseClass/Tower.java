@@ -48,11 +48,11 @@ abstract public class Tower {
     /**
      * 表现层坐标
      */
-    protected Location _surflocation;
+    protected Point _surflocation;
     /**
      * 业务层坐标
      */
-    protected Location _optlocation;
+    protected Point _optlocation;
     /**
      * 攻击目标
      */
@@ -91,7 +91,7 @@ abstract public class Tower {
       * @param surfacelocation
      * @param optlocation
      */
-    public void SetTower(Location surfacelocation,Location optlocation){
+    public void SetTower(Point surfacelocation, Point optlocation){
         _surflocation=surfacelocation;
         _optlocation=optlocation;
         _canattack=true;
@@ -192,7 +192,7 @@ abstract public class Tower {
      *
      * @return 返回塔的UI位置
      */
-    public final Location GetSurfaceLocation() {
+    public final Point GetSurfaceLocation() {
         return _surflocation;
     }
 
@@ -201,7 +201,7 @@ abstract public class Tower {
      *
      * @return 返回塔的操作位置
      */
-    public final Location GetOperationLocation() {
+    public final Point GetOperationLocation() {
         return _optlocation;
     }
 

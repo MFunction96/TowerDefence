@@ -1,6 +1,6 @@
 package Controller.Thread;
 import Model.BaseClass.Monster;
-import Model.Frame.Map;
+import Model.Framework.Map;
 
 import java.util.LinkedList;
 

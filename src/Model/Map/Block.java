@@ -1,6 +1,6 @@
 package Model.Map;
 
-import Model.BaseClass.Location;
+import Model.BaseClass.Point;
 import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
 
@@ -14,11 +14,11 @@ public class Block {
     /**
      * 表现层位置
      */
-    protected Location _surlocation;
+    protected Point _surlocation;
     /**
      * 业务层位置
      */
-    protected Location _optlocation;
+    protected Point _optlocation;
     /**
      * 通行状态
      */
@@ -39,14 +39,14 @@ public class Block {
     /**
      * 构造块对象
      *
-     * @param surfaceLocation   UI界面的位置
-     * @param operationLocation 后台操作的位置
+     * @param surfacePoint   UI界面的位置
+     * @param operationPoint 后台操作的位置
      * @param pass              判断是否能通过
      * @param isPath            判断是否能做为路径
      */
-    public Block(Location surfaceLocation, Location operationLocation, boolean pass, boolean isPath) {
-        _surlocation = surfaceLocation;
-        _optlocation = operationLocation;
+    public Block(Point surfacePoint, Point operationPoint, boolean pass, boolean isPath) {
+        _surlocation = surfacePoint;
+        _optlocation = operationPoint;
         _canpass = pass;
         _ispath = isPath;
     }
@@ -56,7 +56,7 @@ public class Block {
      *
      * @return 返回模块的界面位置
      */
-    public final Location GetSurfaceLocation() {
+    public final Point GetSurfaceLocation() {
         return _surlocation;
     }
 
@@ -65,7 +65,7 @@ public class Block {
      *
      * @return 返回模块的后台操作位置
      */
-    public final Location GetOperationLocation() {
+    public final Point GetOperationLocation() {
         return _optlocation;
     }
 

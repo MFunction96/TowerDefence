@@ -1,7 +1,7 @@
 package Controller.Menu;
 
 import Controller.Thread.GameController;
-import Model.Frame.Map;
+import Model.Framework.Map;
 
 /**
  * Created by MFunction on 2017/4/17.

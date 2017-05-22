@@ -1,6 +1,6 @@
-package Model.Frame;
+package Model.Framework;
 
-import Model.BaseClass.Location;
+import Model.BaseClass.Point;
 import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
 import Model.Map.Block;
@@ -45,11 +45,11 @@ public class Map {
     /**
      * 起点
      */
-    private Location _start;
+    private Point _start;
     /**
      * 终点
      */
-    private Location _end;
+    private Point _end;
     /**
      * 区块
      */
@@ -123,7 +123,7 @@ public class Map {
      *
      * @return 起点
      */
-    public Location start() {
+    public Point start() {
         return _start;
     }
 
@@ -132,7 +132,7 @@ public class Map {
      *
      * @return 终点
      */
-    public Location end() {
+    public Point end() {
         return _end;
     }
 
@@ -160,7 +160,7 @@ public class Map {
      * @param l 砖块位置
      * @return 指定位置砖块
      */
-    public Block block(Location l) {
+    public Block block(Point l) {
         return _blocks[l.y()][l.x()];
     }
 

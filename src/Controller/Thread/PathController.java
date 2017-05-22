@@ -1,6 +1,6 @@
 package Controller.Thread;
 
-import Model.BaseClass.Location;
+import Model.BaseClass.Point;
 import Model.BaseClass.Monster;
 
 import java.util.ArrayDeque;
@@ -23,8 +23,8 @@ public class PathController extends Thread {
      * 游戏控制器线程
      */
     private GameController _gc;
-    private Deque<Location> dq = new ArrayDeque<>();
-    private Location _dl[] = {new Location(1, 0), new Location(0, 1), new Location(-1, 0), new Location(0, -1)};
+    private Deque<Point> dq = new ArrayDeque<>();
+    private Point _dl[] = {new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)};
 
     /**
      * 线程类构造函数
@@ -43,7 +43,7 @@ public class PathController extends Thread {
      * @param l 新坐标
      * @return 新坐标是否可前进
      */
-    private boolean CanGo(Location l) {
+    private boolean CanGo(Point l) {
         return l.x() >= 0 && l.y() >= 0 && l.x() < 12 && l.y() < 12;
     }
 
@@ -51,12 +51,12 @@ public class PathController extends Thread {
      * 路径搜索主线程
      */
     public synchronized void run() {
-        Queue<Location> q = new LinkedList<>();
+        Queue<Point> q = new LinkedList<>();
         q.offer(_monster.GetOperationLocation());
         while (!q.isEmpty()) {
-            Location l = q.poll();
+            Point l = q.poll();
             for (int i = 0; i < 4; i++) {
-                Location ll = l.Add(_dl[i]);
+                Point ll = l.Add(_dl[i]);
                 if (CanGo(ll)) {
                     if (_gc._map.block(l).IsPath()) {
                         break;

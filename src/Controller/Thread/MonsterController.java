@@ -1,6 +1,5 @@
 package Controller.Thread;
 
-import Model.BaseClass.Location;
 import Model.BaseClass.Monster;
 
 /**

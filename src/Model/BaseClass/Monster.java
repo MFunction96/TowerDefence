@@ -1,7 +1,6 @@
 package Model.BaseClass;
 
 import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.UUID;
 
 /**
@@ -32,11 +31,11 @@ abstract public class Monster {
     /**
      * 表现层位置
      */
-    protected Location _surlocation;
+    protected Point _surlocation;
     /**
      * 业务层位置
      */
-    protected Location _optlocation;
+    protected Point _optlocation;
     /**
      * 升级生命值
      */
@@ -48,7 +47,7 @@ abstract public class Monster {
     /**
      * 怪物行进路径
      */
-    protected ArrayDeque<Location> _ad = new ArrayDeque<>();
+    protected ArrayDeque<Point> _ad = new ArrayDeque<>();
     /**
      * 构造基础怪
      *
@@ -58,16 +57,16 @@ abstract public class Monster {
      * @param price            怪的价值
      * @param upgradehp        怪的血量升级
      * @param upgradePrice     怪的价值升级
-     * @param surfaceLocation  怪的UI位置
-     * @param operatorLocation 怪的后台操作位置
+     * @param surfacePoint  怪的UI位置
+     * @param operatorPoint 怪的后台操作位置
      */
-    public Monster(String name, int hp, int speed, int price, int upgradehp, int upgradePrice, Location surfaceLocation, Location operatorLocation) {
+    public Monster(String name, int hp, int speed, int price, int upgradehp, int upgradePrice, Point surfacePoint, Point operatorPoint) {
         _name = name;
         _uuid = UUID.randomUUID();
         _speed = speed;
         _price = price;
-        _surlocation = surfaceLocation;
-        _optlocation = operatorLocation;
+        _surlocation = surfacePoint;
+        _optlocation = operatorPoint;
         _upprice = upgradePrice;
         _uphp = upgradehp;
         _hp = hp;
@@ -141,7 +140,7 @@ abstract public class Monster {
      *
      * @return 返回怪在UI界面的位置
      */
-    public final Location GetSurfaceLocation() {
+    public final Point GetSurfaceLocation() {
         return _surlocation;
     }
 
@@ -150,7 +149,7 @@ abstract public class Monster {
      *
      * @return 返回怪在后台操作的位置
      */
-    public final Location GetOperationLocation() {
+    public final Point GetOperationLocation() {
         return _optlocation;
     }
 
@@ -189,7 +188,7 @@ abstract public class Monster {
      * 怪物行进路径
      * @param ad 行进路径
      */
-    public void UpdatePath(ArrayDeque<Location> ad){
+    public void UpdatePath(ArrayDeque<Point> ad){
         _ad = ad;
     }
 }

@@ -23,9 +23,9 @@ public class GameController extends Thread {
      */
     MonsterGenerator _mongen;
     /**
-     * 路径控制器线程对象
+     * 怪物控制器线程对象
      */
-    PathController _pathctl;
+    MonsterController _mc;
     /**
      * 游戏地图
      */
@@ -43,8 +43,8 @@ public class GameController extends Thread {
     public GameController(Map map) {
         _map = map;
         _hp = _map.HP();
-        _pathctl = new PathController(_map.period(), _map.total(), this);
         _round = 0;
+        _mc = new MonsterController(this);
     }
 
     /**
@@ -94,7 +94,7 @@ public class GameController extends Thread {
     public synchronized void run() {
         while (true) {
             if (_round <= _map.total() && _round > 0 && _round % _map.period() == 0) {
-                _mongen = new MonsterGenerator(_map.moninterval(), _map.monnumber(), this, _round++ % _map.monster().length);
+                _mongen = new MonsterGenerator(this, _round++);
                 _mongen.run();
             } else if (_monsters.size() == 0) {
                 Win();
@@ -103,8 +103,8 @@ public class GameController extends Thread {
                 Lose();
                 break;
             }
+            _mc.run();
             try {
-                _pathctl.run();
                 sleep(1000);
             } catch (InterruptedException e) {
                 System.err.print(e.getMessage());

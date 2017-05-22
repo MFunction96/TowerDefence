@@ -157,8 +157,10 @@ abstract public class Monster {
 
     /**
      * 怪在后台操作的移动
+     * @param l
      */
-    public void OperationMove() {
+    public void OperationMove(Location l) {
+        _optlocation = _optlocation.Add(l);
     }
 
     /**

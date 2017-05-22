@@ -1,36 +1,51 @@
 package Controller.Thread;
 
-import Model.Monster.*;
+import Model.BaseClass.Monster;
 
 /**
  * Created by MFunction on 2017/4/17.
  * 怪物生成线程类
+ *
+ * @author MFunction
  */
 public class MonsterGenerator extends Thread {
     /**
-     *
+     * 等待时间
      */
     private int _stime;
-    private int _cnt;
-    private int _index;
+    /**
+     * 总计数
+     */
+    private int _total;
+    /**
+     * 游戏控制器线程
+     */
     private GameController _gc;
+    /**
+     * 创建的怪物
+     */
+    private Monster _monster;
 
     /**
-     * @param time 时间间隔
+     * 怪物生成器构造函数
+     *
+     * @param gc    游戏控制器
+     * @param index 怪物索引
      */
-    MonsterGenerator(int time, int cnt, GameController gc, int index) {
-        _stime = time;
+    MonsterGenerator(GameController gc, int index) {
         _gc = gc;
-        _cnt = cnt;
-        _index = index;
+        _stime = _gc._map.moninterval();
+        _total = _gc._map.monnumber();
+        _monster = _gc._map.monster()[(index - 1) % _gc._map.monster().length];
     }
 
+    /**
+     * 怪物生成器主线程
+     */
     public synchronized void run() {
         try {
-            for (int i = 0; i < _cnt; i++) {
-                if (_index == 0) {
-                    _gc._monsters.addLast(new MonNormal());
-                }
+            for (int i = 0; i < _total; i++) {
+                _gc._monsters.addLast(_monster);
                 sleep(_stime);
             }
         } catch (InterruptedException e) {

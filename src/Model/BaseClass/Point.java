@@ -2,9 +2,9 @@ package Model.BaseClass;
 
 /**
  * Created by MFunction on 2017/4/15.
+ * 点类，描述某对象的坐标的基础类
  *
  * @author MFunction
- *         点类，描述某对象的坐标的基础类
  */
 public class Point {
     private int _x, _y;
@@ -28,6 +28,16 @@ public class Point {
      */
     public Point Add(final Point p) {
         return new Point(_x + p._x, _y + p._y);
+    }
+
+    /**
+     * 点对象的相减操作
+     *
+     * @param p 减去的点坐标
+     * @return 两点的方向向量
+     */
+    public Point Minus(final Point p) {
+        return new Point(_x - p._x, _y - p._y);
     }
 
     /**

@@ -37,7 +37,7 @@ public class MonsterController extends Thread {
     public synchronized void run() {
         for (Monster monster : _gc._monsters) {
             Block b = _gc._map.block(monster.GetOperationLocation());
-            
+
         }
         for (Monster monster : _gc._monsters) {
             Point p = monster.OptMove();

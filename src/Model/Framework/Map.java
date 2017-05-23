@@ -57,13 +57,18 @@ public class Map {
      */
     private Block[][] _blocks = new Block[12][12];
 
-    /**
-     * 从文件构造对象
-     *
-     * @param cfgpath 外部文件路径
-     */
-    public Map(String cfgpath) {
 
+    public Map(int hp,int total,Monster []monsters,LinkedList<Tower>towers,int monnumber,int moninterval,int period,int money,Point start,Point end) {
+        _hp=hp;
+        _total=total;
+        _monster=monsters;
+        _tower=towers;
+        _monnumber=monnumber;
+        _moninterval=moninterval;
+        _period=period;
+        _money=money;
+        _start=start;
+        _end=end;
     }
 
     /**

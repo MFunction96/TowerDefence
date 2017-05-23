@@ -1,4 +1,5 @@
 package Controller.Thread;
+
 import Model.BaseClass.Monster;
 import Model.Framework.Map;
 
@@ -22,15 +23,19 @@ public class GameController extends Thread {
     /**
      * 怪物生成器线程对象
      */
-    MonsterGenerator _mongen;
+    private MonsterGenerator _mongen;
     /**
      * 怪物控制器线程对象
      */
-    MonsterController _mc;
+    private MonsterController _mc;
     /**
      * 游戏地图
      */
     Map _map;
+    /**
+     * 攻击控制器线程对象
+     */
+    private AttackController _ac;
     /**
      * 在场怪物
      */
@@ -104,6 +109,8 @@ public class GameController extends Thread {
                 Lose();
                 break;
             }
+            _ac = new AttackController(this);
+            _ac.run();
             _mc.run();
             try {
                 sleep(1000);

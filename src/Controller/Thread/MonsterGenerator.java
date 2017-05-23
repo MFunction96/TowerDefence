@@ -37,6 +37,7 @@ public class MonsterGenerator extends Thread {
         _stime = _gc._map.moninterval();
         _total = _gc._map.monnumber();
         _monster = _gc._map.monster()[(index - 1) % _gc._map.monster().length];
+        _monster.Upgrade();
     }
 
     /**

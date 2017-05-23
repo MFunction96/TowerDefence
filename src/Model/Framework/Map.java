@@ -5,6 +5,8 @@ import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
 import Model.Map.Block;
 
+import java.util.LinkedList;
+
 /**
  * Created by MFunction on 2017/4/17.
  * This class is about game map.
@@ -25,7 +27,7 @@ public class Map {
     /**
      * 塔信息
      */
-    private Tower[] _tower;
+    private LinkedList<Tower> _tower;
     /**
      * 出怪数量
      */
@@ -150,7 +152,7 @@ public class Map {
      *
      * @return 塔信息
      */
-    public Tower[] tower() {
+    public LinkedList<Tower> tower() {
         return _tower;
     }
 

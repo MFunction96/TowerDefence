@@ -56,7 +56,7 @@ abstract public class Tower {
     /**
      * 攻击目标
      */
-     protected Object _target;
+     protected Monster _target;
 
     /**
      * 标记塔是否可用
@@ -98,11 +98,18 @@ abstract public class Tower {
     }
 
     /**
+     * 获取攻击目标
+     * @return 攻击目标
+     */
+    public Monster GetTarget(){
+        return _target;
+    }
+    /**
      * 设置塔的攻击目标
      *
      * @param target
      */
-    public void SetTarget(Object target){
+    public void SetTarget(Monster target){
         _target=target;
     }
 
@@ -221,14 +228,5 @@ abstract public class Tower {
         _uptime *= 2;
         _price += _upprice;
         _upprice *= 2;
-    }
-
-    /**
-     * 更新塔的目标
-     *
-     * @param target 更新后塔的目标
-     */
-    public void UpdateTarget(Object target) {
-
     }
 }

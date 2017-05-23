@@ -4,6 +4,8 @@ import Model.BaseClass.Point;
 import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
 
+import java.util.LinkedList;
+
 /**
  * Created by MFunction on 2017/4/19.
  * 地图块类
@@ -30,7 +32,7 @@ public class Block {
     /**
      * 可攻击的塔
      */
-    protected Tower[] _towers = new Tower[6];
+    protected LinkedList<Tower> _atktw = new LinkedList<>();
     /**
      * 区块本身是否放塔
      */
@@ -50,7 +52,9 @@ public class Block {
         _canpass = pass;
         _ispath = isPath;
     }
-
+    public Point PreMove(){
+        return _atktw.getFirst().GetOperationLocation();
+    }
     /**
      * 获取模块的UI界面位置
      *
@@ -91,13 +95,16 @@ public class Block {
      * 攻击模块上的怪
      *
      * @param monster 被攻击的怪
+     * @return 返回伤害值
      */
-    public void Attack(Monster monster) {
+    public int Attack(Monster monster) {
         int damage = 0;
-        for (int i = 0; i < _towers.length; i++) {
-            damage += _towers[i].GetDamage();
+        for (Tower tw : _atktw){
+            if (tw.GetTarget().GetUUID() == monster.GetUUID()){
+                damage += tw.GetDamage();
+            }
         }
-        monster.Hurt(damage);
+        return damage;
     }
 
     /**
@@ -119,7 +126,6 @@ public class Block {
         _ispath = false;
         _tower = tw;
         _tower.SetTower(_surlocation,_optlocation);
-
     }
 
     /**

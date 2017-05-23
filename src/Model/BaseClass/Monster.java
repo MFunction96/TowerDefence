@@ -48,15 +48,16 @@ abstract public class Monster {
      * 怪物行进路径
      */
     protected ArrayDeque<Point> _ad = new ArrayDeque<>();
+
     /**
      * 构造基础怪
      *
-     * @param name             怪的名字
-     * @param hp               怪的生命值
-     * @param speed            怪的速度
-     * @param price            怪的价值
-     * @param upgradehp        怪的血量升级
-     * @param upgradePrice     怪的价值升级
+     * @param name          怪的名字
+     * @param hp            怪的生命值
+     * @param speed         怪的速度
+     * @param price         怪的价值
+     * @param upgradehp     怪的血量升级
+     * @param upgradePrice  怪的价值升级
      * @param surfacePoint  怪的UI位置
      * @param operatorPoint 怪的后台操作位置
      */
@@ -161,10 +162,9 @@ abstract public class Monster {
 
     /**
      * 怪在后台操作的移动
-     * @param l
      */
-    public void OptMove() {
-        _optlocation = _ad.removeFirst();
+    public Point OptMove() {
+        return _optlocation = _ad.removeFirst();
     }
 
     /**
@@ -186,9 +186,10 @@ abstract public class Monster {
 
     /**
      * 怪物行进路径
+     *
      * @param ad 行进路径
      */
-    public void UpdatePath(ArrayDeque<Point> ad){
+    public void UpdatePath(ArrayDeque<Point> ad) {
         _ad = ad;
     }
 }

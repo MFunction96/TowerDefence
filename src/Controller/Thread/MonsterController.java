@@ -1,6 +1,9 @@
 package Controller.Thread;
 
 import Model.BaseClass.Monster;
+import Model.BaseClass.Point;
+import Model.Map.Block;
+
 
 /**
  * Created by MFunction on 2017/5/21.
@@ -17,6 +20,7 @@ public class MonsterController extends Thread {
      * 路径控制器线程组
      */
     private PathController[] _pc;
+
     /**
      * 怪物控制器线程构造函数
      *
@@ -32,7 +36,12 @@ public class MonsterController extends Thread {
      */
     public synchronized void run() {
         for (Monster monster : _gc._monsters) {
-            monster.OptMove();
+            Block b = _gc._map.block(monster.GetOperationLocation());
+            
+        }
+        for (Monster monster : _gc._monsters) {
+            Point p = monster.OptMove();
+
         }
     }
 }

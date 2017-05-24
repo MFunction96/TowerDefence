@@ -1,8 +1,10 @@
 package View;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 /**
  * Created by Chris Young on 2017/5/22.
@@ -14,14 +16,20 @@ public class MainMenu extends JFrame implements ActionListener{
     JButton _helpBtn;
     JButton _communiteeBtn;
     JButton _ranklistBtn;
+    Toolkit _tk;
 
 
     MainMenu(){
-        super("0度塔防");
-        this.setVisible(true);
-        this.setSize(1024,838);
-        this.setLayout(null);
-        this.setLocationRelativeTo(null);
+        //设置窗体
+        super("0度塔防");    //设置标题
+        this.setVisible(true);     //设置为可见
+        this.setSize(1024,838);   //设置窗体大小
+        this.setLayout(null);     //设置为空布局
+        this.setLocationRelativeTo(null);  //设置为在屏幕居中显示
+        this.setResizable(false);   //设置为不可更改窗体大小
+        _tk=Toolkit.getDefaultToolkit();
+        Image img= _tk.createImage("src/Image/logo.png");
+        this.setIconImage(img);    //修改窗体默认图标
 
         JPanel imagePanel=(JPanel)this.getContentPane();
         imagePanel.setOpaque(false);
@@ -48,7 +56,7 @@ public class MainMenu extends JFrame implements ActionListener{
         _startBtn=new JButton(new ImageIcon("src/Image/start.jpg")); //设置按钮背景
        _startBtn.setBounds(104,428,296,130);  //设置按钮位置，大小
         _startBtn.addActionListener(this);  //注册监听器
-        _startBtn.setBorderPainted(false);
+        _startBtn.setBorderPainted(false);    //隐藏按钮边界
         this.getContentPane().add(_startBtn); //将按钮添加到ContentPane层中
 
         _continueBtn=new JButton(new ImageIcon("src/Image/continue.jpg"));
@@ -79,7 +87,7 @@ public class MainMenu extends JFrame implements ActionListener{
         _communiteeBtn.setBounds(701,644,296,130);
         _communiteeBtn.setBorderPainted(false);
         _communiteeBtn.addActionListener(this);
-        this.add(_communiteeBtn);
+        this.getContentPane().add(_communiteeBtn);
 
     }
 
@@ -87,9 +95,9 @@ public class MainMenu extends JFrame implements ActionListener{
      * 按钮事件响应，实现界面跳转
      */
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==_startBtn){
+        if(e.getSource()==_startBtn){   //如果事件源为_startBtn按钮
             this.dispose(); //隐藏当前窗口
-            new GameMenu();
+            new GameMenu();  //新建GameMenu引用
         }
         else if(e.getSource()==_continueBtn){
 

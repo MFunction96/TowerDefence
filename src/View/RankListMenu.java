@@ -11,14 +11,17 @@ public class RankListMenu extends JFrame implements ActionListener {
     JButton _return;
 
     RankListMenu(){
-        _return=new JButton("返回");
-        _return.addActionListener(this);
-        _return.setBounds(200,200,200,100);
-        this.add(_return);
         this.setVisible(true);
         this.setSize(1024,838);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+
+        _return=new JButton("返回");
+        _return.addActionListener(this);
+        _return.setBounds(200,200,200,100);
+        this.add(_return);
+
 
     }
     public void actionPerformed(ActionEvent e) {

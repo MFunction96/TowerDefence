@@ -17,10 +17,6 @@ public class MonsterController extends Thread {
      * 游戏控制器线程对象
      */
     private GameController _gc;
-    /**
-     * 路径控制器线程组
-     */
-    private PathController[] _pc;
 
     /**
      * 怪物控制器线程构造函数
@@ -29,7 +25,9 @@ public class MonsterController extends Thread {
      */
     MonsterController(GameController gc) {
         _gc = gc;
-        _pc = new PathController[_gc._monsters.size()];
+        _gc._pc = new PathController[200];
+        _gc._pc[0] = new PathController(_gc, _gc._map.start(), _gc._sepath);
+        _gc._pc[0].run();
     }
 
     /**
@@ -37,7 +35,7 @@ public class MonsterController extends Thread {
      */
     public synchronized void run() {
         for (Monster monster : _gc._monsters) {
-            if (monster.PreMove() == _gc._map.end()){
+            if (monster.PreMove() == _gc._map.end()) {
                 _gc._map.Damage();
                 if (_gc._map.HP() <= 0) {
                     _gc.Lose();
@@ -46,25 +44,25 @@ public class MonsterController extends Thread {
             }
             LinkedList<Tower> tw = _gc._map.block(monster.GetOperationLocation()).GetAtkTw();
             LinkedList<Tower> ptw = _gc._map.block(monster.PreMove()).GetAtkTw();
-            for (Tower tower : tw){
-                if (tower.GetTarget() == monster){
+            for (Tower tower : tw) {
+                if (tower.GetTarget() == monster) {
                     boolean flag = true;
-                    for (Tower ptower : ptw){
-                        if (tower == ptower) {
+                    for (Tower pTower : ptw) {
+                        if (tower == pTower) {
                             flag = false;
                             break;
                         }
                     }
-                    if (flag){
+                    if (flag) {
                         tower.SetTarget(null);
                     }
                 }
             }
         }
         for (Monster monster : _gc._monsters) {
-            LinkedList<Tower> ptw = _gc._map.block(monster.PreMove()).GetAtkTw();
-            for (Tower tower : ptw){
-                if (tower.GetTarget() == null){
+            LinkedList<Tower> ptw = _gc._map.block(monster.OptMove()).GetAtkTw();
+            for (Tower tower : ptw) {
+                if (tower.GetTarget() == null) {
                     tower.SetTarget(monster);
                 }
             }

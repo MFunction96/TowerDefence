@@ -21,6 +21,14 @@ public class Point {
     }
 
     /**
+     * 复制构造函数
+     * @param p 点对象
+     */
+    public Point(Point p){
+        _x=p._x;
+        _y=p._y;
+    }
+    /**
      * 点对象的加操作
      *
      * @param p 点对象的相加对象

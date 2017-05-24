@@ -74,6 +74,25 @@ abstract public class Monster {
     }
 
     /**
+     * 复制构造函数
+     *
+     * @param monster 源对象
+     * @param ad      路径
+     */
+    public Monster(Monster monster, ArrayDeque<Point> ad) {
+        _name = monster._name;
+        _uuid = UUID.randomUUID();
+        _speed = monster._speed;
+        _price = monster._price;
+        _surlocation = monster._surlocation;
+        _optlocation = monster._optlocation;
+        _upprice = monster._upprice;
+        _uphp = monster._uphp;
+        _hp = monster._hp;
+        _ad = ad;
+    }
+
+    /**
      * 获取怪的名称
      *
      * @return 返回怪的名称
@@ -162,6 +181,7 @@ abstract public class Monster {
 
     /**
      * 怪在后台操作的移动
+     *
      * @return 新坐标
      */
     public Point OptMove() {
@@ -170,6 +190,7 @@ abstract public class Monster {
 
     /**
      * 怪下一步移动坐标
+     *
      * @return 新坐标
      */
     public Point PreMove() {

@@ -1,8 +1,10 @@
 package Controller.Thread;
 
 import Model.BaseClass.Monster;
+import Model.BaseClass.Point;
 import Model.Framework.Map;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 
 /**
@@ -29,9 +31,17 @@ public class GameController extends Thread {
      */
     Map _map;
     /**
+     * 路径控制器线程组
+     */
+    volatile PathController[] _pc;
+    /**
      * 在场怪物
      */
     volatile LinkedList<Monster> _monsters;
+    /**
+     *
+     */
+    volatile ArrayDeque<Point> _sepath;
 
     /**
      * 构造游戏控制器

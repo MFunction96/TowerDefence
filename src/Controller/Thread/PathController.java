@@ -1,12 +1,8 @@
 package Controller.Thread;
 
 import Model.BaseClass.Point;
-import Model.BaseClass.Monster;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by MFunction on 2017/5/17.
@@ -16,54 +12,85 @@ import java.util.Queue;
  */
 public class PathController extends Thread {
     /**
-     * 搜索的怪物
+     * 搜索的起点
      */
-    private Monster _monster;
+    private Point _p;
     /**
      * 游戏控制器线程
      */
     private GameController _gc;
-    private Deque<Point> dq = new ArrayDeque<>();
-    private Point _dl[] = {new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)};
+    private ArrayDeque<Point> _ad;
+    private Point _dp[] = {new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)};
+    private int[][] vis;
 
     /**
      * 线程类构造函数
      *
-     * @param gc      游戏控制器线程对象
-     * @param monster 搜索的怪物对象
+     * @param gc 游戏控制器线程对象
+     * @param p  搜索的怪物对象
      */
-    PathController(GameController gc, Monster monster) {
+    PathController(GameController gc, Point p, ArrayDeque<Point> ad) {
         _gc = gc;
-        _monster = monster;
+        _p = p;
+        _ad = ad;
+        vis = new int[30][30];
+        Arrays.fill(vis, -1);
     }
 
     /**
      * 判断新坐标是否可前进
      *
-     * @param l 新坐标
+     * @param p 新坐标
      * @return 新坐标是否可前进
      */
-    private boolean CanGo(Point l) {
-        return l.x() >= 0 && l.y() >= 0 && l.x() < 12 && l.y() < 12;
+    private boolean CanGo(Point p) {
+        return p.x() >= 0 && p.y() >= 0 && p.x() < 12 && p.y() < 12 && vis[p.y()][p.x()] < 0;
+    }
+
+    /**
+     * 路经计算核心函数
+     * @return 路径
+     */
+    private ArrayDeque<Point> CalPath() {
+        boolean flag = false;
+        Queue<Point> q = new LinkedList<>();
+        ArrayDeque<Point> ad = new ArrayDeque<>();
+        q.offer(_p);
+        vis[_p.y()][_p.x()] = 0;
+        while (!q.isEmpty()) {
+            Point p = q.poll();
+            for (int i = 0; i < 4; i++) {
+                Point pp = p.Add(_dp[i]);
+                if (CanGo(pp)) {
+                    vis[pp.y()][pp.x()] = vis[p.y()][p.x()] + 1;
+                    if (pp.Equal(_gc._map.end())) {
+                        flag = true;
+                        break;
+                    }
+                    q.offer(pp);
+                }
+            }
+        }
+        if (flag) {
+            for (Point p = _gc._map.end(); !p.Equal(_gc._map.start()); ) {
+                ad.addLast(p);
+                for (int i = 0; i < 4; i++) {
+                    Point pp = p.Add(_dp[i]);
+                    if (vis[pp.y()][pp.x()] == vis[p.y()][p.x()] - 1) {
+                        p = pp;
+                        break;
+                    }
+                }
+            }
+            ad.addLast(_gc._map.start());
+        }
+        return ad;
     }
 
     /**
      * 路径搜索主线程
      */
     public synchronized void run() {
-        Queue<Point> q = new LinkedList<>();
-        q.offer(_monster.GetOperationLocation());
-        while (!q.isEmpty()) {
-            Point l = q.poll();
-            for (int i = 0; i < 4; i++) {
-                Point ll = l.Add(_dl[i]);
-                if (CanGo(ll)) {
-                    if (_gc._map.block(l).IsPath()) {
-                        break;
-                    }
-                }
-
-            }
-        }
+        _ad = CalPath();
     }
 }

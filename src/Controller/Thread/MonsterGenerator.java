@@ -1,6 +1,7 @@
 package Controller.Thread;
 
 import Model.BaseClass.Monster;
+import Model.Monster.*;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -46,7 +47,7 @@ public class MonsterGenerator extends Thread {
     public synchronized void run() {
         try {
             for (int i = 0; i < _total; i++) {
-                _gc._monsters.addLast(_monster);
+                _gc._monsters.addLast(new MonNormal(_monster, _gc._sepath));
                 sleep(_stime);
             }
         } catch (InterruptedException e) {

@@ -87,7 +87,7 @@ public class MainMenu extends JFrame implements ActionListener{
         _communiteeBtn.setBounds(701,644,296,130);
         _communiteeBtn.setBorderPainted(false);
         _communiteeBtn.addActionListener(this);
-        this.add(_communiteeBtn);
+        this.getContentPane().add(_communiteeBtn);
 
     }
 

@@ -30,6 +30,7 @@ public class MainMenu extends JFrame implements ActionListener{
         _tk=Toolkit.getDefaultToolkit();
         Image img= _tk.createImage("src/Image/logo.png");
         this.setIconImage(img);    //修改窗体默认图标
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JPanel imagePanel=(JPanel)this.getContentPane();
         imagePanel.setOpaque(false);

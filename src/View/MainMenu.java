@@ -30,7 +30,7 @@ public class MainMenu extends JFrame implements ActionListener{
         设置界面背景
          */
         JLabel label=new JLabel();
-        ImageIcon icon=new ImageIcon("src/Image/background.png");
+        ImageIcon icon=new ImageIcon("src/Image/Mainmenu.png");
         label.setIcon(icon);      //将图片填充到Label中
         label.setBounds(0,0,icon.getIconWidth(),icon.getIconHeight()); //设置Label位置，以背景图像的宽和高设置label大小
         /*

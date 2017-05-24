@@ -162,9 +162,18 @@ abstract public class Monster {
 
     /**
      * 怪在后台操作的移动
+     * @return 新坐标
      */
     public Point OptMove() {
         return _optlocation = _ad.removeFirst();
+    }
+
+    /**
+     * 怪下一步移动坐标
+     * @return 新坐标
+     */
+    public Point PreMove() {
+        return _ad.getFirst();
     }
 
     /**

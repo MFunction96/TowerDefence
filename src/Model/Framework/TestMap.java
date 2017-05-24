@@ -3,8 +3,6 @@ package Model.Framework;
 import Model.BaseClass.Point;
 import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
-import Model.Monster.MonNormal;
-import Model.Tower.TwNormal;
 
 import java.util.LinkedList;
 

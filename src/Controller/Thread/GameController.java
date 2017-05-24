@@ -21,10 +21,6 @@ public class GameController extends Thread {
      */
     private int _hp;
     /**
-     * 怪物生成器线程对象
-     */
-    private MonsterGenerator _mongen;
-    /**
      * 怪物控制器线程对象
      */
     private MonsterController _mc;
@@ -32,10 +28,6 @@ public class GameController extends Thread {
      * 游戏地图
      */
     Map _map;
-    /**
-     * 攻击控制器线程对象
-     */
-    private AttackController _ac;
     /**
      * 在场怪物
      */
@@ -100,7 +92,7 @@ public class GameController extends Thread {
     public synchronized void run() {
         while (true) {
             if (_round <= _map.total() && _round > 0 && _round % _map.period() == 0) {
-                _mongen = new MonsterGenerator(this, _round++);
+                MonsterGenerator _mongen = new MonsterGenerator(this, _round++);
                 _mongen.run();
             } else if (_monsters.size() == 0) {
                 Win();
@@ -109,7 +101,7 @@ public class GameController extends Thread {
                 Lose();
                 break;
             }
-            _ac = new AttackController(this);
+            AttackController _ac = new AttackController(this);
             _ac.run();
             _mc.run();
             try {

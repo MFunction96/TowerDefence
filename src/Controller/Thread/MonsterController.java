@@ -1,8 +1,9 @@
 package Controller.Thread;
 
 import Model.BaseClass.Monster;
-import Model.BaseClass.Point;
-import Model.Map.Block;
+import Model.BaseClass.Tower;
+
+import java.util.LinkedList;
 
 
 /**
@@ -36,12 +37,37 @@ public class MonsterController extends Thread {
      */
     public synchronized void run() {
         for (Monster monster : _gc._monsters) {
-            Block b = _gc._map.block(monster.GetOperationLocation());
-            Block pb = _gc._map.block(monster.PreMove());
+            if (monster.PreMove() == _gc._map.end()){
+                _gc._map.Damage();
+                if (_gc._map.HP() <= 0) {
+                    _gc.Lose();
+                    break;
+                }
+            }
+            LinkedList<Tower> tw = _gc._map.block(monster.GetOperationLocation()).GetAtkTw();
+            LinkedList<Tower> ptw = _gc._map.block(monster.PreMove()).GetAtkTw();
+            for (Tower tower : tw){
+                if (tower.GetTarget() == monster){
+                    boolean flag = true;
+                    for (Tower ptower : ptw){
+                        if (tower == ptower) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag){
+                        tower.SetTarget(null);
+                    }
+                }
+            }
         }
         for (Monster monster : _gc._monsters) {
-            Point p = monster.OptMove();
-
+            LinkedList<Tower> ptw = _gc._map.block(monster.PreMove()).GetAtkTw();
+            for (Tower tower : ptw){
+                if (tower.GetTarget() == null){
+                    tower.SetTarget(monster);
+                }
+            }
         }
     }
 }

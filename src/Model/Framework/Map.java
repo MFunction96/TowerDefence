@@ -175,7 +175,7 @@ public class Map {
      * 扣除生命
      */
     public void Damage() {
-
+        _hp--;
     }
 
     /**

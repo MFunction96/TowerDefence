@@ -52,8 +52,8 @@ public class Block {
         _canpass = pass;
         _ispath = isPath;
     }
-    public Point PreMove(){
-        return _atktw.getFirst().GetOperationLocation();
+    public LinkedList<Tower> GetAtkTw(){
+        return _atktw;
     }
     /**
      * 获取模块的UI界面位置

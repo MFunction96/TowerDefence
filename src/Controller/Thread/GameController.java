@@ -82,7 +82,7 @@ public class GameController extends Thread {
     /**
      * 游戏失败
      */
-    private void Lose() {
+    public void Lose() {
 
     }
 
@@ -97,7 +97,7 @@ public class GameController extends Thread {
             } else if (_monsters.size() == 0) {
                 Win();
                 break;
-            } else if (_hp == 0) {
+            } else if (_hp <= 0) {
                 Lose();
                 break;
             }

@@ -30,7 +30,7 @@ public class MainMenu extends JFrame implements ActionListener{
         _tk=Toolkit.getDefaultToolkit();
         Image img= _tk.createImage("src/Image/logo.png");
         this.setIconImage(img);    //修改窗体默认图标
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置窗体关闭
 
         JPanel imagePanel=(JPanel)this.getContentPane();
         imagePanel.setOpaque(false);
@@ -39,7 +39,7 @@ public class MainMenu extends JFrame implements ActionListener{
         设置界面背景
          */
         JLabel label=new JLabel();
-        ImageIcon icon=new ImageIcon("src/Image/Mainmenu.png");
+        ImageIcon icon=new ImageIcon("src/Image/background.png");
         label.setIcon(icon);      //将图片填充到Label中
         label.setBounds(0,0,icon.getIconWidth(),icon.getIconHeight()); //设置Label位置，以背景图像的宽和高设置label大小
         /*

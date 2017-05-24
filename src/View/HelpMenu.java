@@ -18,6 +18,7 @@ public class HelpMenu extends JFrame implements ActionListener {
         this.setSize(1024,838);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == _return) {

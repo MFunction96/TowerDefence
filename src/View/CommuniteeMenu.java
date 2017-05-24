@@ -15,6 +15,7 @@ public class CommuniteeMenu extends JFrame implements ActionListener{
         this.setSize(1024,838);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         _return=new JButton("返回");
         _return.addActionListener(this);

@@ -1,6 +1,7 @@
 package View;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
  */
 public class CommuniteeMenu extends JFrame implements ActionListener{
     JButton _return;
+    Toolkit _tk;
 
     CommuniteeMenu(){
         this.setVisible(true);
@@ -16,6 +18,9 @@ public class CommuniteeMenu extends JFrame implements ActionListener{
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        _return=new JButton("返回");
+        _return.addActionListener(this);
+        _return.setBounds(200,200,200,100);
 
         _return=new JButton("返回");
         _return.addActionListener(this);

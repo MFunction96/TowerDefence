@@ -16,8 +16,12 @@ import java.util.Map;
 
 import javax.swing.*;
 
+import Controller.Thread.GameController;
+import Model.Framework.TestMap;
 import Model.Map.Block;
 import Model.BaseClass.*;
+import Controller.Menu.* ;
+import Model.Framework.* ;
 /**
  * Created by Chris Young on 2017/5/22.
  */
@@ -39,7 +43,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 游戏区域左上顶点y坐标
      */
     private int gameY;
-    /*
+    /**
     *地图宽
     */
     private int gameW;
@@ -47,23 +51,64 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     *地图长
      */
     private int gameH;
-    /*
+    /**
     *单块方格大小
      */
     private int squaresSize;
-    /*
+    /**
     *当焦点单位方格x坐标
      */
     private int focusX;
-/*
-当前焦点单位方格y坐标
- */
-
+   /**
+    *当前焦点单位方格y坐标
+   */
     private int focusY;
     /**
             * 鼠标坐标
      */
     int x, y;
+    private boolean  atTools;
+    private boolean drawTowerTools;
+    private int changeTowerType;
+    private TestMap  testmap=new TestMap() ;
+    /**
+     * 塔数组
+     */
+    private List<Tower> towerList;
+    /**
+     * 子弹数组
+     */
+
+
+    /**
+     * 升级工具栏x坐标
+     */
+    private int upX;
+
+    /**
+     * 升级工具栏y坐标
+     */
+    private int upY;
+
+    /**
+     * 是否升级塔
+     */
+    private boolean up;
+
+    /**
+     * 是否摧毁塔
+     */
+    private boolean broken;
+
+    /**
+     * 当前焦点塔
+     */
+    private Tower focusTower;
+
+    /**
+     * 是否绘制金钱（用以金钱不够时使金钱一闪一闪的）
+     */
+    private boolean drawMoney;
 
     JButton _return;
 
@@ -96,6 +141,9 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         focusX = -64;
         focusY = -64;
         squaresSize = 64;
+        drawMoney =true ;
+        GameController _gc = new GameController(new TestMap());
+        _gc.Start();
     }
     public void paint(Graphics gr) {
         BufferedImage image = null;
@@ -115,10 +163,34 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         }
         g2.setColor(Color.blue);
         g2.fillRect(focusX, focusY, squaresSize, squaresSize);
+        drawTowers(g2);
+        drawMoney(g2);
         gr.drawImage(image, 0, 0, this);
 
-    }
 
+    }
+    /**
+     * 绘制防御塔
+     */
+    private void drawTowers(Graphics g2) {
+
+    }
+    /**
+     * 绘制金钱
+     */
+    private void drawMoney(Graphics g) {
+        if (drawMoney) {
+            Font font = new Font("宋体", 30, 30);
+            g.setFont(font);
+            g.setColor(Color.white);
+            g.drawString("$" + testmap .money() , 900, 100);
+        }
+        Font font = new Font("宋体", 30, 30);
+        g.setColor(Color.white);
+        g.setFont(font);
+        g.drawString("round" + testmap .period() , 890,
+                200);
+    }
     public static void main(String[] args) {
         new GameMenu() ;
     }

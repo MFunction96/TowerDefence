@@ -73,7 +73,7 @@ public class PathController extends Thread {
         }
         if (flag) {
             for (Point p = _gc._map.end(); !p.Equal(_gc._map.start()); ) {
-                ad.addLast(p);
+                ad.addFirst(p);
                 for (int i = 0; i < 4; i++) {
                     Point pp = p.Add(_dp[i]);
                     if (vis[pp.y()][pp.x()] == vis[p.y()][p.x()] - 1) {
@@ -82,7 +82,6 @@ public class PathController extends Thread {
                     }
                 }
             }
-            ad.addLast(_gc._map.start());
         }
         return ad;
     }

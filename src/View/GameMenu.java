@@ -16,6 +16,8 @@ import java.util.List;
 import Controller.Thread.GameController;
 import Model.BaseClass.*;
 import Model.Framework.Map ;
+import Model.Tower.TwNormal ;
+
 /**
  * Created by Chris Young on 2017/5/22.
  */
@@ -61,16 +63,18 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 鼠标坐标
      */
     int x, y;
+
+
+    private Map  map=new Map() ;
+
     private boolean  atTools;
     private boolean drawTowerTools;
     private int changeTowerType;
-    private Map  map=new Map() ;
+
     /**
      * 塔数组
      */
     private List<Tower> towerList;
-
-
 
     /**
      * 升级工具栏x坐标
@@ -101,22 +105,21 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 是否绘制金钱（用以金钱不够时使金钱一闪一闪的）
      */
     private boolean drawMoney;
-
     JButton _return;
 
     GameMenu() {
-        super("0度塔防");
-        this.setVisible(true);
-        this.setSize(1024,838);
-        this.setLayout(null);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setBounds(64, 64, w, h);
+        super("0度塔防");//设置标题
+        this.setVisible(true);//设置为可见
+        this.setSize(1024,838);//设置窗体大小
+        this.setLayout(null);//设置为空布局
+        this.setLocationRelativeTo(null);//设置为集中显示
+        this.setResizable(false);//设置不可改变窗体大小
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//关闭线程;
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
-        this.setResizable(false);
 
-        _return = new JButton("返回");
+
+        _return = new JButton("暂停游戏");
         _return.addActionListener(this);
         _return.setBounds(200,200,200,100);
         this.getContentPane().add(_return);
@@ -125,8 +128,8 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     private void init() {
         w = 1024;
         h = 838;
-        x =64;
-        y = 64;
+        gameX  =64;
+        gameY  = 64;
         gameW = 1024;
         gameH = 800;
         focusX = -64;
@@ -148,8 +151,8 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g2.setColor(Color.white);
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j <12; j++) {
-                g2.drawRect(j * squaresSize + x, i * squaresSize
-                        + y, squaresSize, squaresSize);
+                g2.drawRect(j * squaresSize + gameX, i * squaresSize
+                        + gameY , squaresSize, squaresSize);
             }
         }
         g2.setColor(Color.blue);
@@ -164,7 +167,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 绘制防御塔
      */
     private void drawTowers(Graphics g2) {
-
+      new TwNormal(g2,896,320);
     }
     /**
      * 绘制金钱
@@ -179,8 +182,35 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         Font font = new Font("宋体", 30, 30);
         g.setColor(Color.white);
         g.setFont(font);
-        g.drawString("round" + map .period() , 890,
+
+        g.drawString("" + map .period() , 890,
                 200);
+    }
+
+    /**
+     * 升级塔
+     * @param tower
+     */
+    private void UpTower(final Tower tower ){
+        map.SetMoney( map .money() -tower.GetPrice()) ;
+        tower .Upgrade() ;
+    }
+
+    /**
+     * 摧毁塔
+     * @param tower
+     */
+    private void downTower(Tower  tower ){
+        map.SetMoney(map .money()+ tower.GetPrice()*tower .GetLevel() ) ;
+
+    }
+    public void Gamerun(){
+       /* try{
+            while(true){
+                repaint() ;
+
+            }
+        }*/
     }
     public static void main(String[] args) {
         new GameMenu() ;
@@ -226,11 +256,11 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     public void mouseMoved(MouseEvent e) {
         int mx = e.getX();
         int my = e.getY();
-        if (mx > x  && mx < x + gameW && my > y
-                && my < y + gameH) {
-            focusX = (mx - x) / squaresSize * squaresSize
+        if (mx > gameX   && mx < gameX  + gameW && my > gameY
+                && my < gameY  + gameH) {
+            focusX = (mx - gameX ) / squaresSize * squaresSize
                     + squaresSize;
-            focusY = (my - y) / squaresSize * squaresSize
+            focusY = (my - gameY ) / squaresSize * squaresSize
                     + squaresSize;
         } else {
             focusX = -128;

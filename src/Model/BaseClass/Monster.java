@@ -177,6 +177,9 @@ abstract public class Monster {
      * 怪在UI上的移动
      */
     public void SurfaceMove() {
+        Point temp;
+        temp=_ad.getFirst().Minus(_optlocation);
+        _surlocation=new Point(temp.x()*64,temp.y()*64);
     }
 
     /**
@@ -222,6 +225,11 @@ abstract public class Monster {
     public void UpdatePath(ArrayDeque<Point> ad) {
         _ad = ad;
     }
+
+    /**
+     *
+     * @return 是否活着
+     */
     public boolean IsAlive(){
         if(_hp<=0){
             return false;

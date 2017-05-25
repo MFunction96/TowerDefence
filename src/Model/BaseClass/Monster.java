@@ -222,4 +222,12 @@ abstract public class Monster {
     public void UpdatePath(ArrayDeque<Point> ad) {
         _ad = ad;
     }
+    public boolean IsAlive(){
+        if(_hp<=0){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }

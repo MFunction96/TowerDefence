@@ -10,18 +10,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.swing.*;
 
 import Controller.Thread.GameController;
-import Model.Framework.TestMap;
-import Model.Map.Block;
 import Model.BaseClass.*;
-import Controller.Menu.* ;
-import Model.Framework.* ;
+import Model.Framework.Map ;
 /**
  * Created by Chris Young on 2017/5/22.
  */
@@ -64,20 +58,18 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
    */
     private int focusY;
     /**
-            * 鼠标坐标
+     * 鼠标坐标
      */
     int x, y;
     private boolean  atTools;
     private boolean drawTowerTools;
     private int changeTowerType;
-    private TestMap  testmap=new TestMap() ;
+    private Map  map=new Map() ;
     /**
      * 塔数组
      */
     private List<Tower> towerList;
-    /**
-     * 子弹数组
-     */
+
 
 
     /**
@@ -114,22 +106,21 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
     GameMenu() {
         super("0度塔防");
-        _return = new JButton("返回");
-        _return.addActionListener(this);
-        _return.setBounds(200,200,200,100);
-        this.add(_return);
         this.setVisible(true);
         this.setSize(1024,838);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
-        init();
-
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(64, 64, w, h);
-        this.setDefaultCloseOperation(WindowConstants .EXIT_ON_CLOSE);
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
         this.setResizable(false);
 
+        _return = new JButton("返回");
+        _return.addActionListener(this);
+        _return.setBounds(200,200,200,100);
+        this.getContentPane().add(_return);
+        init();
     }
     private void init() {
         w = 1024;
@@ -142,7 +133,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         focusY = -64;
         squaresSize = 64;
         drawMoney =true ;
-        GameController _gc = new GameController(new TestMap());
+        GameController _gc = new GameController(new Map());
         _gc.Start();
     }
     public void paint(Graphics gr) {
@@ -183,12 +174,12 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             Font font = new Font("宋体", 30, 30);
             g.setFont(font);
             g.setColor(Color.white);
-            g.drawString("$" + testmap .money() , 900, 100);
+            g.drawString("$" +map .money() , 900, 100);
         }
         Font font = new Font("宋体", 30, 30);
         g.setColor(Color.white);
         g.setFont(font);
-        g.drawString("round" + testmap .period() , 890,
+        g.drawString("round" + map .period() , 890,
                 200);
     }
     public static void main(String[] args) {

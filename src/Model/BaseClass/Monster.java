@@ -177,6 +177,9 @@ abstract public class Monster {
      * 怪在UI上的移动
      */
     public void SurfaceMove() {
+        Point temp;
+        temp=_ad.getFirst().Minus(_optlocation);  //计算方向向量
+        _surlocation=new Point(temp.x()*64,temp.y()*64); //转换成表现层的下一个坐标
     }
 
     /**
@@ -222,11 +225,6 @@ abstract public class Monster {
     public void UpdatePath(ArrayDeque<Point> ad) {
         _ad = ad;
     }
-
-    /**
-     * 判断怪是否存活
-     * @return 返回怪是否存活
-     */
     public boolean IsAlive(){
         if(_hp<=0){
             return false;

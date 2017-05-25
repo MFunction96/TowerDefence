@@ -4,6 +4,7 @@ import Model.BaseClass.Point;
 import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
 import Model.Map.Block;
+import Model.Monster.MonNormal;
 
 import java.util.LinkedList;
 
@@ -57,7 +58,7 @@ public class Map {
      */
     private Block[][] _blocks = new Block[12][12];
 
-
+/*
     public Map(int hp,int total,Monster []monsters,LinkedList<Tower>towers,int monnumber,int moninterval,int period,int money,Point start,Point end) {
         _hp=hp;
         _total=total;
@@ -69,6 +70,20 @@ public class Map {
         _money=money;
         _start=start;
         _end=end;
+    }
+    */
+    public Map(){
+        _hp=10;
+        _total=5;
+        _monster=new MonNormal[5];
+        _tower=new LinkedList<>();
+        _monnumber=20;
+        _moninterval=10;
+        _period=4;
+        _money=100;
+        _start=new Point(0,0);
+        _end=new Point(11,11);
+
     }
 
     /**
@@ -181,8 +196,8 @@ public class Map {
     /**
      * 修改金钱
      */
-    public void UpdateMoney() {
-
+    public void SetMoney(int money) {
+        _money=money;
     }
 
     /**

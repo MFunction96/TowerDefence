@@ -43,6 +43,8 @@ public class GameController extends Thread {
      */
     volatile ArrayDeque<Point> _sepath;
 
+    volatile  MonsterMoveController[] _mvc;
+
     /**
      * 构造游戏控制器
      *

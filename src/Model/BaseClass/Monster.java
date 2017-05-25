@@ -61,12 +61,12 @@ abstract public class Monster {
      * @param surfacePoint  怪的UI位置
      * @param operatorPoint 怪的后台操作位置
      */
-    public Monster(String name, int hp, int speed, int price, int upgradehp, int upgradePrice, Point surfacePoint, Point operatorPoint) {
+    public Monster(String name, int hp, int speed, int price, int upgradehp, int upgradePrice,  Point operatorPoint) {
         _name = name;
         _uuid = UUID.randomUUID();
         _speed = speed;
         _price = price;
-        _surlocation = surfacePoint;
+        _surlocation = new Point(64,64);
         _optlocation = operatorPoint;
         _upprice = upgradePrice;
         _uphp = upgradehp;

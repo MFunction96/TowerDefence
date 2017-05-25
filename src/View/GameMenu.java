@@ -106,7 +106,9 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     private boolean drawMoney;
     JButton _return;
-
+    JLabel Tools;
+    ImageIcon Toolsicon;
+    Image Toolsimg;
     GameMenu() {
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
@@ -118,11 +120,11 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
 
-
+/*
         _return = new JButton("暂停游戏");
         _return.addActionListener(this);
         _return.setBounds(200,200,200,100);
-        this.getContentPane().add(_return);
+        this.getContentPane().add(_return);*/
         init();
     }
     private void init() {
@@ -157,12 +159,22 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         }
         g2.setColor(Color.blue);
         g2.fillRect(focusX, focusY, squaresSize, squaresSize);
+        Toolsicon=new ImageIcon("src/image/Tools.png");
+        Toolsimg=Toolsicon.getImage();
+        g2.drawImage(Toolsimg,840,0,184,838,null );
+        //drawTools(g2);
+
         drawTowers(g2);
         drawMoney(g2);
         gr.drawImage(image, 0, 0, this);
 
 
     }
+    private void drawTools(Graphics g2){
+        /*Tools =new JLabel() ;
+        Tools.setIcon(new ImageIcon("src/Image/Tools.png") );
+        Tools.setBounds(919,0,105,838);
+    */}
     /**
      * 绘制防御塔
      */
@@ -177,14 +189,14 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             Font font = new Font("宋体", 30, 30);
             g.setFont(font);
             g.setColor(Color.white);
-            g.drawString("$" +map .money() , 900, 100);
+            g.drawString("$" +map .money() , 910, 85);
         }
         Font font = new Font("宋体", 30, 30);
         g.setColor(Color.white);
         g.setFont(font);
 
-        g.drawString("" + map .period() , 890,
-                200);
+        g.drawString("" + map .period() , 950,
+                130);
     }
 
     /**
@@ -205,7 +217,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
     }
     public void Gamerun(){
-       /* try{
+        /*try{
             while(true){
                 repaint() ;
 

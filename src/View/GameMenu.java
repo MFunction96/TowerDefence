@@ -106,22 +106,21 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
     GameMenu() {
         super("0度塔防");
-        _return = new JButton("返回");
-        _return.addActionListener(this);
-        _return.setBounds(200,200,200,100);
-        this.add(_return);
         this.setVisible(true);
         this.setSize(1024,838);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
-        init();
-
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(64, 64, w, h);
-        this.setDefaultCloseOperation(WindowConstants .EXIT_ON_CLOSE);
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
         this.setResizable(false);
 
+        _return = new JButton("返回");
+        _return.addActionListener(this);
+        _return.setBounds(200,200,200,100);
+        this.getContentPane().add(_return);
+        init();
     }
     private void init() {
         w = 1024;

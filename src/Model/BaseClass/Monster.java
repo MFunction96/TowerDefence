@@ -178,8 +178,8 @@ abstract public class Monster {
      */
     public void SurfaceMove() {
         Point temp;
-        temp=_ad.getFirst().Minus(_optlocation);
-        _surlocation=new Point(temp.x()*64,temp.y()*64);
+        temp=_ad.getFirst().Minus(_optlocation);  //计算方向向量
+        _surlocation=new Point(temp.x()*64,temp.y()*64); //转换成表现层的下一个坐标
     }
 
     /**

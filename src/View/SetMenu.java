@@ -1,18 +1,23 @@
 package View;
 
+import Model.Audio.MenuMusic;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * Created by Chris Young on 2017/5/23.
  */
-public class SetMenu extends JFrame implements ActionListener {
+public class SetMenu extends JFrame implements ActionListener,ItemListener {
     JButton _return;
     Toolkit _tk;
     JLabel _title;
-
+    JCheckBox _audio;
+    public static boolean _isopenmusic=true;
     SetMenu(){
         this.setTitle("0度塔防—游戏设置");
         this.setVisible(true);
@@ -51,11 +56,37 @@ public class SetMenu extends JFrame implements ActionListener {
         _return.setContentAreaFilled(false);
         this.getContentPane().add(_return);
 
+        if(_isopenmusic==false) {
+            _audio = new JCheckBox("开启音效", new ImageIcon("src/Image/Audio.png"), false);
+        }else {
+            _audio = new JCheckBox("关闭音效", new ImageIcon("src/Image/Audio.png"), true);
+        }
+        _audio.setBounds(460,260,200,160);
+        _audio.setOpaque(false);
+        _audio.setFont(new Font("宋体", Font.BOLD,30));
+        _audio.setForeground(Color.WHITE);
+        _audio.addItemListener(this);
+        this.getContentPane().add(_audio);
     }
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == _return) {
             this.dispose();
             new MainMenu();
+        }
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if(_audio.isSelected()==true){
+            _isopenmusic=true;
+            _audio.setText("关闭音效");
+            MainMenu.music= new MenuMusic();
+            MainMenu.music.start();
+        }
+        else{
+            _isopenmusic=false;
+            _audio.setText("开启音效");
+            MainMenu.music.MusicSetting(false);
         }
     }
 }

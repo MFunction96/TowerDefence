@@ -222,6 +222,11 @@ abstract public class Monster {
     public void UpdatePath(ArrayDeque<Point> ad) {
         _ad = ad;
     }
+
+    /**
+     * 判断怪是否存活
+     * @return 返回怪是否存活
+     */
     public boolean IsAlive(){
         if(_hp<=0){
             return false;

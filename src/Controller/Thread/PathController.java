@@ -49,7 +49,7 @@ public class PathController extends Thread {
      * @return 新坐标是否可前进
      */
     private boolean CanGo(Point p) {
-        return p.x() >= 0 && p.y() >= 0 && p.x() < 12 && p.y() < 12 && vis[p.y()][p.x()] < 0;
+        return p.x() >= 0 && p.y() >= 0 && p.x() < 12 && p.y() < 12;
     }
 
     /**
@@ -66,7 +66,7 @@ public class PathController extends Thread {
             Point p = q.poll();
             for (int i = 0; i < 4; i++) {
                 Point pp = p.Add(_dp[i]);
-                if (CanGo(pp)) {
+                if (CanGo(pp) && vis[p.y()][p.x()] < 0) {
                     vis[pp.y()][pp.x()] = vis[p.y()][p.x()] + 1;
                     if (pp.Equal(_gc._map.end())) {
                         flag = true;
@@ -81,7 +81,7 @@ public class PathController extends Thread {
                 ad.addFirst(p);
                 for (int i = 0; i < 4; i++) {
                     Point pp = p.Add(_dp[i]);
-                    if (vis[pp.y()][pp.x()] == vis[p.y()][p.x()] - 1) {
+                    if (CanGo(pp) && vis[pp.y()][pp.x()] == (vis[p.y()][p.x()] - 1)) {
                         p = pp;
                         break;
                     }

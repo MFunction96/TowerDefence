@@ -65,17 +65,8 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     int x, y;
 
 
-    private Map  map=new Map() ;
-
     private boolean  atTools;
-    private boolean drawTowerTools;
     private int changeTowerType;
-
-    /**
-     * 塔数组
-     */
-    private List<Tower> towerList;
-
     /**
      * 升级工具栏x坐标
      */
@@ -95,6 +86,10 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 是否摧毁塔
      */
     private boolean broken;
+    /**
+     *
+     */
+    private boolean drawTowerTools;
 
     /**
      * 当前焦点塔
@@ -105,10 +100,14 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 是否绘制金钱（用以金钱不够时使金钱一闪一闪的）
      */
     private boolean drawMoney;
+    private Map  map=new Map() ;
+
     JButton _return;
+    JButton _Stop;
     JLabel Tools;
     ImageIcon Toolsicon;
     Image Toolsimg;
+
     GameMenu() {
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
@@ -120,11 +119,9 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
 
-/*
-        _return = new JButton("暂停游戏");
-        _return.addActionListener(this);
-        _return.setBounds(200,200,200,100);
-        this.getContentPane().add(_return);*/
+
+
+
         init();
     }
     private void init() {
@@ -164,23 +161,94 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g2.drawImage(Toolsimg,840,0,184,838,null );
         //drawTools(g2);
 
+        _return = new JButton(new ImageIcon("src/Image/BackToMainMenu.png") );
+        _return .setVisible(true);
+        _return.addActionListener(this);
+        _return.setBounds(80,800,217,60);
+        _return .setBorderPainted(false) ;
+        this.getContentPane().add(_return);
+
+        _Stop =new JButton(new ImageIcon("src/Image/Stop.png"));
+        _Stop.setVisible(true) ;
+        _Stop .addActionListener(this);
+        _Stop .setBounds(800,700,217,60);
+
         drawTowers(g2);
         drawMoney(g2);
         gr.drawImage(image, 0, 0, this);
 
 
     }
-    private void drawTools(Graphics g2){
-        /*Tools =new JLabel() ;
-        Tools.setIcon(new ImageIcon("src/Image/Tools.png") );
-        Tools.setBounds(919,0,105,838);
-    */}
+    /**
+     * 绘制升级、摧毁工具栏
+     */
+    private void drawUpOrDown(Graphics g2) {
+        if (upX != -100 && upY != -100 && !drawTowerTools) {
+            g2.setColor(Color.white);
+            g2.fillRect(upX, upY, 50, 10);
+            g2.setColor(Color.orange);
+            if (up) {
+                g2.fillRect(upX, upY, 25, 10);
+            }
+            if (broken) {
+                g2.fillRect(upX + 25, upY, 25, 10);
+            }
+            g2.setColor(Color.black);
+            g2.drawLine(upX + squaresSize / 2, upY, upX + squaresSize / 2,
+                    upY + 10);
+            Font font = new Font("宋体", 5, 8);
+            g2.setFont(font);
+            if (focusTower.GetLevel() < 6) {
+                g2.drawString("up" + focusTower.GetPrice() , upX, upY + 8);
+            }
+            g2.drawString(" down", upX + 25, upY + 8);
+        }
+    }
+    /**
+     * 绘制你赢了或你输了标语
+     */
+    private void drawDead(Graphics g) {
+        /*
+         *  if (GameController .Win()) {
+         Font font = new Font("宋体", 70, 70);
+         g.setFont(font);
+         g.setColor(Color.white);
+         g.drawString("you win!", 200, 200);
+         } else if (GameController .Lose()) {
+         Font font = new Font("宋体", 70, 70);
+         g.setFont(font);
+         g.setColor(Color.white);
+         g.drawString("you lose!", 200, 200);
+         }
+         */
+    }
+/**
+ * 绘制总生命
+ */
+private void drawLife(Graphics g2){
+
+}
     /**
      * 绘制防御塔
      */
     private void drawTowers(Graphics g2) {
-      new TwNormal(g2,896,320);
+
     }
+    /**
+     * 绘制建塔工具栏价格
+     */
+    private void drawTowersTools(Graphics g2) {
+        /*
+        private TwNormal twnormal=new TwNormal(g2) ;
+        Font font = new Font("宋体", 5, 8);
+        g2.setFont(font);
+        if (drawTowerTools && focusX >= gameX && focusX < gameX + gameW
+                && focusY >= gameY && focusY < gameY + gameH) {
+            g2.drawString("$"+ TwNormal.);
+        }
+         */
+    }
+
     /**
      * 绘制金钱
      */
@@ -200,6 +268,13 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     }
 
     /**
+     * 绘制敌人
+     * @param g2
+     */
+    private void drawMonster(Graphics g2){
+
+    }
+    /**
      * 升级塔
      * @param tower
      */
@@ -216,13 +291,19 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         map.SetMoney(map .money()+ tower.GetPrice()*tower .GetLevel() ) ;
 
     }
+
+    /**
+     * 据说是刷新图片的线程
+     */
     public void Gamerun(){
-        /*try{
+        try{
             while(true){
                 repaint() ;
-
+                Thread .sleep(1);
             }
-        }*/
+        }catch(Exception  e){
+            e.printStackTrace() ;
+        }
     }
     public static void main(String[] args) {
         new GameMenu() ;
@@ -235,12 +316,17 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             this.dispose();
             new MainMenu();
         }
+        else if(e.getSource() ==_Stop ){
+
+        }
     }
 
     @Override
+    /**
+     *
+     */
     public void mouseClicked(MouseEvent e) {
-
-    }
+}
 
     @Override
     public void mousePressed(MouseEvent e) {

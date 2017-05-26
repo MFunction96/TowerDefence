@@ -34,7 +34,12 @@ public class PathController extends Thread {
         _p = p;
         _ad = ad;
         vis = new int[30][30];
-        Arrays.fill(vis, -1);
+       // Arrays.fill(vis, -1);
+        for(int i=0;i<30;i++){
+            for(int j=0;j<30;j++){
+                vis[i][j]=-1;
+            }
+        }
     }
 
     /**

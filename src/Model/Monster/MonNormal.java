@@ -31,6 +31,7 @@ public class MonNormal extends Monster{
         super(monster,ad);
         _menu=menu;
         _nomal=Toolkit.getDefaultToolkit().getImage("src/Image/NormalMonster.png");
+
     }
     /*
         普通怪的形态

@@ -22,9 +22,9 @@ public class MonsterMoveController implements Runnable {
      * 构造函数
      * @param map 地图信息
      */
-    public MonsterMoveController(Map map) {
+    public MonsterMoveController(Map map,GameController gc) {
         _map = map;
-        _gc = new GameController(map);
+        _gc = gc;
         _monlist = _gc._monsters;
     }
 

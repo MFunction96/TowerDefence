@@ -58,7 +58,7 @@ abstract public class Monster {
      * @param price         怪的价值
      * @param upgradehp     怪的血量升级
      * @param upgradePrice  怪的价值升级
-     * @param surfacePoint  怪的UI位置
+
      * @param operatorPoint 怪的后台操作位置
      */
     public Monster(String name, int hp, int speed, int price, int upgradehp, int upgradePrice,  Point operatorPoint) {

@@ -66,7 +66,7 @@ public class PathController extends Thread {
             Point p = q.poll();
             for (int i = 0; i < 4; i++) {
                 Point pp = p.Add(_dp[i]);
-                if (CanGo(pp) && vis[p.y()][p.x()] < 0) {
+                if (CanGo(pp) && vis[pp.y()][pp.x()] < 0) {
                     vis[pp.y()][pp.x()] = vis[p.y()][p.x()] + 1;
                     if (pp.Equal(_gc._map.end())) {
                         flag = true;

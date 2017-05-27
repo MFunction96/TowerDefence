@@ -105,8 +105,10 @@ public class GameController extends Thread {
      * 游戏控制器主线程
      */
     public synchronized void run() {
+        int time = 0;
         while (true) {
-            if (_round <= _map.total() && _round > 0) {
+            time++;
+            if ((_round <= _map.total() && _round > 0) || time == _map.Period()) {
                 MonsterGenerator _mongen = new MonsterGenerator(this, _round++);
                 _mongen.run();
                 _mvc.run();
@@ -117,13 +119,15 @@ public class GameController extends Thread {
                 Lose();
                 break;
             }
-            AttackController _ac = new AttackController(this);
-            _ac.run();
-            _mc.run();
-            try {
-                sleep(1000);
-            } catch (InterruptedException e) {
-                System.err.print(e.getMessage());
+            if (time >= _map.Period()) {
+                AttackController _ac = new AttackController(this);
+                _ac.run();
+                _mc.run();
+                try {
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    System.err.print(e.getMessage());
+                }
             }
         }
     }

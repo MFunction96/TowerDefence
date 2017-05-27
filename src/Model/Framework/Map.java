@@ -25,7 +25,7 @@ public class Map {
     /**
      * 怪物信息
      */
-    private int [] _monster= new int[5];
+    private int[] _monster = new int[5];
     /**
      * 塔信息
      */
@@ -54,6 +54,10 @@ public class Map {
      * 区块
      */
     private Block[][] _blocks = new Block[12][12];
+    /**
+     * 每波周期
+     */
+    private int _period;
 
     /*
         public Map(int hp,int total,Monster []monsters,LinkedList<Tower>towers,int monnumber,int moninterval,int period,int money,Point start,Point end) {
@@ -74,18 +78,18 @@ public class Map {
         _total = 5;
         _tower = new TwNormal[5];
         _monnumber = 20;
-        _moninterval = 10;
+        _moninterval = 1;
         _money = 100;
         _start = new Point(0, 0);
         _end = new Point(11, 11);
-
-        for(int i=0;i<5;i++){
-            _monster[i]=1;
+        _period = 30;
+        for (int i = 0; i < 5; i++) {
+            _monster[i] = 1;
         }
 
-        for (int i = 0, y=1; i < 12; i++,y++) {
-            for (int j = 0,x=1; j < 12; j++,x++) {
-                _blocks[i][j] = new Block(new Point(y*64,x*64), new Point(j, i), true, false);
+        for (int i = 0, y = 1; i < 12; i++, y++) {
+            for (int j = 0, x = 1; j < 12; j++, x++) {
+                _blocks[i][j] = new Block(new Point(y * 64, x * 64), new Point(j, i), true, false);
             }
         }
     }
@@ -204,6 +208,14 @@ public class Map {
                 _blocks[i][j].Reset();
             }
         }
+    }
+
+    /**
+     * 周期时间
+     * @return 周期时间
+     */
+    public int Period(){
+        return _period;
     }
 
 }

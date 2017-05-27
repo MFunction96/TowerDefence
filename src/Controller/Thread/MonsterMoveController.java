@@ -29,24 +29,24 @@ public class MonsterMoveController implements Runnable {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         try {
             while (true) {
                 for (int i = 0; i < _monlist.size(); i++) {
                     Monster monster = _monlist.get(i);
                     if (monster == null)
                         break;
-                    else if(monster.IsAlive()==true){
+                    else if(monster.IsAlive()){
                         //如果怪活着
                         monster.SurfaceMove();  //调用怪物表层移动方法
                     }
-                    else if(monster.IsAlive()==false){
+                    else {
                         _map.SetMoney(_map.money()+monster.GetPrice());//如果怪物死亡，更改地图金钱数
                         _monlist.remove(i); //移除死亡怪
                         i--;
                     }
                 }
-                Thread.sleep(640);
+                Thread.sleep(64);
             }
         }
         catch (Exception e){

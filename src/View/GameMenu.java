@@ -82,10 +82,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     private int upY;
 
     /**
-     * 是否安装塔
-     */
-    private boolean _caninstalltower;
-    /**
      * 是否升级塔
      */
     private boolean up;
@@ -121,7 +117,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     private boolean drawMoney;
     private Map  map=new Map() ;
 
-    JButton NormalMonster;
     JButton _return;
     JButton _Stop;
     JLabel Tools;
@@ -142,23 +137,11 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(64, 64, 1024, 838);
-        this._caninstalltower=false;
+
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
-        InitialMonsterButton();
         init();
     }
-
-
-    private void InitialMonsterButton(){
-        NormalMonster=new JButton(new ImageIcon("src/Image/TwNormal.png"));
-        NormalMonster.setBounds(800,600,64,64);
-        NormalMonster.addActionListener(this);
-        this.add(NormalMonster);
-    }
-    /**
-     * 初始化界面元素
-     */
     private void init() {
         w = 1024;
         h = 838;
@@ -173,10 +156,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         GameController _gc = new GameController(new Map());
         _gc.Start();
     }
-
-    /**
-     * 绘制地图
-     */
     public void paint(Graphics gr) {
         BufferedImage image = null;
         try{
@@ -251,8 +230,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
          *  if (GameController .Win()) {
          Font font = new Font("宋体", 70, 70);
          g.setFont(font);
-         g.setC
-         olor(Color.white);
+         g.setColor(Color.white);
          g.drawString("you win!", 200, 200);
          } else if (GameController .Lose()) {
          Font font = new Font("宋体", 70, 70);
@@ -377,8 +355,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
     public void mouseDragged(MouseEvent e) {
     }
-
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == _return) {
             this.dispose();
@@ -387,12 +363,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         else if(e.getSource() ==_Stop ){
 
         }
-        else if(e.getSource()==NormalMonster){
-            if(_caninstalltower==true)
-                _caninstalltower=false;
-            else
-                _caninstalltower=true;
-        }
     }
 
     @Override
@@ -400,8 +370,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      *
      */
     public void mouseClicked(MouseEvent e) {
-        if(_caninstalltower==true){
-        }
+
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * Created by Chris Young on 2017/5/25.
  */
 public class MonsterMoveController implements Runnable {
-    LinkedList<Monster> _monlist;   //怪物链表
+    LinkedList<Monster> _monlist ;   //怪物链表
     GameController _gc;    //游戏主控制线程
     Map _map;   //地图信息
     Point _p;
@@ -20,13 +20,12 @@ public class MonsterMoveController implements Runnable {
 
     /**
      * 构造函数
-     *
      * @param map 地图信息
      */
-    public MonsterMoveController(Map map, GameController gc) {
+    public MonsterMoveController(Map map,GameController gc) {
         _map = map;
         _gc = gc;
-        _monlist = _gc._monsters;
+        _monlist = _gc._surmonsters;
     }
 
     @Override
@@ -37,18 +36,21 @@ public class MonsterMoveController implements Runnable {
                     Monster monster = _monlist.get(i);
                     if (monster == null)
                         break;
-                    else if (monster.IsAlive()) {
+                    else if(monster.IsAlive()){
                         //如果怪活着
                         monster.SurfaceMove();  //调用怪物表层移动方法
-                    } else {
-                        _map.SetMoney(_map.money() + monster.GetPrice());//如果怪物死亡，更改地图金钱数
+                        monster.OptMove();
+                    }
+                    else {
+                        _map.SetMoney(_map.money()+monster.GetPrice());//如果怪物死亡，更改地图金钱数
                         _monlist.remove(i); //移除死亡怪
                         i--;
                     }
                 }
-                wait(64);
+                wait(100);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
 

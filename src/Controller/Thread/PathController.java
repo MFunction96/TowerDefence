@@ -24,6 +24,7 @@ public class PathController extends Thread {
     private int[][] vis;
 
     private final int INF = 0x7fffffff;
+
     /**
      * 线程类构造函数
      *
@@ -65,7 +66,7 @@ public class PathController extends Thread {
         vis[_p.y()][_p.x()] = 0;
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 12; j++) {
-                if (!_gc._map.block(new Point(j,i)).CanPass()){
+                if (!_gc._map.block(new Point(j, i)).CanPass()) {
                     vis[i][j] = INF;
                 }
             }
@@ -104,7 +105,7 @@ public class PathController extends Thread {
      */
     public synchronized void run() {
         ArrayDeque<Point> ad = CalPath();
-        while (!ad.isEmpty()){
+        while (!ad.isEmpty()) {
             _ad.addFirst(ad.removeFirst());
         }
     }

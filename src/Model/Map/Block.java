@@ -43,8 +43,8 @@ public class Block {
      *
      * @param surfacePoint   UI界面的位置
      * @param operationPoint 后台操作的位置
-     * @param pass              判断是否能通过
-     * @param isPath            判断是否能做为路径
+     * @param pass           判断是否能通过
+     * @param isPath         判断是否能做为路径
      */
     public Block(Point surfacePoint, Point operationPoint, boolean pass, boolean isPath) {
         _surlocation = surfacePoint;
@@ -52,9 +52,11 @@ public class Block {
         _canpass = pass;
         _ispath = isPath;
     }
-    public LinkedList<Tower> GetAtkTw(){
+
+    public LinkedList<Tower> GetAtkTw() {
         return _atktw;
     }
+
     /**
      * 获取模块的UI界面位置
      *
@@ -99,8 +101,8 @@ public class Block {
      */
     public int Attack(Monster monster) {
         int damage = 0;
-        for (Tower tw : _atktw){
-            if (tw.GetTarget().GetUUID() == monster.GetUUID()){
+        for (Tower tw : _atktw) {
+            if (tw.GetTarget().GetUUID() == monster.GetUUID()) {
                 damage += tw.GetDamage();
             }
         }
@@ -125,7 +127,7 @@ public class Block {
         _canpass = false;
         _ispath = false;
         _tower = tw;
-        _tower.SetTower(_surlocation,_optlocation);
+        _tower.SetTower(_surlocation, _optlocation);
     }
 
     /**
@@ -143,5 +145,15 @@ public class Block {
      */
     public boolean HasTower() {
         return _tower == null;
+    }
+
+    /**
+     * 重置区块状态
+     */
+    public void Reset() {
+        if (_tower == null) {
+            _canpass = true;
+        }
+        _ispath = false;
     }
 }

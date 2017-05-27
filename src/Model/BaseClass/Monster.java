@@ -30,6 +30,10 @@ abstract public class Monster {
      */
     protected String _name;
     /**
+     * 类型
+     */
+    protected  int _type;
+    /**
      * 表现层位置
      */
     protected Point _surlocation;
@@ -59,27 +63,25 @@ abstract public class Monster {
      * @param price         怪的价值
      * @param upgradehp     怪的血量升级
      * @param upgradePrice  怪的价值升级
-
-     * @param operatorPoint 怪的后台操作位置
      */
-    public Monster(String name, int hp, int speed, int price, int upgradehp, int upgradePrice,  Point operatorPoint) {
+
+    public Monster(String name, int hp,int type, int speed, int price, int upgradehp, int upgradePrice,Point surfacePoint,  Point operatorPoint,ArrayDeque<Point> ad ) {
         _name = name;
+        _type=type;
         _uuid = UUID.randomUUID();
         _speed = speed;
         _price = price;
-        _surlocation = new Point(64,64);
+        _surlocation = surfacePoint;
         _optlocation = operatorPoint;
         _upprice = upgradePrice;
         _uphp = upgradehp;
         _hp = hp;
+        _ad=ad;
     }
 
-    /**
-     * 复制构造函数
-     *
-     * @param monster 源对象
-     * @param ad      路径
-     */
+
+
+    /*
     public Monster(Monster monster, ArrayDeque<Point> ad) {
         _name = monster._name;
         _uuid = UUID.randomUUID();
@@ -90,8 +92,9 @@ abstract public class Monster {
         _upprice = monster._upprice;
         _uphp = monster._uphp;
         _hp = monster._hp;
-        _ad = ad;
     }
+*/
+
 
     /**
      * 获取怪的名称

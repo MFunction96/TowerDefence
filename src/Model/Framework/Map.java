@@ -25,7 +25,7 @@ public class Map {
     /**
      * 怪物信息
      */
-    private Monster[] _monster;
+    private int [] _monster= new int[5];
     /**
      * 塔信息
      */
@@ -72,16 +72,20 @@ public class Map {
     public Map() {
         _hp = 10;
         _total = 5;
-        _monster = new MonNormal[5];
         _tower = new TwNormal[5];
         _monnumber = 20;
         _moninterval = 10;
         _money = 100;
         _start = new Point(0, 0);
         _end = new Point(11, 11);
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 12; j++) {
-                _blocks[i][j] = new Block(new Point(), new Point(j, i), true, false);
+
+        for(int i=0;i<5;i++){
+            _monster[i]=1;
+        }
+
+        for (int i = 0, y=1; i < 12; i++,y++) {
+            for (int j = 0,x=1; j < 12; j++,x++) {
+                _blocks[i][j] = new Block(new Point(y*64,x*64), new Point(j, i), true, false);
             }
         }
     }
@@ -154,7 +158,7 @@ public class Map {
      *
      * @return 怪物信息
      */
-    public Monster[] monster() {
+    public int[] monster() {
         return _monster;
     }
 

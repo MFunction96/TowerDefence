@@ -14,22 +14,14 @@ import java.util.ArrayDeque;
 public class MonNormal extends Monster{
 
     private Image _nomal;
-    private GameMenu _menu;
-
-
-    public MonNormal(Monster monster, ArrayDeque<Point> ad) {
-        super(monster,ad);
-    }
 
     /**
      * 构造普通怪
-     * @param monster 基础怪的元对象
-     * @param ad 路径
-     * @param menu 怪所在视图
+     * @param ad
      */
-    public MonNormal(Monster monster, ArrayDeque<Point> ad,GameMenu menu) {
-        super(monster,ad);
-        _menu=menu;
+    public MonNormal(ArrayDeque<Point> ad) {
+        super("蘑菇怪",5,1,1,5,2,2,new Point(64,64),new Point(0,0),ad);
+
         _nomal=Toolkit.getDefaultToolkit().getImage("src/Image/NormalMonster.png");
 
     }
@@ -37,7 +29,7 @@ public class MonNormal extends Monster{
         普通怪的形态
      */
     public void draw(Graphics g) {
-        g.drawImage(_nomal,_surlocation.x(),_surlocation.y(),64,64,_menu);
+        g.drawImage(_nomal,_surlocation.x(),_surlocation.y(),null);
     }
 
 }

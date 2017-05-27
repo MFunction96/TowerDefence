@@ -43,7 +43,7 @@ public class GameController extends Thread {
      */
     volatile ArrayDeque<Point> _sepath;
 
-    volatile  MonsterMoveController _mvc;
+    volatile MonsterMoveController _mvc;
 
     /**
      * 构造游戏控制器
@@ -54,8 +54,10 @@ public class GameController extends Thread {
         _map = map;
         _hp = _map.HP();
         _round = 0;
+        _sepath = new ArrayDeque<>();
+        _monsters = new LinkedList<>();
         _mc = new MonsterController(this);
-        _mvc=new MonsterMoveController(_map,this);
+        _mvc = new MonsterMoveController(_map, this);
     }
 
     /**
@@ -126,7 +128,7 @@ public class GameController extends Thread {
         }
     }
 
-    public LinkedList<Monster> getMonsterList(){
+    public LinkedList<Monster> getMonsterList() {
         return _monsters;
     }
 }

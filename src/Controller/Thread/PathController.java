@@ -19,7 +19,7 @@ public class PathController extends Thread {
      * 游戏控制器线程
      */
     private GameController _gc;
-    private ArrayDeque<Point> _ad=new ArrayDeque<>();
+    private ArrayDeque<Point> _ad;
     private Point _dp[] = {new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)};
     private int[][] vis;
 

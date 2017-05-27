@@ -33,15 +33,15 @@ public class GameController extends Thread {
     /**
      * 路径控制器线程组
      */
-     PathController[] _pc;
+    volatile PathController[] _pc;
     /**
      * 在场怪物
      */
-     LinkedList<Monster> _monsters;
+    volatile LinkedList<Monster> _monsters;
     /**
      *
      */
-     ArrayDeque<Point> _sepath;
+    volatile ArrayDeque<Point> _sepath;
 
     volatile  MonsterMoveController _mvc;
 

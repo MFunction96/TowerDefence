@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -70,6 +71,8 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     private List<Tower> towerList;
 
+    GameController _gc= new GameController(map);
+
 
 
     /**
@@ -102,7 +105,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     private boolean drawMoney;
 
-    JButton _return;
 
     GameMenu() {
         super("0度塔防");
@@ -129,7 +131,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         focusY = -64;
         squaresSize = 64;
         drawMoney =true ;
-        GameController _gc = new GameController(new Map());
         _gc.Start();
     }
     public void paint(Graphics gr) {
@@ -139,7 +140,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         }catch (Exception e){
             e.printStackTrace() ;
         }
-       gr.drawImage(image,0,0,null);
+        gr.drawImage(image,0,0,null);
         Graphics g2 = image.getGraphics();
         g2.setColor(Color.white);
         for (int i = 0; i < 12; i++) {
@@ -152,6 +153,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g2.fillRect(focusX, focusY, squaresSize, squaresSize);
         drawTowers(g2);
         drawMoney(g2);
+        drawMonster(g2);
         gr.drawImage(image, 0, 0, this);
 
 
@@ -178,18 +180,31 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g.drawString("round" + map .period() , 890,
                 200);
     }
+
+    public void drawMonster(Graphics g) {
+        LinkedList<Monster> monsterlist = _gc.getMonsterList();
+        for (int i = 0; i < monsterlist.size(); i++) {
+            Monster monster = monsterlist.get(i);
+            if (monster != null) {
+                monster.draw(g);
+            }
+        }
+    }
+
+
+
+
+
     public static void main(String[] args) {
         new GameMenu() ;
     }
 
     public void mouseDragged(MouseEvent e) {
+
     }
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == _return) {
-            this.dispose();
-            new MainMenu();
-        }
-    }
+
+}
 
     @Override
     public void mouseClicked(MouseEvent e) {

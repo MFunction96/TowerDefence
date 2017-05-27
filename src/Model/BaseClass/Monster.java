@@ -1,5 +1,6 @@
 package Model.BaseClass;
 
+import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.UUID;
 
@@ -225,6 +226,9 @@ abstract public class Monster {
     public void UpdatePath(ArrayDeque<Point> ad) {
         _ad = ad;
     }
+    /**
+     *判断怪物是否活着
+     */
     public boolean IsAlive(){
         if(_hp<=0){
             return false;
@@ -233,4 +237,10 @@ abstract public class Monster {
             return true;
         }
     }
+
+    /**
+     * 绘画怪样子的方法，由子类完成
+     * @param g
+     */
+    public void draw(Graphics g){ }
 }

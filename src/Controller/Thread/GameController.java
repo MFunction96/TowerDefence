@@ -56,7 +56,6 @@ public class GameController extends Thread {
         _round = 0;
         _mc = new MonsterController(this);
         _mvc=new MonsterMoveController(_map,this);
-        _mvc.run();
     }
 
     /**
@@ -108,6 +107,7 @@ public class GameController extends Thread {
             if (_round <= _map.total() && _round > 0 && _round % _map.period() == 0) {
                 MonsterGenerator _mongen = new MonsterGenerator(this, _round++);
                 _mongen.run();
+                _mvc.run();
             } else if (_monsters.size() == 0) {
                 Win();
                 break;
@@ -124,5 +124,9 @@ public class GameController extends Thread {
                 System.err.print(e.getMessage());
             }
         }
+    }
+
+    public LinkedList<Monster> getMonsterList(){
+        return _monsters;
     }
 }

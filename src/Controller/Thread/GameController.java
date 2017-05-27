@@ -104,11 +104,11 @@ public class GameController extends Thread {
      */
     public synchronized void run() {
         while (true) {
-            if (_round <= _map.total() && _round > 0 && _round % _map.period() == 0) {
+            if (_round <= _map.total() && _round > 0) {
                 MonsterGenerator _mongen = new MonsterGenerator(this, _round++);
                 _mongen.run();
                 _mvc.run();
-            } else if (_monsters.size() == 0) {
+            } else if (_monsters.size() == 0 && _round == _map.total()) {
                 Win();
                 break;
             } else if (_hp <= 0) {

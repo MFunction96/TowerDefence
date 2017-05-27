@@ -79,7 +79,11 @@ public class Map {
         _money = 100;
         _start = new Point(0, 0);
         _end = new Point(11, 11);
-
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                _blocks[i][j] = new Block(new Point(), new Point(j, i), true, false);
+            }
+        }
     }
 
     /**

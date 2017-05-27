@@ -1,6 +1,7 @@
 package Controller.Thread;
 
 import Model.BaseClass.Monster;
+import Model.BaseClass.Point;
 import Model.Framework.Map;
 
 
@@ -14,15 +15,16 @@ public class MonsterMoveController implements Runnable {
     LinkedList<Monster> _monlist ;   //怪物链表
     GameController _gc;    //游戏主控制线程
     Map _map;   //地图信息
+    Point _p;
 
 
     /**
      * 构造函数
      * @param map 地图信息
      */
-    public MonsterMoveController(Map map) {
+    public MonsterMoveController(Map map,GameController gc) {
         _map = map;
-        _gc = new GameController(map);
+        _gc = gc;
         _monlist = _gc._monsters;
     }
 
@@ -30,7 +32,6 @@ public class MonsterMoveController implements Runnable {
     public void run() {
         try {
             while (true) {
-                //
                 for (int i = 0; i < _monlist.size(); i++) {
                     Monster monster = _monlist.get(i);
                     if (monster == null)

@@ -58,15 +58,15 @@ abstract public class Monster {
      * @param price         怪的价值
      * @param upgradehp     怪的血量升级
      * @param upgradePrice  怪的价值升级
-     * @param surfacePoint  怪的UI位置
+
      * @param operatorPoint 怪的后台操作位置
      */
-    public Monster(String name, int hp, int speed, int price, int upgradehp, int upgradePrice, Point surfacePoint, Point operatorPoint) {
+    public Monster(String name, int hp, int speed, int price, int upgradehp, int upgradePrice,  Point operatorPoint) {
         _name = name;
         _uuid = UUID.randomUUID();
         _speed = speed;
         _price = price;
-        _surlocation = surfacePoint;
+        _surlocation = new Point(64,64);
         _optlocation = operatorPoint;
         _upprice = upgradePrice;
         _uphp = upgradehp;
@@ -225,11 +225,6 @@ abstract public class Monster {
     public void UpdatePath(ArrayDeque<Point> ad) {
         _ad = ad;
     }
-
-    /**
-     *
-     * @return 是否活着
-     */
     public boolean IsAlive(){
         if(_hp<=0){
             return false;

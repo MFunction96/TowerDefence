@@ -1,5 +1,7 @@
 package View;
 
+import Model.Audio.MenuMusic;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,7 +19,7 @@ public class MainMenu extends JFrame implements ActionListener{
     JButton _communiteeBtn;
     JButton _ranklistBtn;
     Toolkit _tk;
-
+    public static MenuMusic music=new MenuMusic();
 
     MainMenu(){
         //设置窗体
@@ -89,6 +91,10 @@ public class MainMenu extends JFrame implements ActionListener{
         _communiteeBtn.setBorderPainted(false);
         _communiteeBtn.addActionListener(this);
         this.getContentPane().add(_communiteeBtn);
+
+        if(music.isAlive()==false){
+            music.start();
+        }
 
     }
 

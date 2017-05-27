@@ -25,7 +25,7 @@ public class MonsterGenerator extends Thread {
     /**
      * 创建的怪物
      */
-    private int  _montyp;
+    private int _montyp;
 
     /**
      * 怪物生成器构造函数
@@ -47,10 +47,10 @@ public class MonsterGenerator extends Thread {
     public synchronized void run() {
         try {
             for (int i = 0; i < _total; i++) {
-                if(_montyp==1){
+                if (_montyp == 1) {
                     _gc._monsters.addLast(new MonNormal(_gc._sepath));
                 }
-                sleep(_stime);
+                wait(_stime);
             }
         } catch (InterruptedException e) {
             System.err.print(e.getMessage());

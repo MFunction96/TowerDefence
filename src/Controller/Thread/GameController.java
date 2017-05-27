@@ -124,7 +124,7 @@ public class GameController extends Thread {
                 _ac.run();
                 _mc.run();
                 try {
-                    sleep(1000);
+                    wait(1000);
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
                 }

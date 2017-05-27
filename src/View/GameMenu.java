@@ -145,17 +145,15 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g2.setColor(Color.white);
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j <12; j++) {
-                g2.drawRect(j * squaresSize + x, i * squaresSize
-                        + y, squaresSize, squaresSize);
+                g2.drawRect(j * squaresSize + x, i * squaresSize + y, squaresSize, squaresSize);
             }
         }
         g2.setColor(Color.blue);
         g2.fillRect(focusX, focusY, squaresSize, squaresSize);
         drawTowers(g2);
         drawMoney(g2);
-        drawMonster(g2);
+       //drawMonster(g2);
         gr.drawImage(image, 0, 0, this);
-
 
     }
     /**
@@ -177,8 +175,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         Font font = new Font("宋体", 30, 30);
         g.setColor(Color.white);
         g.setFont(font);
-        g.drawString("round" + map .period() , 890,
-                200);
+        g.drawString("round" + map .total() , 890,200);
     }
 
     public void drawMonster(Graphics g) {

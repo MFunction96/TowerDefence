@@ -27,10 +27,7 @@ public class MonsterController extends Thread {
         _gc = gc;
         _gc._pc = new PathController[200];
         _gc._pc[0] = new PathController(_gc, _gc._map.start(), _gc._sepath);
-        //_gc._mvc=new MonsterMoveController[200];
-        //_gc._mvc[0]=new MonsterMoveController(_gc._map);
         _gc._pc[0].run();
-        //_gc._mvc[0].run();
     }
 
     /**

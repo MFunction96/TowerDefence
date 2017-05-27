@@ -19,7 +19,7 @@ public class PathController extends Thread {
      * 游戏控制器线程
      */
     private GameController _gc;
-    private ArrayDeque<Point> _ad;
+    private ArrayDeque<Point> _ad=new ArrayDeque<>();
     private Point _dp[] = {new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)};
     private int[][] vis;
 
@@ -35,7 +35,6 @@ public class PathController extends Thread {
         _p = p;
         _ad = ad;
         vis = new int[30][30];
-        // Arrays.fill(vis, -1);
         for (int i = 0; i < 30; i++) {
             for (int j = 0; j < 30; j++) {
                 vis[i][j] = -1;

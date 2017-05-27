@@ -25,7 +25,7 @@ public class MonsterGenerator extends Thread {
     /**
      * 创建的怪物
      */
-    private Monster _monster;
+    private int  _montyp;
 
     /**
      * 怪物生成器构造函数
@@ -37,8 +37,8 @@ public class MonsterGenerator extends Thread {
         _gc = gc;
         _stime = _gc._map.moninterval();
         _total = _gc._map.monnumber();
-        _monster = _gc._map.monster()[(index - 1) % _gc._map.monster().length];
-        _monster.Upgrade();
+        _montyp = _gc._map.monster()[(index) % _gc._map.monster().length];
+        //_monster.Upgrade();
     }
 
     /**
@@ -47,7 +47,9 @@ public class MonsterGenerator extends Thread {
     public synchronized void run() {
         try {
             for (int i = 0; i < _total; i++) {
-                _gc._monsters.addLast(new MonNormal(_monster, _gc._sepath));
+                if(_montyp==1){
+                    _gc._monsters.addLast(new MonNormal(_gc._sepath));
+                }
                 sleep(_stime);
             }
         } catch (InterruptedException e) {

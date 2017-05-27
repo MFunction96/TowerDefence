@@ -77,8 +77,8 @@ public class Map {
         _hp = 10;
         _total = 5;
         _tower = new TwNormal[5];
-        _monnumber = 20;
-        _moninterval = 1000;
+        _monnumber = 5;
+        _moninterval = 50;
         _money = 100;
         _start = new Point(0, 0);
         _end = new Point(11, 11);

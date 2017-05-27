@@ -38,6 +38,7 @@ public class GameController extends Thread {
      * 在场怪物
      */
     volatile LinkedList<Monster> _monsters;
+    volatile LinkedList<Monster>_surmonsters;
     /**
      *
      */
@@ -56,6 +57,7 @@ public class GameController extends Thread {
         _round = 0;
         _sepath = new ArrayDeque<>();
         _monsters = new LinkedList<>();
+        _surmonsters=new LinkedList<>();
         _mc = new MonsterController(this);
         _mvc = new MonsterMoveController(_map, this);
     }
@@ -111,7 +113,6 @@ public class GameController extends Thread {
             if ((_round <= _map.total() && _round > 0) || time == _map.Period()) {
                 MonsterGenerator _mongen = new MonsterGenerator(this, _round++);
                 _mongen.run();
-                _mvc.run();
             } else if (_monsters.size() == 0 && _round == _map.total()) {
                 Win();
                 break;
@@ -123,6 +124,7 @@ public class GameController extends Thread {
                 AttackController _ac = new AttackController(this);
                 _ac.run();
                 _mc.run();
+                _mvc.run();
                 try {
                     wait(1000);
                 } catch (InterruptedException e) {
@@ -133,6 +135,6 @@ public class GameController extends Thread {
     }
 
     public LinkedList<Monster> getMonsterList() {
-        return _monsters;
+        return _surmonsters;
     }
 }

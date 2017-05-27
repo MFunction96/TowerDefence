@@ -1,5 +1,7 @@
 package Model.BaseClass;
 
+import Model.Framework.Map;
+
 import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.UUID;
@@ -54,6 +56,8 @@ abstract public class Monster {
      */
     protected ArrayDeque<Point> _ad = new ArrayDeque<>();
 
+    protected Map map=new Map();
+
     /**
      * 构造基础怪
      *
@@ -81,7 +85,7 @@ abstract public class Monster {
 
 
 
-    /*
+
     public Monster(Monster monster, ArrayDeque<Point> ad) {
         _name = monster._name;
         _uuid = UUID.randomUUID();
@@ -93,7 +97,7 @@ abstract public class Monster {
         _uphp = monster._uphp;
         _hp = monster._hp;
     }
-*/
+
 
 
     /**
@@ -233,7 +237,7 @@ abstract public class Monster {
      *判断怪物是否活着
      */
     public boolean IsAlive(){
-        if(_hp<=0){
+        if(_hp<=0||_optlocation==map.end()){
             return false;
         }
         else {

@@ -5,6 +5,7 @@ import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
 import Model.Map.Block;
 import Model.Monster.MonNormal;
+import Model.Tower.TwNormal;
 
 import java.util.LinkedList;
 
@@ -28,7 +29,7 @@ public class Map {
     /**
      * 塔信息
      */
-    private LinkedList<Tower> _tower;
+    private Tower[] _tower;
     /**
      * 出怪数量
      */
@@ -37,10 +38,6 @@ public class Map {
      * 出怪间隔
      */
     private int _moninterval;
-    /**
-     * 波数
-     */
-    private int _period;
     /**
      * 金钱数
      */
@@ -58,32 +55,35 @@ public class Map {
      */
     private Block[][] _blocks = new Block[12][12];
 
-/*
-    public Map(int hp,int total,Monster []monsters,LinkedList<Tower>towers,int monnumber,int moninterval,int period,int money,Point start,Point end) {
-        _hp=hp;
-        _total=total;
-        _monster=monsters;
-        _tower=towers;
-        _monnumber=monnumber;
-        _moninterval=moninterval;
-        _period=period;
-        _money=money;
-        _start=start;
-        _end=end;
-    }
-    */
-    public Map(){
-        _hp=10;
-        _total=5;
-        _monster=new MonNormal[5];
-        _tower=new LinkedList<>();
-        _monnumber=20;
-        _moninterval=10;
-        _period=4;
-        _money=100;
-        _start=new Point(0,0);
-        _end=new Point(11,11);
-
+    /*
+        public Map(int hp,int total,Monster []monsters,LinkedList<Tower>towers,int monnumber,int moninterval,int period,int money,Point start,Point end) {
+            _hp=hp;
+            _total=total;
+            _monster=monsters;
+            _tower=towers;
+            _monnumber=monnumber;
+            _moninterval=moninterval;
+            _period=period;
+            _money=money;
+            _start=start;
+            _end=end;
+        }
+        */
+    public Map() {
+        _hp = 10;
+        _total = 5;
+        _monster = new MonNormal[5];
+        _tower = new TwNormal[5];
+        _monnumber = 20;
+        _moninterval = 10;
+        _money = 100;
+        _start = new Point(0, 0);
+        _end = new Point(11, 11);
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                _blocks[i][j] = new Block(new Point(), new Point(j, i), true, false);
+            }
+        }
     }
 
     /**
@@ -120,15 +120,6 @@ public class Map {
      */
     public int moninterval() {
         return _moninterval;
-    }
-
-    /**
-     * 获取波数
-     *
-     * @return 波数
-     */
-    public int period() {
-        return _period;
     }
 
     /**
@@ -172,7 +163,7 @@ public class Map {
      *
      * @return 塔信息
      */
-    public LinkedList<Tower> tower() {
+    public Tower[] tower() {
         return _tower;
     }
 
@@ -197,13 +188,18 @@ public class Map {
      * 修改金钱
      */
     public void SetMoney(int money) {
-        _money=money;
+        _money = money;
     }
 
     /**
-     * 修改波数
+     * 重置地图标记状态
      */
-    public void UpdatePeriod() {
-
+    public void Reset() {
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                _blocks[i][j].Reset();
+            }
+        }
     }
+
 }

@@ -23,6 +23,7 @@ public class PathController extends Thread {
     private Point _dp[] = {new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)};
     private int[][] vis;
 
+    private final int INF = 0x7fffffff;
     /**
      * 线程类构造函数
      *
@@ -34,10 +35,10 @@ public class PathController extends Thread {
         _p = p;
         _ad = ad;
         vis = new int[30][30];
-       // Arrays.fill(vis, -1);
-        for(int i=0;i<30;i++){
-            for(int j=0;j<30;j++){
-                vis[i][j]=-1;
+        // Arrays.fill(vis, -1);
+        for (int i = 0; i < 30; i++) {
+            for (int j = 0; j < 30; j++) {
+                vis[i][j] = -1;
             }
         }
     }
@@ -54,6 +55,7 @@ public class PathController extends Thread {
 
     /**
      * 路经计算核心函数
+     *
      * @return 路径
      */
     private ArrayDeque<Point> CalPath() {
@@ -62,6 +64,13 @@ public class PathController extends Thread {
         ArrayDeque<Point> ad = new ArrayDeque<>();
         q.offer(_p);
         vis[_p.y()][_p.x()] = 0;
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                if (!_gc._map.block(new Point(j,i)).CanPass()){
+                    vis[i][j] = INF;
+                }
+            }
+        }
         while (!q.isEmpty()) {
             Point p = q.poll();
             for (int i = 0; i < 4; i++) {

@@ -8,18 +8,19 @@ import java.awt.*;
 /**
  * Created by MFunction on 2017/4/19.
  */
-public class TwNormal extends Tower {
+public  class TwNormal extends Tower {
+
     ImageIcon icon;
     Image img;
 
-    public TwNormal(){
+    public TwNormal(Graphics g){
         super("炮塔",1,2,5,1,1,3 );
-        icon=new ImageIcon("src/image/tower.png");
+        icon=new ImageIcon("src/image/TwNormal.png");
         img=icon.getImage();
+        g.drawImage(img,963,320,64,64,null );
+
     }
-    public void DrawOutLook(Graphics g){
-        g.drawImage(img,0,0,null );
-    }
+
 
 
 }

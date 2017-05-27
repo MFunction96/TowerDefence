@@ -198,8 +198,10 @@ abstract public class Tower {
      * 获取塔的UI位置
      *
      * @return 返回塔的UI位置
+     * @param x
+     * @param y
      */
-    public final Point GetSurfaceLocation() {
+    public final Point GetSurfaceLocation(int x, int y) {
         return _surflocation;
     }
 

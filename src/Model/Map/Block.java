@@ -3,7 +3,9 @@ package Model.Map;
 import Model.BaseClass.Point;
 import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
+import Model.Tower.TwNormal;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 /**
@@ -121,13 +123,22 @@ public class Block {
     /**
      * 在模块上安装塔
      *
-     * @param tw 该模块上安装的塔
+     * @param x 塔的ui横坐标
+     *  @param y  ui纵坐标
+     *    @param size 大小
      */
-    public void AddTower(Tower tw) {
+    public  void AddTower(String name, int x, int y, int size,Graphics g2) {
         _canpass = false;
         _ispath = false;
-        _tower = tw;
-        _tower.SetTower(_surlocation, _optlocation);
+        Point point=new Point(x, y) ;
+        if (name.equals("炮塔")) {
+            TwNormal twn=new TwNormal(g2) ;
+            _tower = twn;
+            _surlocation =point ;
+            _optlocation =point;
+            _tower.SetTower(_surlocation, _optlocation);
+        }
+
     }
 
     /**
@@ -156,4 +167,6 @@ public class Block {
         }
         _ispath = false;
     }
+
+
 }

@@ -2,29 +2,30 @@ package View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.plaf.ColorUIResource;
+import javax.tools.Tool;
+import java.awt.event.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.LinkedList;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
 import Controller.Thread.GameController;
-import Controller.Thread.MonsterMoveController;
 import Model.BaseClass.*;
 import Model.Framework.Map ;
 import Model.Map.Block;
 import Model.Tower.TwNormal ;
 import Model.BaseClass.Point ;
+import View.URL.DrawTwNormal;
+
 /**
  * Created by Chris Young on 2017/5/22.
  */
-public class GameMenu extends JFrame implements ActionListener, MouseMotionListener, MouseListener ,Runnable{
+public class GameMenu extends JFrame implements ActionListener, MouseMotionListener, MouseListener,ItemListener {
     /**
      * 窗体宽
      * */
@@ -87,6 +88,10 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 是否升级塔
      */
     private boolean up;
+    /**
+     * 是否能安装塔
+     */
+    private  boolean _caninstalltower;
 
     /**
      * 是否摧毁塔
@@ -96,6 +101,10 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 塔数组
      */
     private List<Tower>towerList;
+    /**
+     * 安装塔的位置
+     */
+    private List<Point>towerPoint;
     /**
      *
      */
@@ -117,14 +126,18 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 是否绘制金钱（用以金钱不够时使金钱一闪一闪的）
      */
     private boolean drawMoney;
+    /**
+     * 判断是否化塔
+     */
+    private  boolean _isdrawtower;
     private Map  map=new Map() ;
-    GameController _gc;
 
+    ButtonGroup towerGroup;
+    JRadioButton normalTower;
     JButton _return;
     JButton _Stop;
+    JLabel Background;
     JLabel Tools;
-    ImageIcon Toolsicon;
-    Image Toolsimg;
 
     GameMenu() {
         super("0度塔防");//设置标题
@@ -141,8 +154,108 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(64, 64, 1024, 838);
 
+        this.towerPoint=new ArrayList<>();
+        this.towerList=new ArrayList<>();
+        this._caninstalltower=false;
+        this.InitialTower();
+        this.SetBack();
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
+        init();
+    }
+
+    /**
+     * 初始化窗口变量
+     */
+    private void init() {
+        w = 1024;
+        h = 838;
+        gameX  =64;
+        gameY  = 64;
+        gameW = 1024;
+        gameH = 800;
+        focusX = -64;
+        focusY = -64;
+        squaresSize = 64;
+        drawMoney =true ;
+        GameController _gc = new GameController(new Map());
+        _gc.Start();
+    }
+    /**
+     *设置背景
+     */
+    private  void SetBack(){
+        Tools =new JLabel(new ImageIcon("src/image/Tools.png"));
+        Tools.setBounds(840,0,184,838);
+        this.add(Tools);
+    }
+    /***
+     * 初始化塔
+     */
+    public void InitialTower(){
+        normalTower=new JRadioButton(new ImageIcon("src/Image/TwNormal.png"),_caninstalltower);
+        normalTower.setBounds(900,460,64,64);
+        normalTower.setOpaque(false);
+        normalTower.addItemListener(this);
+        towerGroup=new ButtonGroup();
+        this.add(normalTower);
+    }
+
+    public void update(Graphics g){     //覆盖update方法，截取默认的调用过程
+        paint(g);
+    }
+
+    /**
+     *
+     * 绘制地图
+     * @param g 画笔
+     */
+    @Override
+    public void paint(Graphics g) {
+        BufferedImage images = new BufferedImage(w,h,BufferedImage.TYPE_3BYTE_BGR);
+        Image image=null;
+        Graphics  g2=images.createGraphics();
+
+        //画地图
+        try{
+            image = ImageIO .read(new File("src/Image/Map.png") );
+        }catch (Exception e){
+            e.printStackTrace() ;
+        }
+        //画工具栏
+       g2.drawImage(image,0,0,this);
+        try {
+            image=ImageIO.read(new File("src/image/Tools.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        g2.drawImage(image,840,0,184,838,this );
+        //画塔
+        try {
+            drawTowers(g2,towerPoint,towerList);
+        }catch (Exception e){
+            System.err.print("画塔失败");
+
+        }
+        //画钱
+        drawMoney(g2);
+        g2.setColor(Color.white);
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j <12; j++) {
+                g2.drawRect(j * squaresSize + gameX, i * squaresSize
+                        + gameY , squaresSize, squaresSize);
+            }
+        }
+        g2.setColor(Color.blue);
+        if(focusX<776)
+        {
+            g2.fillRect(focusX, focusY, squaresSize, squaresSize);
+        }
+        g2.dispose();
+
+        //在此函数前面调用g2画笔画其它图
+        g.drawImage(images,0,0,this);
+        //drawTools(g2);
 
         _return = new JButton(new ImageIcon("src/Image/BackToMainMenu.png") );
         _return .setVisible(true);
@@ -155,53 +268,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         _Stop.setVisible(true) ;
         _Stop .addActionListener(this);
         _Stop .setBounds(800,700,217,60);
-        this.getContentPane().add(_Stop);
-        _gc = new GameController(map);
-
-        init();
-    }
-    private void init() {
-        w = 1024;
-        h = 838;
-        gameX  =64;
-        gameY  = 64;
-        gameW = 1024;
-        gameH = 800;
-        focusX = -64;
-        focusY = -64;
-        squaresSize = 64;
-        drawMoney =true ;
-
-        _gc.Start();
-        Thread thread=new Thread(this);
-        thread.start();
-    }
-    public void paint(Graphics gr) {
-        BufferedImage image = null;
-        try{
-            image = ImageIO .read(new File("src/Image/Map.png") );
-        }catch (Exception e){
-            e.printStackTrace() ;
-        }
-        gr.drawImage(image,0,0,null);
-        Graphics g2 = image.getGraphics();
-        g2.setColor(Color.white);
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j <12; j++) {
-                g2.drawRect(j * squaresSize + gameX, i * squaresSize
-                        + gameY , squaresSize, squaresSize);
-            }
-        }
-        g2.setColor(Color.blue);
-        g2.fillRect(focusX, focusY, squaresSize, squaresSize);
-        Toolsicon=new ImageIcon("src/image/Tools.png");
-        Toolsimg=Toolsicon.getImage();
-        g2.drawImage(Toolsimg,840,0,184,838,null );
-        //drawTools(g2);
-        drawTowers(g2);
-        drawMoney(g2);
-        drawMonster(g2);
-        gr.drawImage(image, 0, 0, this);
 
 
     }
@@ -257,8 +323,20 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     /**
      * 绘制防御塔
      */
-    private void drawTowers(Graphics g2) {
-
+    private void drawTowers(Graphics g2,List<Point> towerLocation,List<Tower> tower) {
+        int pointLen=towerLocation.size();
+        int towerLen=tower.size();
+        Image image=new ImageIcon("src/Image/TwNormal.png").getImage();
+        for(int i=towerLen;i<pointLen;i++){
+            if(normalTower.isSelected()){
+                TwNormal twNormal=new TwNormal();
+                twNormal.SetTower(towerLocation.get(i),towerLocation.get(i));
+                tower.add(twNormal);
+            }
+        }
+        for(int i=0;i<towerLen;i++){
+            g2.drawImage(image,tower.get(i).GetSurfaceLocation().x(),tower.get(i).GetSurfaceLocation().y(),this);
+        }
     }
     /**
      * 绘制建塔工具栏价格
@@ -297,13 +375,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * @param g2
      */
     private void drawMonster(Graphics g2){
-        LinkedList<Monster> monsterlist=_gc.getMonsterList();
-        for(int i=0;i<monsterlist.size();i++){
-            Monster monster=monsterlist.get(i);
-           if(monster!=null){
-               monster.draw(g2);
-           }
-        }
 
     }
     /**
@@ -324,7 +395,19 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
     }
 
-
+    /**
+     * 据说是刷新图片的线程
+     */
+    public void Gamerun(){
+        try{
+            while(true){
+                repaint() ;
+                Thread .sleep(1);
+            }
+        }catch(Exception  e){
+            e.printStackTrace() ;
+        }
+    }
     /**
      * 金钱一闪一闪控制器
      */
@@ -352,9 +435,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             }
         }.start();
     }
-    public static void main(String[] args) {
-        new GameMenu() ;
-    }
 
     public void mouseDragged(MouseEvent e) {
     }
@@ -369,10 +449,12 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     }
 
     @Override
-    /**
-     *
-     */
     public void mouseClicked(MouseEvent e) {
+        if(_caninstalltower&&map.money()>new TwNormal().GetPrice()&&focusX<776){
+            Point newTowerPoint=new Point(focusX,focusY);
+            towerPoint.add(newTowerPoint);
+            repaint();
+        }
 
     }
 
@@ -382,8 +464,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
 
     public void mousePressed(MouseEvent e) {
-
-
     }
 
     @Override
@@ -393,7 +473,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
@@ -423,18 +502,29 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             focusX = -128;
             focusY = -128;
         }
-
+        repaint();
     }
 
+    /**
+     * 选项改变
+     * @param e 项事件
+     */
     @Override
-    public void run() {
-        try {
-            while(true){
-                repaint();
-                Thread.sleep(50);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void itemStateChanged(ItemEvent e) {
+        /*
+        判断塔是否被选中
+         */
+        if(normalTower.isSelected()==true){
+            _caninstalltower=true;
+            normalTower.setIcon(new ImageIcon("src/Image/MonNormal.png"));
+                Image img=Toolkit.getDefaultToolkit().getImage("src/Image/TwNormal.png");
+                Cursor cu=Toolkit.getDefaultToolkit().createCustomCursor(img,new java.awt.Point(),null);
+                this.setCursor(cu);
+
+        }else {
+            _caninstalltower=false;
+            normalTower.setIcon(new ImageIcon("src/Image/TwNormal.png"));
+            this.setCursor(null);
         }
     }
 }

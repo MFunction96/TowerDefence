@@ -132,7 +132,7 @@ public class Block {
         _ispath = false;
         Point point=new Point(x, y) ;
         if (name.equals("炮塔")) {
-            TwNormal twn=new TwNormal(g2) ;
+            TwNormal twn=new TwNormal( ) ;
             _tower = twn;
             _surlocation =point ;
             _optlocation =point;

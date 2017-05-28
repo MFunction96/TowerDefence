@@ -40,12 +40,13 @@ public class MonsterMoveController implements Runnable {
                         //如果怪活着
                         monster.SurfaceMove();  //调用怪物表层移动方
                         monster.OptMove();
-                        wait(50);
+                        wait(200);
                     }
                     else {
                         _map.SetMoney(_map.money()+monster.GetPrice());//如果怪物死亡，更改地图金钱数
                         _monlist.remove(i); //移除死亡怪
-                        i--;
+                        i=i-1;
+                        wait(200);
                     }
                 }
 

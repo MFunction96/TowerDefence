@@ -48,7 +48,7 @@ public class MonsterGenerator extends Thread {
         try {
             for (int i = 0; i < _total; i++) {
                 if (_montyp == 1) {
-                    _gc._monsters.addLast(new MonNormal(_gc._sepath));
+                    //_gc._monsters.addLast(new MonNormal(_gc._sepath));
                     _gc._surmonsters.addLast(new MonNormal(_gc._sepath));
                 }
                 wait(_stime);

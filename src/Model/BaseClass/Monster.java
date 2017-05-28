@@ -185,12 +185,9 @@ public void setPath(ArrayDeque<Point> ad){
      *
      * @return 新坐标
      */
-    public Point OptMove() {
+    public void OptMove() {
         if(_ad.size()!=0){
-            return _optlocation = _ad.removeFirst();
-        }
-        else{
-            return new Point(11,11);
+            _optlocation = _ad.removeFirst();
         }
     }
 
@@ -232,7 +229,7 @@ public void setPath(ArrayDeque<Point> ad){
      *判断怪物是否活着
      */
     public boolean IsAlive(){
-        if(_hp<=0||_ad.size()==0){
+        if(_optlocation.x()==11&&_optlocation.y()==11){
             return false;
         }
         else {

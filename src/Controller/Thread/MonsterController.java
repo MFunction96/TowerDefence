@@ -60,7 +60,7 @@ public class MonsterController extends Thread {
             }
         }
         for (Monster monster : _gc._monsters) {
-            LinkedList<Tower> ptw = _gc._map.block(monster.OptMove()).GetAtkTw();
+            LinkedList<Tower> ptw = _gc._map.block(monster.PreMove()).GetAtkTw();
             for (Tower tower : ptw) {
                 if (tower.GetTarget() == null) {
                     tower.SetTarget(monster);

@@ -17,9 +17,9 @@ public class MenuMusic extends Thread{
             }
         }
     }
-    public void MusicSetting(boolean isOpen) {
+    public void MusicSetting(boolean isOpen) throws InterruptedException {
         _isopen=isOpen;
         if(isOpen==false)
-            music.stop();
+            Thread.sleep(1000000000);
     }
 }

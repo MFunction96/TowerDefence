@@ -106,7 +106,7 @@ public class PathController extends Thread {
     public synchronized void run() {
         ArrayDeque<Point> ad = CalPath();
         while (!ad.isEmpty()) {
-            _ad.addFirst(ad.removeFirst());
+            _ad.addLast(ad.removeFirst());
         }
     }
 }

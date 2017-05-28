@@ -20,10 +20,10 @@ public class MonNormal extends Monster{
      * @param ad
      */
     public MonNormal(ArrayDeque<Point> ad) {
-        super("蘑菇怪",5,1,1,5,2,2,new Point(64,64),new Point(0,0),ad);
+        super("蘑菇怪",5,1,1,5,2,2,new Point(64,64),new Point(0,0));
 
         _nomal=Toolkit.getDefaultToolkit().getImage("src/Image/NormalMonster.png");
-
+        setPath(ad);
     }
     /*
         普通怪的形态

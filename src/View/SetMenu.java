@@ -86,7 +86,7 @@ public class SetMenu extends JFrame implements ActionListener,ItemListener {
         else{
             _isopenmusic=false;
             _audio.setText("开启音效");
-            MainMenu.music.MusicSetting(false);
+           // MainMenu.music.MusicSetting(false);
         }
     }
 }

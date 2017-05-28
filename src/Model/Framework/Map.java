@@ -25,7 +25,7 @@ public class Map {
     /**
      * 怪物信息
      */
-    private int[] _monster = new int[5];
+    private int[] _monster = new int[1];
     /**
      * 塔信息
      */
@@ -83,7 +83,7 @@ public class Map {
         _start = new Point(0, 0);
         _end = new Point(11, 11);
         _period = 30000;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             _monster[i] = 1;
         }
 

@@ -69,7 +69,7 @@ abstract public class Monster {
      * @param upgradePrice  怪的价值升级
      */
 
-    public Monster(String name, int hp,int type, int speed, int price, int upgradehp, int upgradePrice,Point surfacePoint,  Point operatorPoint,ArrayDeque<Point> ad ) {
+    public Monster(String name, int hp,int type, int speed, int price, int upgradehp, int upgradePrice,Point surfacePoint,  Point operatorPoint) {
         _name = name;
         _type=type;
         _uuid = UUID.randomUUID();
@@ -80,23 +80,10 @@ abstract public class Monster {
         _upprice = upgradePrice;
         _uphp = upgradehp;
         _hp = hp;
+    }
+public void setPath(ArrayDeque<Point> ad){
         _ad=ad;
-    }
-
-
-
-
-    public Monster(Monster monster, ArrayDeque<Point> ad) {
-        _name = monster._name;
-        _uuid = UUID.randomUUID();
-        _speed = monster._speed;
-        _price = monster._price;
-        _surlocation = monster._surlocation;
-        _optlocation = monster._optlocation;
-        _upprice = monster._upprice;
-        _uphp = monster._uphp;
-        _hp = monster._hp;
-    }
+}
 
 
 
@@ -186,8 +173,11 @@ abstract public class Monster {
      */
     public void SurfaceMove() {
         Point temp;
-        temp=_ad.getFirst().Minus(_optlocation);  //计算方向向量
-        _surlocation=new Point(temp.x()*64,temp.y()*64); //转换成表现层的下一个坐标
+        if(_ad.size()!=0){
+            temp=_ad.getFirst().Minus(GetOperationLocation());  //计算方向向量
+            _surlocation=_surlocation.Add(new Point(temp.x()*64,temp.y()*64)); //转换成表现层的下一个坐标
+        }
+
     }
 
     /**
@@ -196,7 +186,12 @@ abstract public class Monster {
      * @return 新坐标
      */
     public Point OptMove() {
-        return _optlocation = _ad.removeFirst();
+        if(_ad.size()!=0){
+            return _optlocation = _ad.removeFirst();
+        }
+        else{
+            return new Point(11,11);
+        }
     }
 
     /**
@@ -237,7 +232,7 @@ abstract public class Monster {
      *判断怪物是否活着
      */
     public boolean IsAlive(){
-        if(_hp<=0||_optlocation==map.end()){
+        if(_hp<=0||_ad.size()==0){
             return false;
         }
         else {

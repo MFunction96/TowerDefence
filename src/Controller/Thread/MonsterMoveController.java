@@ -36,10 +36,11 @@ public class MonsterMoveController implements Runnable {
                     Monster monster = _monlist.get(i);
                     if (monster == null)
                         break;
-                    else if(monster.IsAlive()){
+                    if(monster.IsAlive()){
                         //如果怪活着
-                        monster.SurfaceMove();  //调用怪物表层移动方法
+                        monster.SurfaceMove();  //调用怪物表层移动方
                         monster.OptMove();
+                        wait(50);
                     }
                     else {
                         _map.SetMoney(_map.money()+monster.GetPrice());//如果怪物死亡，更改地图金钱数
@@ -47,7 +48,7 @@ public class MonsterMoveController implements Runnable {
                         i--;
                     }
                 }
-                wait(100);
+
             }
         }
         catch (Exception e){

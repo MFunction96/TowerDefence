@@ -18,6 +18,7 @@ public  class TwNormal extends Tower {
         icon=new ImageIcon("src/image/TwNormal.png");
         img=icon.getImage();
     }
+
     public void DrawTower(Graphics g){
         g.drawImage(img,GetSurfaceLocation().x(),GetSurfaceLocation().y(),64,64,null );
     }

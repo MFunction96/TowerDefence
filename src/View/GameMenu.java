@@ -470,6 +470,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         if(_caninstalltower&&map.money()>new TwNormal().GetPrice()&&focusX<776){
             Point newTowerPoint=new Point(focusX,focusY);
             towerPoint.add(newTowerPoint);
+
             repaint();
         }
 

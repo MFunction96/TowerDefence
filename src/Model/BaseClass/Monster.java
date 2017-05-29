@@ -15,6 +15,8 @@ abstract public class Monster {
      * 生命值
      */
     protected int _hp;
+
+    protected  int _curhp;
     /**
      * 移动速度
      */
@@ -38,7 +40,7 @@ abstract public class Monster {
     /**
      * 表现层位置
      */
-    protected Point _surlocation;
+    protected Point _presurflocation;
     /**
      * 业务层位置
      */
@@ -58,6 +60,8 @@ abstract public class Monster {
 
     protected Map map=new Map();
 
+    protected  Point _cursurfloaction;
+
     /**
      * 构造基础怪
      *
@@ -75,11 +79,11 @@ abstract public class Monster {
         _uuid = UUID.randomUUID();
         _speed = speed;
         _price = price;
-        _surlocation = surfacePoint;
+        _presurflocation=_cursurfloaction= surfacePoint;
         _optlocation = operatorPoint;
         _upprice = upgradePrice;
         _uphp = upgradehp;
-        _hp = hp;
+        _hp =_curhp= hp;
     }
 public void setPath(ArrayDeque<Point> ad){
         _ad=ad;
@@ -111,7 +115,7 @@ public void setPath(ArrayDeque<Point> ad){
      * @return 返回怪的生命值
      */
     public final int Gethp() {
-        return _hp;
+        return _curhp;
     }
 
     /**
@@ -155,9 +159,11 @@ public void setPath(ArrayDeque<Point> ad){
      *
      * @return 返回怪在UI界面的位置
      */
-    public final Point GetSurfaceLocation() {
-        return _surlocation;
+    public final Point GetPreSurfaceLocation() {
+        return _presurflocation;
     }
+
+    public final Point GetCurSurfLocaton(){return _cursurfloaction;}
 
     /**
      * 获取怪在后台操作的位置
@@ -168,6 +174,8 @@ public void setPath(ArrayDeque<Point> ad){
         return _optlocation;
     }
 
+    public final void SetCurSurfLocation(Point pt){_cursurfloaction=pt;}
+
     /**
      * 怪在UI上的移动
      */
@@ -175,7 +183,7 @@ public void setPath(ArrayDeque<Point> ad){
         Point temp;
         if(_ad.size()!=0){
              temp=_ad.getFirst().Minus(GetOperationLocation());  //计算方向向量
-            _surlocation=_surlocation.Add(new Point(temp.x()*64,temp.y()*64)); //转换成表现层的下一个坐标
+            _presurflocation=_presurflocation.Add(new Point(temp.x()*64,temp.y()*64)); //转换成表现层的下一个坐标
         }
 
     }
@@ -206,7 +214,7 @@ public void setPath(ArrayDeque<Point> ad){
      * @param damage 对怪的伤害值
      */
     public void Hurt(int damage) {
-        _hp -= damage;
+        _curhp -= damage;
     }
 
     /**
@@ -242,4 +250,23 @@ public void setPath(ArrayDeque<Point> ad){
      * @param g
      */
     public void draw(Graphics g){ }
+
+    /**
+     * 绘画怪的生命条
+     * @param g 画笔
+     * @param x 怪表现层横坐标
+     * @param y 怪表现层纵坐标
+     */
+    public void drawLifeStatus(Graphics g, int x, int y) {
+        if (_hp < 0) {
+            _hp = 0;
+        }
+        int redLength = (int) ((double) (_hp - _curhp) / _hp * 40);
+        redLength = redLength > 0 ? redLength : 0;
+        g.setColor(Color.green);
+        g.fillRect(y + 5, x, 64 - 10, 5);
+        g.setColor(Color.red);
+        g.fillRect(y + 64 - redLength - 5, x, redLength, 5);
+    }
+
 }

@@ -30,6 +30,7 @@ public class MonsterMoveController implements Runnable {
     public synchronized  void run() {
         try {
             while (true) {
+               // Thread.sleep(500);
                 for (int i = 0; i < _monlist.size(); i++) {
                     Monster monster = _monlist.get(i);
                     if (monster == null)
@@ -38,7 +39,6 @@ public class MonsterMoveController implements Runnable {
                         //如果怪活着
                         monster.SurfaceMove();  //调用怪物表层移动方
                         monster.OptMove();
-                        Thread.sleep(100);
                     }
                     else {
                         _map.SetMoney(_map.money()+monster.GetPrice());//如果怪物死亡，更改地图金钱数
@@ -50,8 +50,8 @@ public class MonsterMoveController implements Runnable {
                         _monlist.remove(i);
                         i--;
                     }
+                    wait(100);
                 }
-
             }
         }
         catch (Exception e){

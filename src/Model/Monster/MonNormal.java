@@ -29,7 +29,8 @@ public class MonNormal extends Monster{
         普通怪的形态
      */
     public void draw(Graphics g) {
-        g.drawImage(_nomal,_surlocation.x(),_surlocation.y(),null);
+        g.drawImage(_nomal,_presurflocation.x(),_presurflocation.y(),null);
+        drawLifeStatus(g,_presurflocation.y(),_presurflocation.x());
     }
 
 }

@@ -38,7 +38,6 @@ public class MonsterGenerator extends Thread {
         _stime = _gc._map.moninterval();
         _total = _gc._map.monnumber();
         _montyp = _gc._map.monster()[(index) % _gc._map.monster().length];
-        //_monster.Upgrade();
     }
 
     /**
@@ -46,15 +45,28 @@ public class MonsterGenerator extends Thread {
      */
     public synchronized void run() {
         try {
+            Thread.sleep(5000);
             for (int i = 0; i < _total; i++) {
                 if (_montyp == 1) {
-                    //_gc._monsters.addLast(new MonNormal(_gc._sepath));
-                    _gc._surmonsters.addLast(new MonNormal(_gc._sepath));
+                    _gc._monsters.addLast(new MonNormal(_gc._sepath));
+                    _gc._surmonsters.addLast(new MonNormal(_gc._sepath.clone()));
+                    for (int j = 0; j < _gc._surmonsters.size(); j++) {
+                        Monster monster = _gc._surmonsters.get(j);
+                        if (monster == null)
+                            break;
+                        else {
+                            monster.SurfaceMove();
+                            monster.OptMove();
+                        }
+                        Thread.sleep(100);
+                    }
                 }
-                wait(_stime);
+                Thread.sleep(_stime);
             }
+
         } catch (InterruptedException e) {
             System.err.print(e.getMessage());
+
         }
     }
 }

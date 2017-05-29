@@ -21,7 +21,7 @@ import Model.Framework.Map ;
 import Model.Map.Block;
 import Model.Tower.TwNormal ;
 import Model.BaseClass.Point ;
-import View.URL.DrawTwNormal;
+
 
 /**
  * Created by Chris Young on 2017/5/22.
@@ -301,6 +301,10 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g2.setColor(Color.GREEN);
         g2.drawString("$10",936,590);
         drawMonster(g2);
+        g2.setColor(Color.CYAN);
+        g2.fillRect(64,64,64,64);
+        g2.setColor(Color.red);
+        g2.fillRect(768,768,64,64);
 
         g2.dispose();//在此函数前面调用g2画笔画其它图
 
@@ -576,5 +580,9 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             normalTower.setIcon(new ImageIcon("src/Image/TwNormal.png"));
             this.setCursor(null);
         }
+    }
+
+    public static void  main(String args[]){
+        new GameMenu();
     }
 }

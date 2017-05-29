@@ -11,14 +11,24 @@ import java.util.LinkedList;
  * Created by Chris Young on 2017/5/25.
  */
 public class MonsterMoveController implements Runnable {
-    LinkedList<Monster> _monlist ;   //怪物链表
-    GameController _gc;    //游戏主控制线程
-    Map _map;   //地图信息
+    /**
+     * 当前怪物链表
+     */
+    LinkedList<Monster> _monlist ;
+    /**
+     * 游戏主控线程
+     */
+    GameController _gc;
+    /**
+     * 地图信息
+     */
+    Map _map;
 
 
     /**
-     * 构造函数
+     * 构造函数，初始化
      * @param map 地图信息
+     * @param gc  游戏主控线程
      */
     public MonsterMoveController(Map map,GameController gc) {
         _map = map;
@@ -26,35 +36,37 @@ public class MonsterMoveController implements Runnable {
         _monlist = _gc._surmonsters;
     }
 
+    /**
+     * 怪物移动方法：调用每个怪物的SurfaceMove()方法
+     */
     @Override
     public synchronized  void run() {
         try {
             while (true) {
                // Thread.sleep(500);
                 for (int i = 0; i < _monlist.size(); i++) {
-                    Monster monster = _monlist.get(i);
-                    if (monster == null)
+                    Monster monster = _monlist.get(i);  //获取当前怪物链表中相应位置的怪物
+                    if (monster == null)          //如果没有怪物即链表为空，则跳出循环
                         break;
-                    if(monster.IsAlive()){
-                        //如果怪活着
-                        monster.SurfaceMove();  //调用怪物表层移动方
-                        monster.OptMove();
+                    if(monster.IsAlive()){      //如果怪活着
+                        monster.SurfaceMove();  //调用怪物表层移动方法
+                        monster.OptMove();      //调用怪物逻辑层移动方法
                     }
                     else {
                         _map.SetMoney(_map.money()+monster.GetPrice());//如果怪物死亡，更改地图金钱数
                         _monlist.remove(i); //移除死亡怪
                         i--;
                     }
-                    if(monster.GetOperationLocation()==_map.end()){
-                        _map.Damage();
-                        _monlist.remove(i);
-                        i--;
+                    if(monster.GetOperationLocation()==_map.end()){      //如果怪物走到出口
+                        _map.Damage();                                   //调用地图Damage()方法，减少生命值
+                        _monlist.remove(i);                  //移除怪
+                        i--;                          //i自减
                     }
-                    wait(100);
+                    wait(100);            //控制怪物的移动速度，每个100毫秒走一次
                 }
             }
         }
-        catch (Exception e){
+        catch (Exception e){                   //捕获异常
             e.printStackTrace();
         }
 

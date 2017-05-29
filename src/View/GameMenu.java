@@ -16,6 +16,7 @@ import java.util.List;
 
 
 import Controller.Thread.GameController;
+import Controller.Thread.MonsterMoveController;
 import Model.Audio.GameMusic;
 import Model.Audio.MenuMusic;
 import Model.Audio.TowerInstallMusic;
@@ -133,11 +134,12 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     private boolean drawMoney;
     /**
-     * 判断是否化塔
+     * 判断是否画塔
      */
     private  boolean _isdrawtower;
     private Map  map=new Map() ;
     GameController _gc;
+    MonsterMoveController _mvc;
 
     ButtonGroup towerGroup;
     JRadioButton normalTower;
@@ -149,10 +151,9 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     JButton _Stop;
     JLabel Background;
     JLabel Tools;
+    GameMusic gameMusic=new GameMusic();
 
     public GameMenu() {
-    GameMusic gameMusic=new GameMusic();
-    GameMenu() {
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
         this.setSize(1024,838);//设置窗体大小
@@ -188,9 +189,13 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         _return .setBorderPainted(false) ;
         this.getContentPane().add(_return);
         _gc = new GameController(map);
+        _mvc=new MonsterMoveController(map,_gc);
         init();
         Thread thread=new Thread(this);
         thread.start();
+
+
+
     }
 
 
@@ -209,7 +214,10 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         squaresSize = 64;
         drawMoney =true ;
 
+
         _gc.Start();
+        Thread monstermove=new Thread(_mvc);
+        monstermove.start();
     }
     /**
      *设置背景
@@ -335,6 +343,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g2.drawString("$5",950,390);
         drawMonster(g2);
         drawLife(g2);
+        drawRound(g2);
         g2.setColor(Color.CYAN);
         g2.fillRect(64,64,64,64);
         g2.setColor(Color.red);
@@ -430,11 +439,21 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     private void drawLife(Graphics g){
 
-        Font font = new Font("宋体", 30, 30);
+        Font font = new Font("宋体", 30, 25);
         g.setColor(Color.white);
         g.setFont(font);
 
-        g.drawString("" + map.HP() , 950,230);
+        g.drawString("生命值:" + map.HP() , 880,192);
+
+    }
+
+    private void drawRound(Graphics g){
+
+        Font font = new Font("宋体", 30, 25);
+        g.setColor(Color.white);
+        g.setFont(font);
+
+        g.drawString("回合数：" +_gc.round()+"/"+map.total() , 880,248);
 
     }
     /**
@@ -495,15 +514,15 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     }
 
     /**
-     * 绘制敌人
-     * @param g2
+     * 绘制怪物
+     * @param g2 画笔
      */
     private void drawMonster(Graphics g2){
-        LinkedList<Monster> monsterlist=_gc.getMonsterList();
+        LinkedList<Monster> monsterlist=_gc.getMonsterList();  //得到当前怪物的链表
         for(int i=0;i<monsterlist.size();i++){
-            Monster monster=monsterlist.get(i);
-            if(monster!=null){
-                monster.draw(g2);
+            Monster monster=monsterlist.get(i);  //得到链表中相应位置的怪物
+            if(monster!=null){             //如果有怪
+                monster.draw(g2);     //在表现层显示怪
             }
         }
 
@@ -549,9 +568,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             drawMoney = true;
         }
     }
-    /**
-     * 金钱一闪一闪控制线程(这个有点奢侈了，其实可以在其他线程里将就一下)
-     */
+
     private void noMoneyThread() {
         new Thread() {
             public void run() {

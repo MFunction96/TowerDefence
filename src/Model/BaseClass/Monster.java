@@ -15,7 +15,9 @@ abstract public class Monster {
      * 生命值
      */
     protected int _hp;
-
+    /**
+     * 当前生命值
+     */
     protected  int _curhp;
     /**
      * 移动速度
@@ -57,22 +59,28 @@ abstract public class Monster {
      * 怪物行进路径
      */
     protected ArrayDeque<Point> _ad = new ArrayDeque<>();
-
+    /**
+     * 地图信息
+     */
     protected Map map=new Map();
-
+    /**
+     * 当前表现层坐标
+     */
     protected  Point _cursurfloaction;
 
     /**
-     * 构造基础怪
+     *  * 构造基础怪
      *
      * @param name          怪的名字
      * @param hp            怪的生命值
+     * @param type          怪物类型
      * @param speed         怪的速度
      * @param price         怪的价值
-     * @param upgradehp     怪的血量升级
-     * @param upgradePrice  怪的价值升级
+     * @param upgradehp     怪的血量升级值
+     * @param upgradePrice  怪的价值升级值
+     * @param surfacePoint  表现层坐标
+     * @param operatorPoint 逻辑层坐标
      */
-
     public Monster(String name, int hp,int type, int speed, int price, int upgradehp, int upgradePrice,Point surfacePoint,  Point operatorPoint) {
         _name = name;
         _type=type;
@@ -85,10 +93,14 @@ abstract public class Monster {
         _uphp = upgradehp;
         _hp =_curhp= hp;
     }
-public void setPath(ArrayDeque<Point> ad){
+
+    /**
+     * 设置怪物的行进路径
+     * @param ad
+     */
+    public void setPath(ArrayDeque<Point> ad){
         _ad=ad;
 }
-
 
 
     /**
@@ -155,14 +167,18 @@ public void setPath(ArrayDeque<Point> ad){
     }
 
     /**
-     * 获取怪在UI界面的位置
+     * 获取怪在表现层的下一个位置
      *
-     * @return 返回怪在UI界面的位置
+     * @return 返回怪在表现层的下一个位置
      */
     public final Point GetPreSurfaceLocation() {
         return _presurflocation;
     }
 
+    /**
+     * 获取怪在表现层的当前位置
+     * @return 返回怪在表现层的当前位置
+     */
     public final Point GetCurSurfLocaton(){return _cursurfloaction;}
 
     /**
@@ -174,10 +190,14 @@ public void setPath(ArrayDeque<Point> ad){
         return _optlocation;
     }
 
+    /**
+     * 设置怪的表现层位置
+     * @param pt
+     */
     public final void SetCurSurfLocation(Point pt){_cursurfloaction=pt;}
 
     /**
-     * 怪在UI上的移动
+     * 怪在表现层的移动
      */
     public void SurfaceMove() {
         Point temp;
@@ -189,18 +209,18 @@ public void setPath(ArrayDeque<Point> ad){
     }
 
     /**
-     * 怪在后台操作的移动
+     * 怪在逻辑层的移动
      *
      * @return 新坐标
      */
     public void OptMove() {
         if(_ad.size()!=0){
-            _optlocation = _ad.removeFirst();
+            _optlocation = _ad.removeFirst();//得到下一个位置并移除队列第一个元素
         }
     }
 
     /**
-     * 怪下一步移动坐标
+     * 获取怪下一步移动坐标
      *
      * @return 新坐标
      */
@@ -221,12 +241,12 @@ public void setPath(ArrayDeque<Point> ad){
      * 对怪进行升级,提高难度
      */
     public void Upgrade() {
-        _price += _upprice;
-        _hp += _uphp;
+        _price += _upprice;  //升级怪的价值
+        _hp += _uphp;     //升级怪的生命值
     }
 
     /**
-     * 怪物行进路径
+     * 更新怪物行进路径
      *
      * @param ad 行进路径
      */
@@ -237,10 +257,10 @@ public void setPath(ArrayDeque<Point> ad){
      *判断怪物是否活着
      */
     public boolean IsAlive(){
-        if(_hp<=0){
+        if(_hp<=0){  //如果生命值小于等于0，死亡
             return false;
         }
-        else {
+        else {     //否则活着
             return true;
         }
     }
@@ -261,12 +281,12 @@ public void setPath(ArrayDeque<Point> ad){
         if (_hp < 0) {
             _hp = 0;
         }
-        int redLength = (int) ((double) (_hp - _curhp) / _hp * 40);
+        int redLength = (int) ((double) (_hp - _curhp) / _hp * 40);  //计算红色（减少的生命值）部分
         redLength = redLength > 0 ? redLength : 0;
-        g.setColor(Color.green);
-        g.fillRect(y + 5, x, 64 - 10, 5);
-        g.setColor(Color.red);
-        g.fillRect(y + 64 - redLength - 5, x, redLength, 5);
+        g.setColor(Color.green);     //设置画笔颜色，生命值为绿色
+        g.fillRect(y + 5, x, 64 - 10, 5);  //绘制矩形，设置生命条位置
+        g.setColor(Color.red);      //设置画笔颜色，伤害值为红色
+        g.fillRect(y + 64 - redLength - 5, x, redLength, 5); //绘制伤害值
     }
 
 }

@@ -11,16 +11,43 @@ import java.awt.event.ActionListener;
  * Created by Chris Young on 2017/5/22.
  */
 public class MainMenu extends JFrame implements ActionListener{
+    /**
+     * 开始游戏按钮
+     */
     JButton _startBtn;
+    /**
+     * 设置游戏按钮
+     */
     JButton _setBtn;
+    /**
+     * 继续游戏按钮
+     */
     JButton _continueBtn;
+    /**
+     * 游戏帮助按钮
+     */
     JButton _helpBtn;
+    /**
+     * 游戏社区按钮
+     */
     JButton _communiteeBtn;
+    /**
+     * 游戏排行榜按钮
+     */
     JButton _ranklistBtn;
+    /**
+     * 绘制图片工具
+     */
     Toolkit _tk;
+    /**
+     * 背景音乐
+     */
     public static MenuMusic music=new MenuMusic();
 
-    MainMenu(){
+    /**
+     * 主菜单构造函数
+     */
+   public MainMenu(){
         //设置窗体
         super("0度塔防");    //设置标题
         this.setVisible(true);     //设置为可见
@@ -32,18 +59,17 @@ public class MainMenu extends JFrame implements ActionListener{
         Image img= _tk.createImage("src/Image/logo.png");
         this.setIconImage(img);    //修改窗体默认图标
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置窗体关闭
-
-        JPanel imagePanel=(JPanel)this.getContentPane();
-        imagePanel.setOpaque(false);
-
-        /*
+       /*
         设置界面背景
          */
+        JPanel imagePanel=(JPanel)this.getContentPane();
+        imagePanel.setOpaque(false);
         JLabel label=new JLabel();
         ImageIcon icon=new ImageIcon("src/Image/background.png");
         label.setIcon(icon);      //将图片填充到Label中
         label.setBounds(0,0,icon.getIconWidth(),icon.getIconHeight()); //设置Label位置，以背景图像的宽和高设置label大小
         /*
+        预留根据窗口大小填充背景方法
         int w=this.getLayeredPane().getWidth();
         int h=this.getLayeredPane().getHeight();
         Image img=icon.getImage().getScaledInstance(w,h,Image.SCALE_FAST);
@@ -60,7 +86,7 @@ public class MainMenu extends JFrame implements ActionListener{
         _startBtn.addActionListener(this);  //注册监听器
         _startBtn.setBorderPainted(false);    //隐藏按钮边界
         this.getContentPane().add(_startBtn); //将按钮添加到ContentPane层中
-
+       //下同
         _continueBtn=new JButton(new ImageIcon("src/Image/continue.jpg"));
         _continueBtn.setBounds(423,421,296,130);
         _continueBtn.setBorderPainted(false);
@@ -91,6 +117,7 @@ public class MainMenu extends JFrame implements ActionListener{
         _communiteeBtn.addActionListener(this);
         this.getContentPane().add(_communiteeBtn);
 
+        //播放背景音乐
         if(music.isAlive()==false){
             music.start();
         }

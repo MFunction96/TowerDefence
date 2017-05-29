@@ -47,6 +47,8 @@ public class GameController extends Thread {
      */
     volatile ArrayDeque<Point> _sepath;
 
+
+
     volatile MonsterMoveController _mvc;
 
     /**
@@ -103,7 +105,8 @@ public class GameController extends Thread {
      * 游戏失败
      */
     public void Lose() {
-        new GameMenu() .showDefeat() ;
+       GameMenu gameMenu= new GameMenu();
+        gameMenu.showDefeat() ;
     }
 
     /**

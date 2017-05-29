@@ -59,22 +59,9 @@ public class Map {
      */
     private int _period;
 
-    /*
-        public Map(int hp,int total,Monster []monsters,LinkedList<Tower>towers,int monnumber,int moninterval,int period,int money,Point start,Point end) {
-            _hp=hp;
-            _total=total;
-            _monster=monsters;
-            _tower=towers;
-            _monnumber=monnumber;
-            _moninterval=moninterval;
-            _period=period;
-            _money=money;
-            _start=start;
-            _end=end;
-        }
-        */
+
     public Map() {
-        _hp = 10;
+        _hp = 5;
         _total = 5;
         _tower = new TwNormal[5];
         _monnumber = 5;

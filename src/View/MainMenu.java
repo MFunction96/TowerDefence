@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 /**
  * Created by Chris Young on 2017/5/22.

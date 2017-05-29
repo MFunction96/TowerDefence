@@ -6,9 +6,6 @@ import Model.Framework.Map;
 
 import java.util.ArrayDeque;
 import java.util.LinkedList;
-import View.GameMenu;
-
-import javax.swing.text.View;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -69,7 +66,7 @@ public class GameController extends Thread {
      * 游戏开始
      */
     public void Start() {
-        run();
+        start();
     }
 
     /**
@@ -85,7 +82,6 @@ public class GameController extends Thread {
      * 游戏胜利
      */
     private void Win() {
-    new GameMenu() .showWin() ;
     }
 
     /**
@@ -103,7 +99,6 @@ public class GameController extends Thread {
      * 游戏失败
      */
     public void Lose() {
-        new GameMenu() .showDefeat() ;
     }
 
     /**

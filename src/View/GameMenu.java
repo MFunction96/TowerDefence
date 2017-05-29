@@ -2,26 +2,24 @@ package View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
-import javax.tools.Tool;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 
 import Controller.Thread.GameController;
+import Model.Audio.GameMusic;
+import Model.Audio.MenuMusic;
+import Model.Audio.TowerInstallMusic;
 import Model.BaseClass.*;
 import Model.Framework.Map ;
-import Model.Map.Block;
 import Model.Tower.TwNormal ;
 import Model.BaseClass.Point ;
-import View.URL.DrawTwNormal;
 
 /**
  * Created by Chris Young on 2017/5/22.
@@ -140,7 +138,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     JButton _Stop;
     JLabel Background;
     JLabel Tools;
-
+    GameMusic gameMusic=new GameMusic();
     GameMenu() {
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
@@ -160,7 +158,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.towerList=new ArrayList<>();
         this._caninstalltower=false;
         this.InitialTower();
-        this.SetBack();
+        this.SetBackgroundMusic();
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
 
@@ -180,6 +178,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         Thread thread=new Thread(this);
         thread.start();
     }
+
 
     /**
      * 初始化窗口变量
@@ -201,10 +200,13 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     /**
      *设置背景
      */
-    private  void SetBack(){
-        Tools =new JLabel(new ImageIcon("src/image/Tools.png"));
-        Tools.setBounds(840,0,184,838);
-        this.add(Tools);
+    private  void SetBackgroundMusic(){
+        if(SetMenu._isopenmusic==false){
+
+        }else {
+           gameMusic.start();
+            MainMenu.music.MusicSetting(false);
+        }
     }
     /***
      * 初始化塔
@@ -368,12 +370,17 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     private void drawTowers(Graphics g2,List<Point> towerLocation,List<Tower> tower) {
         int pointLen=towerLocation.size();
         int towerLen=tower.size();
+        Point optPoint;
+
         Image image=new ImageIcon("src/Image/TwNormal.png").getImage();
         for(int i=towerLen;i<pointLen;i++){
+            optPoint=new Point((towerLocation.get(i).x()/64),(towerLocation.get(i).y())/64);
             if(normalTower.isSelected()){
                 TwNormal twNormal=new TwNormal();
-                twNormal.SetTower(towerLocation.get(i),towerLocation.get(i));
+                twNormal.SetTower(towerLocation.get(i),optPoint);
                 tower.add(twNormal);
+                map.block(optPoint).AddTower();
+
             }
         }
         for(int i=0;i<towerLen;i++){
@@ -502,10 +509,14 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         if(_caninstalltower&&map.money()>new TwNormal().GetPrice()&&focusX<776){
             Point newTowerPoint=new Point(focusX,focusY);
             towerPoint.add(newTowerPoint);
+            if(SetMenu._isopenmusic==false) {
+            }else {
+                TowerInstallMusic m = new TowerInstallMusic();
+                m.start();
+            }
 
             repaint();
         }
-
     }
 
     @Override

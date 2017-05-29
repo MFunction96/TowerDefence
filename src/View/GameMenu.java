@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -25,7 +26,7 @@ import View.URL.DrawTwNormal;
 /**
  * Created by Chris Young on 2017/5/22.
  */
-public class GameMenu extends JFrame implements ActionListener, MouseMotionListener, MouseListener,ItemListener {
+public class GameMenu extends JFrame implements ActionListener, MouseMotionListener, MouseListener,ItemListener ,Runnable{
     /**
      * 窗体宽
      * */
@@ -131,6 +132,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     private  boolean _isdrawtower;
     private Map  map=new Map() ;
+    GameController _gc;
 
     ButtonGroup towerGroup;
     JRadioButton normalTower;
@@ -161,7 +163,22 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.SetBack();
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
+
+        _return = new JButton(new ImageIcon("src/Image/BackToMainMenu.png") );
+        _return .setVisible(true);
+        _return.addActionListener(this);
+        _return.setBounds(80,800,217,60);
+        _return .setBorderPainted(false) ;
+        this.getContentPane().add(_return);
+
+        _Stop =new JButton(new ImageIcon("src/Image/Stop.png"));
+        _Stop.setVisible(true) ;
+        _Stop .addActionListener(this);
+        _Stop .setBounds(800,700,217,60);
+        _gc = new GameController(map);
         init();
+        Thread thread=new Thread(this);
+        thread.start();
     }
 
     /**
@@ -178,7 +195,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         focusY = -64;
         squaresSize = 64;
         drawMoney =true ;
-        GameController _gc = new GameController(new Map());
+
         _gc.Start();
     }
     /**
@@ -187,7 +204,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     private  void SetBack(){
         Tools =new JLabel(new ImageIcon("src/image/Tools.png"));
         Tools.setBounds(840,0,184,838);
-        this.getContentPane().add(Tools);
+        this.add(Tools);
     }
     /***
      * 初始化塔
@@ -198,7 +215,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         normalTower.setOpaque(false);
         normalTower.addItemListener(this);
         towerGroup=new ButtonGroup();
-        normalTower.setVisible(true);
         this.add(normalTower);
     }
 
@@ -213,7 +229,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     @Override
     public void paint(Graphics g) {
-        BufferedImage images = new BufferedImage(w,h,BufferedImage.TYPE_INT_ARGB);
+        BufferedImage images = new BufferedImage(w,h,BufferedImage.TYPE_3BYTE_BGR);
         Image image=null;
         Graphics  g2=images.createGraphics();
 
@@ -223,16 +239,14 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         }catch (Exception e){
             e.printStackTrace() ;
         }
-       g2.drawImage(image,0,0,this);
-
         //画工具栏
+       g2.drawImage(image,0,0,this);
         try {
             image=ImageIO.read(new File("src/image/Tools.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         g2.drawImage(image,840,0,184,838,this );
-
         //画塔
         try {
             drawTowers(g2,towerPoint,towerList);
@@ -249,43 +263,54 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
                         + gameY , squaresSize, squaresSize);
             }
         }
-        g2.setColor(Color.CYAN.brighter());
-
+        g2.setColor(Color.blue);
         if(focusX<776)
         {
+            try {
+                image=ImageIO.read(new File("src/image/TwNormal.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if(normalTower.isSelected()){
                 g2.drawOval(focusX-64,focusY-64,new TwNormal().GetAttackArea()*64,new TwNormal().GetAttackArea()*64);
-
-                try {
-                    image=ImageIO.read(new File("src/image/TwNormal.png"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 g2.drawImage(image,focusX,focusY,this);
             }else {
                 g2.fillRect(focusX, focusY, squaresSize, squaresSize);
             }
         }
-        g2.dispose();
-        //在此函数前面调用g2画笔画其它图
+        if(normalTower.isSelected()==false){
+
+            try {
+                image=ImageIO.read(new File("src/image/TwNormal.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            g2.drawImage(image,932,492,this);
+
+        }else {
+            try {
+                image=ImageIO.read(new File("src/image/TwNormal.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            g2.drawImage(image,932,492,this);
+            g2.setColor(Color.WHITE);
+            g2.fillOval(900,900,64,64);
+
+        }
+        g2.setColor(Color.GREEN);
+        g2.drawString("$10",936,590);
+        drawMonster(g2);
+
+        g2.dispose();//在此函数前面调用g2画笔画其它图
+
+
         g.drawImage(images,0,0,this);
         //drawTools(g2);
-        JRadioButton jRadioButton=new JRadioButton("src/Image/BackToMainMenu.png");
-        jRadioButton.setVisible(true);
-        jRadioButton.setBounds(840,640,300,300);
-        this.add(jRadioButton);
 
-        _return = new JButton(new ImageIcon("src/Image/BackToMainMenu.png") );
-        _return .setVisible(true);
-        _return.addActionListener(this);
-        _return.setBounds(80,800,217,60);
-        _return .setBorderPainted(false) ;
-        this.getContentPane().add(_return);
 
-        _Stop =new JButton(new ImageIcon("src/Image/Stop.png"));
-        _Stop.setVisible(true) ;
-        _Stop .addActionListener(this);
-        _Stop .setBounds(800,700,217,60);
+
+
 
     }
     /**
@@ -392,6 +417,13 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * @param g2
      */
     private void drawMonster(Graphics g2){
+        LinkedList<Monster> monsterlist=_gc.getMonsterList();
+        for(int i=0;i<monsterlist.size();i++){
+            Monster monster=monsterlist.get(i);
+            if(monster!=null){
+                monster.draw(g2);
+            }
+        }
 
     }
     /**
@@ -415,11 +447,11 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     /**
      * 据说是刷新图片的线程
      */
-    public void Gamerun(){
+    public void run(){
         try{
             while(true){
                 repaint() ;
-                Thread .sleep(1);
+                Thread .sleep(20);
             }
         }catch(Exception  e){
             e.printStackTrace() ;

@@ -141,7 +141,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     JLabel Background;
     JLabel Tools;
 
-    GameMenu() {
+    public GameMenu() {
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
         this.setSize(1024,838);//设置窗体大小
@@ -301,13 +301,14 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g2.setColor(Color.GREEN);
         g2.drawString("$10",936,590);
         drawMonster(g2);
+        drawLife(g2);
         g2.setColor(Color.CYAN);
         g2.fillRect(64,64,64,64);
         g2.setColor(Color.red);
         g2.fillRect(768,768,64,64);
 
-        g2.dispose();//在此函数前面调用g2画笔画其它图
 
+        g2.dispose();//在此函数前面调用g2画笔画其它图
 
         g.drawImage(images,0,0,this);
         //drawTools(g2);
@@ -363,7 +364,13 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     /**
      * 绘制总生命
      */
-    private void drawLife(Graphics g2){
+    private void drawLife(Graphics g){
+
+        Font font = new Font("宋体", 30, 30);
+        g.setColor(Color.white);
+        g.setFont(font);
+
+        g.drawString("" + map.HP() , 950,230);
 
     }
     /**
@@ -415,6 +422,8 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
         g.drawString("" + map.money() , 950,130);
     }
+
+
 
     /**
      * 绘制敌人

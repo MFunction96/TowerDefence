@@ -229,7 +229,7 @@ public void setPath(ArrayDeque<Point> ad){
      *判断怪物是否活着
      */
     public boolean IsAlive(){
-        if(_optlocation.x()==11&&_optlocation.y()==11||_hp<=0){
+        if(_hp<=0){
             return false;
         }
         else {

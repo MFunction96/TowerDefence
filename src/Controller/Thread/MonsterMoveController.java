@@ -1,7 +1,6 @@
 package Controller.Thread;
 
 import Model.BaseClass.Monster;
-import Model.BaseClass.Point;
 import Model.Framework.Map;
 
 
@@ -15,7 +14,6 @@ public class MonsterMoveController implements Runnable {
     LinkedList<Monster> _monlist ;   //怪物链表
     GameController _gc;    //游戏主控制线程
     Map _map;   //地图信息
-    Point _p;
 
 
     /**
@@ -32,8 +30,6 @@ public class MonsterMoveController implements Runnable {
     public synchronized  void run() {
         try {
             while (true) {
-
-
                 for (int i = 0; i < _monlist.size(); i++) {
                     Monster monster = _monlist.get(i);
                     if (monster == null)
@@ -47,7 +43,12 @@ public class MonsterMoveController implements Runnable {
                     else {
                         _map.SetMoney(_map.money()+monster.GetPrice());//如果怪物死亡，更改地图金钱数
                         _monlist.remove(i); //移除死亡怪
-                        i=i-1;
+                        i--;
+                    }
+                    if(monster.GetOperationLocation()==_map.end()){
+                        _map.Damage();
+                        _monlist.remove(i);
+                        i--;
                     }
                 }
 

@@ -71,7 +71,7 @@ public class GameController extends Thread {
      * 游戏开始
      */
     public void Start() {
-        run();
+        this.start();
     }
 
     /**

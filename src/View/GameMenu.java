@@ -22,6 +22,8 @@ import Model.Map.Block;
 import Model.Tower.TwNormal ;
 import Model.BaseClass.Point ;
 
+import static java.awt.event.KeyEvent.VK_ESCAPE;
+
 
 /**
  * Created by Chris Young on 2017/5/22.
@@ -159,7 +161,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(64, 64, 1024, 838);
-
         this.towerPoint=new ArrayList<>();
         this.towerList=new ArrayList<>();
         this._caninstalltower=false;
@@ -167,20 +168,19 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.SetBack();
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
-
-        _return = new JButton(new ImageIcon("src/Image/BackToMainMenu.png") );
-        _return .setVisible(true);
-        _return.addActionListener(this);
-        _return.setBounds(80,800,217,60);
-        _return .setBorderPainted(false) ;
-        this.getContentPane().add(_return);
-
-        _Stop =new JButton(new ImageIcon("src/Image/Stop.png"));
+        _Stop=new JButton();
         _Stop.setVisible(true) ;
         _Stop .addActionListener(this);
-        _Stop .setBounds(800,700,217,60);
-        _Stop .setBorderPainted(false );
-        this.getContentPane().add(_Stop );
+        _Stop .setBounds(870,600,145,40);
+        _Stop  .setBorderPainted(false) ;
+        this.getContentPane().add(_Stop);
+
+        _return =new JButton() ;
+        _return .setVisible(true);
+        _return.addActionListener(this);
+        _return.setBounds(870,650,145,40);
+        _return .setBorderPainted(false) ;
+        this.getContentPane().add(_return);
         _gc = new GameController(map);
         init();
         Thread thread=new Thread(this);
@@ -217,7 +217,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     public void InitialTower(){
         normalTower=new JRadioButton(new ImageIcon("src/Image/TwNormal.png"),_caninstalltower);
-        normalTower.setBounds(900,460,64,64);
+        normalTower.setBounds(828,318,64,64);
         normalTower.setOpaque(false);
         normalTower.addItemListener(this);
         towerGroup=new ButtonGroup();
@@ -253,6 +253,24 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             e.printStackTrace();
         }
         g2.drawImage(image,840,0,184,838,this );
+        //画按钮
+
+        try {
+            image=ImageIO.read(new File("src/image/Stop.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        g2.drawImage(image  ,870,600,145,40,this);
+
+
+      //画REturn
+        try {
+            image=ImageIO.read(new File("src/image/BackToMainMenu.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        g2.drawImage(image  ,870,650,145,40,this);
+
         //画塔
         try {
             drawTowers(g2,towerPoint,towerList);
@@ -291,7 +309,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            g2.drawImage(image,932,492,this);
+            g2.drawImage(image,860,350,this);
 
         }else {
             try {
@@ -299,13 +317,12 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            g2.drawImage(image,932,492,this);
+            g2.drawImage(image,860,350,this);
             g2.setColor(Color.WHITE);
             g2.fillOval(900,900,64,64);
-
         }
         g2.setColor(Color.GREEN);
-        g2.drawString("$10",936,590);
+        g2.drawString("$5",950,390);
         drawMonster(g2);
         drawLife(g2);
         g2.setColor(Color.CYAN);
@@ -538,13 +555,15 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
     public void mouseDragged(MouseEvent e) {
     }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == _return) {
             this.dispose();
+
             new MainMenu();
         }
         else if(e.getSource() ==_Stop ){
-
+            _gc .Pause();
         }
     }
 
@@ -605,7 +624,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         }
         repaint();
     }
-
     /**
      * 选项改变
      * @param e 项事件

@@ -6,6 +6,9 @@ import Model.Framework.Map;
 
 import java.util.ArrayDeque;
 import java.util.LinkedList;
+import View.GameMenu;
+
+import javax.swing.text.View;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -43,8 +46,6 @@ public class GameController extends Thread {
      *
      */
     volatile ArrayDeque<Point> _sepath;
-
-
 
     volatile MonsterMoveController _mvc;
 
@@ -84,7 +85,7 @@ public class GameController extends Thread {
      * 游戏胜利
      */
     private void Win() {
-
+    new GameMenu() .showWin() ;
     }
 
     /**
@@ -102,7 +103,7 @@ public class GameController extends Thread {
      * 游戏失败
      */
     public void Lose() {
-
+        new GameMenu() .showDefeat() ;
     }
 
     /**
@@ -110,17 +111,11 @@ public class GameController extends Thread {
      */
     public synchronized void run() {
         int time = 0;
-
         while (true) {
             time++;
-            if ((_round <= _map.total() && _round > 0) || time ==_map.Period()) {
+            if ((_round <= _map.total() && _round > 0) || time == _map.Period()) {
                 MonsterGenerator _mongen = new MonsterGenerator(this, _round++);
                 _mongen.run();
-                try {
-                    wait(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             } else if (_monsters.size() == 0 && _round == _map.total()) {
                 Win();
                 break;
@@ -133,6 +128,11 @@ public class GameController extends Thread {
                 _ac.run();
                 _mc.run();
                 _mvc.run();
+                try {
+                    wait(1000);
+                } catch (InterruptedException e) {
+                    System.err.print(e.getMessage());
+                }
             }
         }
     }

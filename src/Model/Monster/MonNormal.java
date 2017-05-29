@@ -2,7 +2,6 @@ package Model.Monster;
 
 import Model.BaseClass.Monster;
 import Model.BaseClass.Point;
-import View.GameMenu;
 
 import java.awt.*;
 import java.util.ArrayDeque;

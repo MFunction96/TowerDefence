@@ -123,22 +123,11 @@ public class Block {
     /**
      * 在模块上安装塔
      *
-     * @param x 塔的ui横坐标
-     *  @param y  ui纵坐标
-     *    @param size 大小
+     *
      */
-    public  void AddTower(String name, int x, int y, int size,Graphics g2) {
+    public  void AddTower( ) {
         _canpass = false;
         _ispath = false;
-        Point point=new Point(x, y) ;
-        if (name.equals("炮塔")) {
-            TwNormal twn=new TwNormal( ) ;
-            _tower = twn;
-            _surlocation =point ;
-            _optlocation =point;
-            _tower.SetTower(_surlocation, _optlocation);
-        }
-
     }
 
     /**

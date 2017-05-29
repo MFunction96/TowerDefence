@@ -137,6 +137,10 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     ButtonGroup towerGroup;
     JRadioButton normalTower;
     JButton _return;
+    JButton _BackWhenWin;
+    JButton _BackWhenDefeat;
+    JButton _Next;
+
     JButton _Stop;
     JLabel Background;
     JLabel Tools;
@@ -175,6 +179,8 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         _Stop.setVisible(true) ;
         _Stop .addActionListener(this);
         _Stop .setBounds(800,700,217,60);
+        _Stop .setBorderPainted(false );
+        this.getContentPane().add(_Stop );
         _gc = new GameController(map);
         init();
         Thread thread=new Thread(this);
@@ -346,20 +352,50 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     /**
      * 绘制你赢了或你输了标语
      */
-    private void drawDead(Graphics g) {
-        /*
-         *  if (GameController .Win()) {
-         Font font = new Font("宋体", 70, 70);
-         g.setFont(font);
-         g.setColor(Color.white);
-         g.drawString("you win!", 200, 200);
-         } else if (GameController .Lose()) {
-         Font font = new Font("宋体", 70, 70);
-         g.setFont(font);
-         g.setColor(Color.white);
-         g.drawString("you lose!", 200, 200);
-         }
-         */
+    public void showWin() {
+        JPanel youwin=new WinPanel() ;
+
+        _Next =new JButton(new ImageIcon("src/Image/NExtGame.png") ) ;
+        _BackWhenWin =new JButton(new ImageIcon("src/Image/BackToMainMenu.png") ) ;
+        Container cont =getContentPane() ;
+        cont .add(youwin ,BorderLayout .CENTER ) ;
+        youwin .add(_Next );
+        _Next .setBounds(510,267,217,60);
+        _Next .setVisible(true);
+        _Next .addActionListener(this);
+        _Next  .setBorderPainted(false) ;
+        this.getContentPane().add(_Next);
+
+        youwin .add(_BackWhenWin );
+        _BackWhenWin  .setBounds(537,508,217,60);
+        _BackWhenWin  .setVisible(true);
+        _BackWhenWin  .addActionListener(this);
+        _BackWhenWin .setBorderPainted(false) ;
+        this.getContentPane().add(_BackWhenWin );
+        youwin .setLocation(0,0);
+        youwin.setLayout(null);
+        this.setBounds(0,0,1024,838) ;
+
+
+        this.setVisible(true) ;
+    }
+    public void showDefeat(){
+        JPanel youdefeat=new DefeatPanel() ;
+        _BackWhenDefeat  =new JButton(new ImageIcon("src/Image/BackToMainMenu.png") ) ;
+        Container cont =getContentPane() ;
+        cont .add(youdefeat  ,BorderLayout .CENTER ) ;
+
+        youdefeat  .add(_BackWhenWin );
+        _BackWhenDefeat   .setBounds(515,508,217,60);
+        _BackWhenDefeat  .setVisible(true);
+        _BackWhenDefeat .addActionListener(this);
+        _BackWhenDefeat  .setBorderPainted(false) ;
+        this.getContentPane().add(_BackWhenDefeat );
+        youdefeat  .setLocation(0,0);
+        youdefeat .setLayout(null);
+        this.setBounds(0,0,1024,838) ;
+
+        this.setVisible(true) ;
     }
     /**
      * 绘制总生命

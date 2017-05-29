@@ -87,7 +87,7 @@ public class GameController extends Thread {
      * 游戏胜利
      */
     private void Win() {
-    //new GameMenu() .showWin() ;
+    new GameMenu() .showWin() ;
     }
 
     /**
@@ -105,7 +105,7 @@ public class GameController extends Thread {
      * 游戏失败
      */
     public void Lose() {
-        //new GameMenu() .showDefeat() ;
+        new GameMenu() .showDefeat() ;
     }
 
     /**

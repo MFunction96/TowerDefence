@@ -418,7 +418,9 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         Image image=new ImageIcon("src/Image/TwNormal.png").getImage();
         for(int i=towerLen;i<pointLen;i++){
             if(normalTower.isSelected()){
+
                 TwNormal twNormal=new TwNormal();
+                map.SetMoney(map.money() -twNormal .GetPrice()) ;
                 twNormal.SetTower(towerLocation.get(i),towerLocation.get(i));
                 tower.add(twNormal);
             }

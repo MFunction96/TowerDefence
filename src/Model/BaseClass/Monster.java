@@ -174,7 +174,7 @@ public void setPath(ArrayDeque<Point> ad){
     public void SurfaceMove() {
         Point temp;
         if(_ad.size()!=0){
-            temp=_ad.getFirst().Minus(GetOperationLocation());  //计算方向向量
+             temp=_ad.getFirst().Minus(GetOperationLocation());  //计算方向向量
             _surlocation=_surlocation.Add(new Point(temp.x()*64,temp.y()*64)); //转换成表现层的下一个坐标
         }
 
@@ -229,7 +229,7 @@ public void setPath(ArrayDeque<Point> ad){
      *判断怪物是否活着
      */
     public boolean IsAlive(){
-        if(_optlocation.x()==11&&_optlocation.y()==11){
+        if(_hp<=0){
             return false;
         }
         else {

@@ -18,7 +18,7 @@ abstract public class Monster {
     /**
      * 当前生命值
      */
-    protected  int _curhp;
+    protected int _curhp;
     /**
      * 移动速度
      */
@@ -38,7 +38,7 @@ abstract public class Monster {
     /**
      * 类型
      */
-    protected  int _type;
+    protected int _type;
     /**
      * 表现层位置
      */
@@ -58,18 +58,18 @@ abstract public class Monster {
     /**
      * 怪物行进路径
      */
-    protected ArrayDeque<Point> _ad = new ArrayDeque<>();
+    protected ArrayDeque<Point> _ad;
     /**
      * 地图信息
      */
-    protected Map map=new Map();
+    protected Map map = new Map();
     /**
      * 当前表现层坐标
      */
-    protected  Point _cursurfloaction;
+    protected Point _cursurfloaction;
 
     /**
-     *  * 构造基础怪
+     * * 构造基础怪
      *
      * @param name          怪的名字
      * @param hp            怪的生命值
@@ -81,26 +81,28 @@ abstract public class Monster {
      * @param surfacePoint  表现层坐标
      * @param operatorPoint 逻辑层坐标
      */
-    public Monster(String name, int hp,int type, int speed, int price, int upgradehp, int upgradePrice,Point surfacePoint,  Point operatorPoint) {
+    public Monster(String name, int hp, int type, int speed, int price, int upgradehp, int upgradePrice, Point surfacePoint, Point operatorPoint) {
         _name = name;
-        _type=type;
+        _type = type;
         _uuid = UUID.randomUUID();
         _speed = speed;
         _price = price;
-        _presurflocation=_cursurfloaction= surfacePoint;
+        _presurflocation = _cursurfloaction = surfacePoint;
         _optlocation = operatorPoint;
         _upprice = upgradePrice;
         _uphp = upgradehp;
-        _hp =_curhp= hp;
+        _hp = _curhp = hp;
+        _ad = new ArrayDeque<>();
     }
 
     /**
      * 设置怪物的行进路径
-     * @param ad
+     *
+     * @param ad 设置路径
      */
-    public void setPath(ArrayDeque<Point> ad){
-        _ad=ad;
-}
+    public void setPath(ArrayDeque<Point> ad) {
+        _ad = ad;
+    }
 
 
     /**
@@ -177,9 +179,12 @@ abstract public class Monster {
 
     /**
      * 获取怪在表现层的当前位置
+     *
      * @return 返回怪在表现层的当前位置
      */
-    public final Point GetCurSurfLocaton(){return _cursurfloaction;}
+    public final Point GetCurSurfLocaton() {
+        return _cursurfloaction;
+    }
 
     /**
      * 获取怪在后台操作的位置
@@ -192,31 +197,33 @@ abstract public class Monster {
 
     /**
      * 设置怪的表现层位置
+     *
      * @param pt
      */
-    public final void SetCurSurfLocation(Point pt){_cursurfloaction=pt;}
+    public final void SetCurSurfLocation(Point pt) {
+        _cursurfloaction = pt;
+    }
 
     /**
      * 怪在表现层的移动
      */
     public void SurfaceMove() {
         Point temp;
-        if(_ad.size()!=0){
-             temp=_ad.getFirst().Minus(GetOperationLocation());  //计算方向向量
-            _presurflocation=_presurflocation.Add(new Point(temp.x()*64,temp.y()*64)); //转换成表现层的下一个坐标
+        if (_ad.size() != 0) {
+            temp = _ad.getFirst().Minus(GetOperationLocation());  //计算方向向量
+            _presurflocation = _presurflocation.Add(new Point(temp.x() * 64, temp.y() * 64)); //转换成表现层的下一个坐标
         }
 
     }
 
     /**
      * 怪在逻辑层的移动
-     *
-     * @return 新坐标
      */
-    public void OptMove() {
-        if(_ad.size()!=0){
+    public Point OptMove() {
+        if (_ad.size() != 0) {
             _optlocation = _ad.removeFirst();//得到下一个位置并移除队列第一个元素
         }
+        return _optlocation;
     }
 
     /**
@@ -253,26 +260,29 @@ abstract public class Monster {
     public void UpdatePath(ArrayDeque<Point> ad) {
         _ad = ad;
     }
+
     /**
-     *判断怪物是否活着
+     * 判断怪物是否活着
      */
-    public boolean IsAlive(){
-        if(_hp<=0){  //如果生命值小于等于0，死亡
+    public boolean IsAlive() {
+        if (_hp <= 0) {  //如果生命值小于等于0，死亡
             return false;
-        }
-        else {     //否则活着
+        } else {     //否则活着
             return true;
         }
     }
 
     /**
      * 绘画怪样子的方法，由子类完成
+     *
      * @param g
      */
-    public void draw(Graphics g){ }
+    public void draw(Graphics g) {
+    }
 
     /**
      * 绘画怪的生命条
+     *
      * @param g 画笔
      * @param x 怪表现层横坐标
      * @param y 怪表现层纵坐标

@@ -45,19 +45,17 @@ public class MonsterGenerator extends Thread {
     /**
      * 怪物生成器主线程
      */
-    public void run() {
+    public synchronized void run() {
         try {
-
             for (int i = 0; i < _total; i++) {
                 if (_montyp == 1) {
-                   // _gc._monsters.addLast(new MonNormal(_gc._sepath));
+                    // _gc._monsters.addLast(new MonNormal(_gc._sepath));
                     _gc._surmonsters.addLast(new MonNormal(_gc._sepath.clone()));
-                }
-                else if(_montyp==2){
+                } else if (_montyp == 2) {
                     _gc._surmonsters.addLast(new MonGhost(_gc._sepath.clone()));
                 }
 
-                if(_gc._surmonsters.size()<=5){
+/*                if(_gc._surmonsters.size()<=5){
                     for (int j = 0; j < _gc._surmonsters.size(); j++) {
                         Monster monster = _gc._surmonsters.get(j);
                         if (monster == null)
@@ -65,13 +63,11 @@ public class MonsterGenerator extends Thread {
                         else {
                             monster.SurfaceMove();
                             monster.OptMove();
-                            Thread.sleep(100);
+                            wait(100);
                         }
                     }
-                }
-
-
-                Thread.sleep(100);
+                }*/
+                wait(_stime);
             }
 
         } catch (InterruptedException e) {

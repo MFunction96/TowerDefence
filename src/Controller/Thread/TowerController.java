@@ -1,29 +1,31 @@
 package Controller.Thread;
 
-import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
-import Model.Framework.Map;
-import Model.Map.Block;
 
+/**
+ * Created by MFunction on 2017/5/29.
+ * 塔控制器
+ *
+ * @author MFunction
+ */
 public class TowerController extends Thread {
-    private  Tower _tower;
-    private Map _map;
-    private Monster _monster[]=new Monster[_map.monster().length];
-    TowerController(Tower tower,Map map){
-        _tower=tower;
-        _map=map;
-    }
-    @Override
-    public void run() {
-        super.run();
-        Block gameBlock=_map.block(_tower.GetOperationLocation());
-        for(int i=_tower.GetOperationLocation().x()-_tower.GetAttackArea()/2;i<=_tower.GetAttackArea();i++){
-            for(int j=_tower.GetOperationLocation().y()-_tower.GetAttackArea()/2;j<=_tower.GetAttackArea();j++){
+    /**
+     * 游戏控制器
+     */
+    private GameController _gc;
+    /**
+     * 坐标
+     */
+    private Tower _tw;
 
-            }
-        }
-        if( _tower.GetCanAttack()==true){
-        }
-
+    /**
+     * 塔控制器构造函数
+     * @param gc 游戏控制器
+     * @param tw 放置的塔
+     */
+    TowerController(GameController gc, Tower tw) {
+        _gc = gc;
+        _tw = tw;
     }
+
 }

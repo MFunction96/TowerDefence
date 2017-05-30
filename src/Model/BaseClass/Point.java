@@ -22,19 +22,21 @@ public class Point {
 
     /**
      * 复制构造函数
+     *
      * @param p 点对象
      */
-    public Point(Point p){
-        _x=p._x;
-        _y=p._y;
+    public Point(Point p) {
+        _x = p._x;
+        _y = p._y;
     }
+
     /**
      * 点对象的加操作
      *
      * @param p 点对象的相加对象
      * @return 返回加操作后的点对象
      */
-    public Point Add(final Point p) {
+    public final Point Add(final Point p) {
         return new Point(_x + p._x, _y + p._y);
     }
 
@@ -44,8 +46,28 @@ public class Point {
      * @param p 减去的点坐标
      * @return 两点的方向向量
      */
-    public Point Minus(final Point p) {
+    public final Point Minus(final Point p) {
         return new Point(_x - p._x, _y - p._y);
+    }
+
+    /**
+     * 表现层坐标转换为业务层坐标
+     *
+     * @param p 表现层坐标
+     * @return 业务层坐标
+     */
+    public final Point SurConvOpt(final Point p) {
+        return new Point((p._x - 64) / 64, (p._y - 64) / 64);
+    }
+
+    /**
+     * 业务层坐标转换为业务层坐标
+     *
+     * @param p 业务层坐标
+     * @return 表现层坐标
+     */
+    public final Point OptConvSur(final Point p) {
+        return new Point(p._x * 64 + 64, p._y * 64 + 64);
     }
 
     /**
@@ -54,7 +76,7 @@ public class Point {
      * @param p 另一点对象
      * @return 返回boolean类型，true为两点相同，否则两点不同
      */
-    public boolean Equal(final Point p) {
+    public final boolean Equal(final Point p) {
         return _x == p._x && _y == p._y;
     }
 
@@ -63,7 +85,7 @@ public class Point {
      *
      * @return 点对象的横坐标
      */
-    final public int x() {
+    public final int x() {
         return _x;
     }
 
@@ -72,7 +94,7 @@ public class Point {
      *
      * @return 点对象的纵坐标
      */
-    final public int y() {
+    public final int y() {
         return _y;
     }
 }

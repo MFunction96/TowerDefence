@@ -6,6 +6,7 @@ import Model.Framework.Map;
 
 import java.util.ArrayDeque;
 import java.util.LinkedList;
+
 import View.GameMenu;
 
 import javax.swing.text.View;
@@ -26,27 +27,22 @@ public class GameController extends Thread {
      */
     private int _hp;
     /**
-     * 怪物控制器线程对象
-     */
-    private MonsterController _mc;
-    /**
      * 游戏地图
      */
     Map _map;
     /**
      * 路径控制器线程组
      */
-    volatile PathController[] _pc;
+    volatile PathController _pc;
     /**
      * 在场怪物
      */
     volatile LinkedList<Monster> _monsters;
-    volatile LinkedList<Monster>_surmonsters;
+    volatile LinkedList<Monster> _surmonsters;
     /**
      *
      */
     volatile ArrayDeque<Point> _sepath;
-
 
 
     volatile MonsterMoveController _mvc;
@@ -62,9 +58,9 @@ public class GameController extends Thread {
         _round = 0;
         _sepath = new ArrayDeque<>();
         _monsters = new LinkedList<>();
-        _surmonsters=new LinkedList<>();
-        _mc = new MonsterController(this);
-        _mvc = new MonsterMoveController(_map, this);
+        _surmonsters = new LinkedList<>();
+        _pc = new PathController(this, _map.start(), _sepath);
+        _pc.start();
     }
 
     /**
@@ -87,7 +83,7 @@ public class GameController extends Thread {
      * 游戏胜利
      */
     private void Win() {
-    new GameMenu() .showWin() ;
+        new GameMenu().showWin();
     }
 
     /**
@@ -105,8 +101,8 @@ public class GameController extends Thread {
      * 游戏失败
      */
     public void Lose() {
-       GameMenu gameMenu= new GameMenu();
-        gameMenu.showDefeat() ;
+        GameMenu gameMenu = new GameMenu();
+        gameMenu.showDefeat();
     }
 
     /**
@@ -115,8 +111,13 @@ public class GameController extends Thread {
     public synchronized void run() {
         int time = 0;
         while (true) {
+            try {
+                wait(1000);
+            } catch (InterruptedException e) {
+                System.err.print(e.getMessage());
+            }
             time++;
-            if ((_round <= _map.total() && _round > 0) || time >= _map.Period()) {
+            if (_round <= _map.total() && _round >= 0 && time % _map.Period() == 0) {
                 MonsterGenerator _mongen = new MonsterGenerator(this, _round++);
                 _mongen.start();
             } else if (_monsters.size() == 0 && _round == _map.total()) {
@@ -126,22 +127,22 @@ public class GameController extends Thread {
                 Lose();
                 break;
             }
-            if (time >= _map.Period()) {
+            if (time > _map.Period()) {
                 AttackController _ac = new AttackController(this);
+                MonsterController _mc = new MonsterController(this);
                 _ac.start();
-                _mvc.start();
-                _mc.start();
+                //_mvc.start();
                 try {
-                    wait(1000);
-                } catch (InterruptedException e) {
-                    System.err.print(e.getMessage());
+                    _mc.start();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    System.err.print(ex.getMessage() + ex.getLocalizedMessage());
                 }
+
             }
         }
     }
-    public ArrayDeque<Point> GetSePath(){
-        return _sepath;
-    }
+
     public LinkedList<Monster> getMonsterList() {
         return _surmonsters;
     }

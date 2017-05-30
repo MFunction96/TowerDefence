@@ -25,47 +25,60 @@ public class MonsterController extends Thread {
      */
     MonsterController(GameController gc) {
         _gc = gc;
-        _gc._pc = new PathController[200];
-        _gc._pc[0] = new PathController(_gc, _gc._map.start(), _gc._sepath);
-        _gc._pc[0].run();
     }
 
     /**
      * 怪物控制器主线程
      */
     public synchronized void run() {
-        for (Monster monster : _gc._surmonsters) {
-            if (monster.PreMove() == _gc._map.end()) {
-                _gc._map.Damage();
-                if (_gc._map.HP() <= 0) {
-                    _gc.Lose();
-                    break;
+        if (_gc._surmonsters.size() > 0){
+            for (Monster monster : _gc._surmonsters) {
+
+                if (monster.PreMove() == _gc._map.end()) {
+                    _gc._map.Damage();
+                    if (_gc._map.HP() <= 0) {
+                        _gc.Lose();
+                        break;
+                    }
                 }
-            }
-            LinkedList<Tower> tw = _gc._map.block(monster.GetOperationLocation()).GetAtkTw();
-            LinkedList<Tower> ptw = _gc._map.block(monster.PreMove()).GetAtkTw();
-            for (Tower tower : tw) {
-                if (tower.GetTarget() == monster) {
-                    boolean flag = true;
-                    for (Tower pTower : ptw) {
-                        if (tower == pTower) {
-                            flag = false;
-                            break;
+
+                LinkedList<Tower> tw = _gc._map.block(monster.GetOperationLocation()).GetAtkTw();
+                LinkedList<Tower> ptw = _gc._map.block(monster.PreMove()).GetAtkTw();
+                if (tw.size() > 0){
+                    for (Tower tower : tw) {
+                        if (tower.GetTarget() == monster) {
+                            boolean flag = true;
+                            if (ptw.size() > 0){
+                                for (Tower pTower : ptw) {
+                                    if (tower == pTower) {
+                                        flag = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (flag) {
+                                tower.SetTarget(null);
+                            }
                         }
                     }
-                    if (flag) {
-                        tower.SetTarget(null);
+                }
+
+            }
+
+            for (Monster monster : _gc._surmonsters) {
+
+                monster.SurfaceMove();
+
+                LinkedList<Tower> ptw = _gc._map.block(monster.OptMove()).GetAtkTw();
+                if (ptw.size() > 0){
+                    for (Tower tower : ptw) {
+                        if (tower.GetTarget() == null) {
+                            tower.SetTarget(monster);
+                        }
                     }
                 }
             }
         }
-        for (Monster monster : _gc._surmonsters) {
-            LinkedList<Tower> ptw = _gc._map.block(monster.OptMove()).GetAtkTw();
-            for (Tower tower : ptw) {
-                if (tower.GetTarget() == null) {
-                    tower.SetTarget(monster);
-                }
-            }
-        }
+
     }
 }

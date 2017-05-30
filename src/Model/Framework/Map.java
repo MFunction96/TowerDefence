@@ -65,11 +65,11 @@ public class Map {
         _total = 5;
         _tower = new TwNormal[5];
         _monnumber = 5;
-        _moninterval = 50;
+        _moninterval = 1000;
         _money = 100;
         _start = new Point(0, 0);
         _end = new Point(11, 11);
-        _period = 2000;
+        _period = 10;
         for (int i = 0,j=1; i <2 ; i++,j++) {
             _monster[i] = j;
         }

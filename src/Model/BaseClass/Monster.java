@@ -58,7 +58,7 @@ abstract public class Monster {
     /**
      * 怪物行进路径
      */
-    protected ArrayDeque<Point> _ad = new ArrayDeque<>();
+    protected ArrayDeque<Point> _ad;
     /**
      * 地图信息
      */
@@ -92,6 +92,7 @@ abstract public class Monster {
         _upprice = upgradePrice;
         _uphp = upgradehp;
         _hp = _curhp = hp;
+        _ad = new ArrayDeque<>();
     }
 
     /**

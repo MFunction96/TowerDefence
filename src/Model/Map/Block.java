@@ -34,7 +34,7 @@ public class Block {
     /**
      * 可攻击的塔
      */
-    protected LinkedList<Tower> _atktw = new LinkedList<>();
+    protected LinkedList<Tower> _atktw;
     /**
      * 区块本身是否放塔
      */
@@ -53,6 +53,7 @@ public class Block {
         _optlocation = operationPoint;
         _canpass = pass;
         _ispath = isPath;
+        _atktw =  new LinkedList<>();
     }
 
     public LinkedList<Tower> GetAtkTw() {

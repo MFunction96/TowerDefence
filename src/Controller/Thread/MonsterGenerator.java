@@ -47,13 +47,11 @@ public class MonsterGenerator extends Thread {
      */
     public synchronized void run() {
         try {
-
             for (int i = 0; i < _total; i++) {
                 if (_montyp == 1) {
-                   // _gc._monsters.addLast(new MonNormal(_gc._sepath));
+                    // _gc._monsters.addLast(new MonNormal(_gc._sepath));
                     _gc._surmonsters.addLast(new MonNormal(_gc._sepath.clone()));
-                }
-                else if(_montyp==2){
+                } else if (_montyp == 2) {
                     _gc._surmonsters.addLast(new MonGhost(_gc._sepath.clone()));
                 }
 
@@ -69,7 +67,7 @@ public class MonsterGenerator extends Thread {
                         }
                     }
                 }*/
-                wait(100);
+                wait(_stime);
             }
 
         } catch (InterruptedException e) {

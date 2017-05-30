@@ -37,6 +37,7 @@ public class AttackController extends Thread {
             monster.Hurt(b.Attack(monster));
             if (monster.Gethp() <= 0) {
                 ad.add(monster);
+                _gc._map.SetMoney(_gc._map.money() + monster.GetPrice());
             }
         }
         _gc._monsters.removeAll(ad);

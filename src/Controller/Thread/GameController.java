@@ -116,9 +116,9 @@ public class GameController extends Thread {
         int time = 0;
         while (true) {
             time++;
-            if ((_round <= _map.total() && _round > 0) || time == _map.Period()) {
+            if ((_round <= _map.total() && _round > 0) || time >= _map.Period()) {
                 MonsterGenerator _mongen = new MonsterGenerator(this, _round++);
-                _mongen.run();
+                _mongen.start();
             } else if (_monsters.size() == 0 && _round == _map.total()) {
                 Win();
                 break;
@@ -128,9 +128,9 @@ public class GameController extends Thread {
             }
             if (time >= _map.Period()) {
                 AttackController _ac = new AttackController(this);
-                _ac.run();
-                _mc.run();
-                _mvc.run();
+                _ac.start();
+                _mvc.start();
+                _mc.start();
                 try {
                     wait(1000);
                 } catch (InterruptedException e) {
@@ -139,7 +139,9 @@ public class GameController extends Thread {
             }
         }
     }
-
+    public ArrayDeque<Point> GetSePath(){
+        return _sepath;
+    }
     public LinkedList<Monster> getMonsterList() {
         return _surmonsters;
     }

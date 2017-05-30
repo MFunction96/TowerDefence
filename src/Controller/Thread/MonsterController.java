@@ -34,7 +34,7 @@ public class MonsterController extends Thread {
      * 怪物控制器主线程
      */
     public synchronized void run() {
-        for (Monster monster : _gc._monsters) {
+        for (Monster monster : _gc._surmonsters) {
             if (monster.PreMove() == _gc._map.end()) {
                 _gc._map.Damage();
                 if (_gc._map.HP() <= 0) {
@@ -59,8 +59,8 @@ public class MonsterController extends Thread {
                 }
             }
         }
-        for (Monster monster : _gc._monsters) {
-            LinkedList<Tower> ptw = _gc._map.block(monster.PreMove()).GetAtkTw();
+        for (Monster monster : _gc._surmonsters) {
+            LinkedList<Tower> ptw = _gc._map.block(monster.OptMove()).GetAtkTw();
             for (Tower tower : ptw) {
                 if (tower.GetTarget() == null) {
                     tower.SetTarget(monster);

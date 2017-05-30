@@ -1,6 +1,7 @@
 package Controller.Thread;
 
 import Model.BaseClass.Monster;
+import Model.BaseClass.Tower;
 import Model.Map.Block;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class AttackController extends Thread {
      */
     public synchronized void run() {
         ArrayList<Monster> ad = new ArrayList<>();
-        for (Monster monster : _gc._monsters) {
+        for (Monster monster : _gc._surmonsters) {
             Block b = _gc._map.block(monster.GetOperationLocation());
             monster.Hurt(b.Attack(monster));
             if (monster.Gethp() <= 0) {

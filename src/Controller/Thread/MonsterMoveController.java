@@ -10,7 +10,7 @@ import java.util.LinkedList;
  * 怪物的表层移动线程
  * Created by Chris Young on 2017/5/25.
  */
-public class MonsterMoveController implements Runnable {
+public class MonsterMoveController extends Thread {
     /**
      * 当前怪物链表
      */
@@ -42,7 +42,7 @@ public class MonsterMoveController implements Runnable {
     @Override
     public synchronized  void run() {
         try {
-            while (true) {
+            while (_monlist.size() > 0) {
                // Thread.sleep(500);
                 for (int i = 0; i < _monlist.size(); i++) {
                     Monster monster = _monlist.get(i);  //获取当前怪物链表中相应位置的怪物
@@ -50,16 +50,16 @@ public class MonsterMoveController implements Runnable {
                         break;
                     if(monster.IsAlive()){      //如果怪活着
                         monster.SurfaceMove();  //调用怪物表层移动方法
-                        monster.OptMove();      //调用怪物逻辑层移动方法
+                        //monster.OptMove();      //调用怪物逻辑层移动方法
                     }
                     else {
                         _map.SetMoney(_map.money()+monster.GetPrice());//如果怪物死亡，更改地图金钱数
-                        _monlist.remove(i); //移除死亡怪
+                        //_monlist.remove(i); //移除死亡怪
                         i--;
                     }
                     if(monster.GetOperationLocation()==_map.end()){      //如果怪物走到出口
                         _map.Damage();                                   //调用地图Damage()方法，减少生命值
-                        _monlist.remove(i);                  //移除怪
+                        //_monlist.remove(i);                  //移除怪
                         i--;                          //i自减
                     }
                     wait(100);            //控制怪物的移动速度，每个100毫秒走一次

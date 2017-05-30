@@ -126,10 +126,12 @@ public class Block {
     public void AddTower(Tower tower) {
         _atktw.addLast(tower);
     }
+
     public void SetTower() {
         _canpass = false;
         _ispath = false;
     }
+
     /**
      * 摧毁当前模块的塔
      */

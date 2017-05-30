@@ -164,14 +164,14 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         _Stop = new JButton();
         _Stop.setVisible(true);
         _Stop.addActionListener(this);
-        _Stop.setBounds(870, 600, 145, 40);
+        _Stop.setBounds(870, 580, 145, 40);
         _Stop.setBorderPainted(false);
         this.getContentPane().add(_Stop);
 
         _return = new JButton();
         _return.setVisible(true);
         _return.addActionListener(this);
-        _return.setBounds(870, 650, 145, 40);
+        _return.setBounds(870, 630, 145, 40);
         _return.setBorderPainted(false);
         this.getContentPane().add(_return);
         _gc = new GameController(map, this);
@@ -224,6 +224,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         normalTower.addItemListener(this);
         towerGroup = new ButtonGroup();
         this.add(normalTower);
+
     }
 
     public void update(Graphics g) {     //覆盖update方法，截取默认的调用过程
@@ -374,8 +375,8 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     public void showWin() {
         JPanel youwin = new WinPanel();
 
-        _Next = new JButton(new ImageIcon("src/Image/NExtGame.png"));
-        _BackWhenWin = new JButton(new ImageIcon("src/Image/BackToMainMenu.png"));
+        _Next = new JButton();
+        _BackWhenWin = new JButton();
         Container cont = getContentPane();
         cont.add(youwin, BorderLayout.CENTER);
         youwin.add(_Next);
@@ -394,14 +395,49 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         youwin.setLocation(0, 0);
         youwin.setLayout(null);
         this.setBounds(0, 0, 1024, 838);
-
+        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
+        Image image = null;
+        Graphics g2 = images.createGraphics();
+        paintWin(g2) ;
 
         this.setVisible(true);
     }
+public void paintWin(Graphics g){
 
+    BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
+    Image image = null;
+    Graphics g2 = images.createGraphics();
+    //画_Next
+    try {
+        image = ImageIO.read(new File("src/Image/NExtGame.png"));
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    g2.drawImage(image, 510, 267, 217, 60, this);
+    //画_BackToWhenWin
+    try {
+        image = ImageIO.read(new File("src/Image/BackToMainMenu.png"));
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    g2.drawImage(image, 537, 508, 217, 60, this);
+    /*
+    try {
+        image = ImageIO.read(new File("src/Image/YOUWIN.png"));
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    g.drawImage(image, 0,0,1024,838, this);
+     */
+}
     public void showDefeat() {
+
         JPanel youdefeat = new DefeatPanel();
-        _BackWhenDefeat = new JButton(new ImageIcon("src/Image/BackToMainMenu.png"));
+        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
+        Image image = null;
+        Graphics g2 = images.createGraphics();
+        paintDefeat(g2) ;
+        _BackWhenDefeat = new JButton();
         Container cont = getContentPane();
         cont.add(youdefeat, BorderLayout.CENTER);
 
@@ -415,9 +451,28 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         youdefeat.setLayout(null);
         this.setBounds(0, 0, 1024, 838);
 
+
         this.setVisible(true);
     }
+    public void paintDefeat(Graphics g){
 
+        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
+        Image image = null;
+        Graphics g2 = images.createGraphics();
+        //画_BackToWhenWin
+        try {
+            image = ImageIO.read(new File("src/Image/BackToMainMenu.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        g2.drawImage(image, 515, 508, 217, 60,this);
+        try {
+            image = ImageIO.read(new File("src/Image/YOUDEFEAT.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        g.drawImage(image, 0,0,1024,838, this);
+    }
     /**
      * 绘制总生命
      */
@@ -675,4 +730,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             this.setCursor(null);
         }
     }
+
+
 }

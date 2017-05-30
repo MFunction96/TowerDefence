@@ -55,7 +55,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     private int squaresSize;
     /**
-     * 当焦点单位方格x坐标
+     * 当前焦点单位方格x坐标
      */
     private int focusX;
     /**
@@ -125,6 +125,11 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 判断是否画塔
      */
     private boolean _isdrawtower;
+    /**
+     * 绘制图片工具
+     */
+    Toolkit _tk;
+
     private Map map = new Map();
     GameController _gc;
 
@@ -150,10 +155,11 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//关闭线程;
         this.setVisible(true);
         this.setSize(1024, 838);
-        this.setLayout(null);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setBounds(64, 64, 1024, 838);
+        _tk=Toolkit.getDefaultToolkit();
+        Image img= _tk.createImage("src/Image/logo.png");
+        this.setIconImage(img);    //修改窗体默认图标
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置窗体关闭
+
 
         this.towerList = new ArrayList<>();
         this._caninstalltower = false;
@@ -161,6 +167,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.SetBackgroundMusic();
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
+
         _Stop = new JButton();
         _Stop.setVisible(true);
         _Stop.addActionListener(this);
@@ -561,13 +568,6 @@ public void paintWin(Graphics g){
      * @param g2 画笔
      */
     private void drawMonster(Graphics g2) {
-/*        LinkedList<Monster> monsterlist = _gc.getMonsterList();  //得到当前怪物的链表
-        for (int i = 0; i < monsterlist.size(); i++) {
-            Monster monster = monsterlist.get(i);  //得到链表中相应位置的怪物
-            if (monster != null) {             //如果有怪
-                monster.draw(g2);     //在表现层显示怪
-            }
-        }*/
         LinkedList<Monster> ml = _gc.Monsters();
         for (Monster monster : ml) {
             monster.draw(g2);
@@ -642,14 +642,18 @@ public void paintWin(Graphics g){
             this.dispose();
             new MainMenu();
         } else if (e.getSource() == _Stop) {
-            _gc.Pause();
+            try {
+                _gc.wait();
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (map.money() > new TwNormal().GetPrice() && focusX < 776 && normalTower.isSelected()) {
-            _gc.AddTower(new Point(e.getX(),e.getY()),new TwNormal());
+            _gc.AddTower(new Point(focusX,focusY),new TwNormal());
             if (SetMenu._isopenmusic) {
                 TowerInstallMusic m = new TowerInstallMusic();
                 m.start();

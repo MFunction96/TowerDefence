@@ -47,6 +47,7 @@ public class GameController extends Thread {
      */
     volatile ArrayDeque<Point> _sepath;
 
+
     /**
      * 构造游戏控制器
      *
@@ -118,8 +119,7 @@ public class GameController extends Thread {
         _mc.interrupt();
         _mongen.interrupt();
         //interrupt();
-        GameMenu gm = new GameMenu();
-        gm.showDefeat();
+        _gm.showDefeat();
     }
 
     /**

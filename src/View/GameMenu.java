@@ -101,10 +101,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     private List<Tower> towerList;
     /**
-     * 安装塔的位置
-     */
-    private List<Point> towerPoint;
-    /**
      *
      */
     private boolean drawTowerTools;
@@ -154,7 +150,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//关闭线程;
         this.setBounds(64, 64, 1024, 838);
 
-        this.towerPoint = new ArrayList<>();
         this.towerList = new ArrayList<>();
         this._caninstalltower = false;
         this.InitialTower();
@@ -175,7 +170,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         _return.setBounds(870, 630, 145, 40);
         _return.setBorderPainted(false);
         this.getContentPane().add(_return);
-        _gc = new GameController(map,this);
+        _gc = new GameController(map, this);
         init();
         Thread thread = new Thread(this);
         thread.start();
@@ -277,7 +272,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
         //画塔
         try {
-            drawTowers(g2, towerPoint, towerList);
+            drawTowers(g2);
         } catch (Exception e) {
             System.err.print("画塔失败");
 
@@ -435,13 +430,13 @@ public void paintWin(Graphics g){
     /**
      * 绘制防御塔
      */
-    private void drawTowers(Graphics g2, List<Point> towerLocation, List<Tower> tower) {
-        int pointLen = towerLocation.size();
+    private void drawTowers(Graphics g2) {
+/*        int pointLen = towerLocation.size();
         int towerLen = tower.size();
-        Point optPoint;
+        Point optPoint;*/
 
         Image image = new ImageIcon("src/Image/TwNormal.png").getImage();
-        for (int i = towerLen; i < pointLen; i++) {
+/*        for (int i = towerLen; i < pointLen; i++) {
             optPoint = new Point((towerLocation.get(i).x() / 64), (towerLocation.get(i).y()) / 64);
             if (normalTower.isSelected()) {
                 TwNormal twNormal = new TwNormal();
@@ -452,9 +447,10 @@ public void paintWin(Graphics g){
                 map.block(optPoint).AddTower();
 
             }
-        }
-        for (int i = 0; i < towerLen; i++) {
-            g2.drawImage(image, tower.get(i).GetSurfaceLocation().x(), tower.get(i).GetSurfaceLocation().y(), this);
+        }*/
+        LinkedList<Tower> ll = _gc.Towers();
+        for (Tower tower : ll) {
+            g2.drawImage(image, tower.GetSurfaceLocation().x(), tower.GetSurfaceLocation().y(), this);
         }
     }
 
@@ -503,8 +499,8 @@ public void paintWin(Graphics g){
                 monster.draw(g2);     //在表现层显示怪
             }
         }*/
-        LinkedList<Monster> ml = _gc.getMonsterList();
-        for (Monster monster : ml){
+        LinkedList<Monster> ml = _gc.Monsters();
+        for (Monster monster : ml) {
             monster.draw(g2);
         }
     }
@@ -568,15 +564,13 @@ public void paintWin(Graphics g){
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (_caninstalltower && map.money() > new TwNormal().GetPrice() && focusX < 776) {
-            Point newTowerPoint = new Point(focusX, focusY);
-            towerPoint.add(newTowerPoint);
-            if (SetMenu._isopenmusic == false) {
-            } else {
+        if (map.money() > new TwNormal().GetPrice() && focusX < 776 && normalTower.isSelected()) {
+            _gc.AddTower(new Point(e.getX(),e.getY()),new TwNormal());
+            if (SetMenu._isopenmusic) {
                 TowerInstallMusic m = new TowerInstallMusic();
                 m.start();
             }
-
+            normalTower.setSelected(false);
             repaint();
         }
 

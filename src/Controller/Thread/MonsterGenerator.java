@@ -1,6 +1,5 @@
 package Controller.Thread;
 
-import Model.BaseClass.Monster;
 import Model.Monster.*;
 
 /**
@@ -47,9 +46,9 @@ public class MonsterGenerator extends Thread {
         try {
             for (int i = 0; i < _total; i++) {
                 if (_montyp == 1) {
-                    _gc._monsters.addLast(new MonNormal(_gc._sepath.clone()));
+                    _gc._monsters.addLast(new MonNormal(_gc._spath.clone()));
                 } else if (_montyp == 2) {
-                    _gc._monsters.addLast(new MonGhost(_gc._sepath.clone()));
+                    _gc._monsters.addLast(new MonGhost(_gc._spath.clone()));
                 }
                 wait(_stime);
             }

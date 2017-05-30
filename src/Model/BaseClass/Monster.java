@@ -100,7 +100,7 @@ abstract public class Monster {
      *
      * @param ad 设置路径
      */
-    public void setPath(ArrayDeque<Point> ad) {
+    public void SetPath(ArrayDeque<Point> ad) {
         _ad = ad;
     }
 

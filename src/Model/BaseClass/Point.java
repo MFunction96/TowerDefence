@@ -56,18 +56,17 @@ public class Point {
      * @param p 表现层坐标
      * @return 业务层坐标
      */
-    public final Point SurConvOpt(final Point p) {
-        return new Point((p._x - 64) / 64, (p._y - 64) / 64);
+    public final Point SurConvOpt() {
+        return new Point((_x - 64) / 64, (_y - 64) / 64);
     }
 
     /**
      * 业务层坐标转换为业务层坐标
      *
-     * @param p 业务层坐标
      * @return 表现层坐标
      */
-    public final Point OptConvSur(final Point p) {
-        return new Point(p._x * 64 + 64, p._y * 64 + 64);
+    public final Point OptConvSur() {
+        return new Point(_x * 64 + 64, _y * 64 + 64);
     }
 
     /**

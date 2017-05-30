@@ -2,7 +2,6 @@ package Controller.Thread;
 
 import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import java.util.LinkedList;
 

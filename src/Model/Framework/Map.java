@@ -165,11 +165,11 @@ public class Map {
     /**
      * 获取砖块
      *
-     * @param l 砖块位置
+     * @param p 砖块位置
      * @return 指定位置砖块
      */
-    public Block block(Point l) {
-        return _blocks[l.y()][l.x()];
+    public Block block(Point p) {
+        return _blocks[p.y()][p.x()];
     }
 
     /**

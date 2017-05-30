@@ -25,7 +25,7 @@ public class MonGhost extends Monster {
         //显示怪的样子
         _ghost=Toolkit.getDefaultToolkit().getImage("src/Image/monster2.png");
         //设置怪物的路径
-        setPath(ad);
+        SetPath(ad);
     }
 
     /**

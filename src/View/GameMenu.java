@@ -152,11 +152,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.setLocationRelativeTo(null);//设置为集中显示
         this.setResizable(false);//设置不可改变窗体大小
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//关闭线程;
-        this.setVisible(true);
-        this.setSize(1024, 838);
-        this.setLayout(null);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(64, 64, 1024, 838);
 
         this.towerPoint = new ArrayList<>();
@@ -166,6 +161,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.SetBackgroundMusic();
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
+
         _Stop = new JButton();
         _Stop.setVisible(true);
         _Stop.addActionListener(this);
@@ -339,6 +335,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g2.fillRect(768, 768, 64, 64);
 
 
+
         g2.dispose();//在此函数前面调用g2画笔画其它图
 
 
@@ -378,34 +375,8 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 绘制你赢了或你输了标语
      */
     public void showWin() {
-        JPanel youwin = new WinPanel();
 
-        _Next = new JButton();
-        _BackWhenWin = new JButton();
-        Container cont = getContentPane();
-        cont.add(youwin, BorderLayout.CENTER);
-        youwin.add(_Next);
-        _Next.setBounds(510, 267, 217, 60);
-        _Next.setVisible(true);
-        _Next.addActionListener(this);
-        _Next.setBorderPainted(false);
-        this.getContentPane().add(_Next);
 
-        youwin.add(_BackWhenWin);
-        _BackWhenWin.setBounds(537, 508, 217, 60);
-        _BackWhenWin.setVisible(true);
-        _BackWhenWin.addActionListener(this);
-        _BackWhenWin.setBorderPainted(false);
-        this.getContentPane().add(_BackWhenWin);
-        youwin.setLocation(0, 0);
-        youwin.setLayout(null);
-        this.setBounds(0, 0, 1024, 838);
-        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-        Image image = null;
-        Graphics g2 = images.createGraphics();
-        paintWin(g2) ;
-
-        this.setVisible(true);
     }
 public void paintWin(Graphics g){
 
@@ -436,48 +407,8 @@ public void paintWin(Graphics g){
      */
 }
     public void showDefeat() {
-
-        JPanel youdefeat = new DefeatPanel();
-        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-        Image image = null;
-        Graphics g2 = images.createGraphics();
-        paintDefeat(g2) ;
-        _BackWhenDefeat = new JButton();
-        Container cont = getContentPane();
-        cont.add(youdefeat, BorderLayout.CENTER);
-
-        youdefeat.add(_BackWhenWin);
-        _BackWhenDefeat.setBounds(515, 508, 217, 60);
-        _BackWhenDefeat.setVisible(true);
-        _BackWhenDefeat.addActionListener(this);
-        _BackWhenDefeat.setBorderPainted(false);
-        this.getContentPane().add(_BackWhenDefeat);
-        youdefeat.setLocation(0, 0);
-        youdefeat.setLayout(null);
-        this.setBounds(0, 0, 1024, 838);
-
-
-        this.setVisible(true);
     }
-    public void paintDefeat(Graphics g){
 
-        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-        Image image = null;
-        Graphics g2 = images.createGraphics();
-        //画_BackToWhenWin
-        try {
-            image = ImageIO.read(new File("src/Image/BackToMainMenu.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        g2.drawImage(image, 515, 508, 217, 60,this);
-        try {
-            image = ImageIO.read(new File("src/Image/YOUDEFEAT.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        g.drawImage(image, 0,0,1024,838, this);
-    }
     /**
      * 绘制总生命
      */
@@ -621,21 +552,6 @@ public void paintWin(Graphics g){
         } else {
             drawMoney = true;
         }
-    }
-
-    private void noMoneyThread() {
-        new Thread() {
-            public void run() {
-                try {
-                    for (int i = 0; i < 4; i++) {
-                        setDrawMoney();
-                        Thread.sleep(100);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
     }
 
     public void mouseDragged(MouseEvent e) {

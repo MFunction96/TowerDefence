@@ -8,7 +8,8 @@ import java.util.ArrayDeque;
 import java.util.LinkedList;
 
 import View.GameMenu;
-
+import View.DefeatMenu ;
+import View.WinMenu ;
 import javax.swing.text.View;
 
 /**
@@ -88,7 +89,8 @@ public class GameController extends Thread {
         _mc.interrupt();
         _mongen.interrupt();
         interrupt();
-        _gm.showWin();
+        _gm.dispose() ;
+        new WinMenu() ;
     }
 
     /**
@@ -119,7 +121,8 @@ public class GameController extends Thread {
         _mc.interrupt();
         _mongen.interrupt();
         //interrupt();
-        _gm.showDefeat();
+        _gm.dispose() ;
+        new DefeatMenu() ;
     }
 
     /**

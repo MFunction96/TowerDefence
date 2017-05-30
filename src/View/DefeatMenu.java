@@ -32,10 +32,11 @@ public class DefeatMenu extends JFrame implements ActionListener, MouseMotionLis
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//关闭线程;
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
+
         init();
 
         _BackWhenDefeat = new JButton(new ImageIcon("src/Image/BackToMainMenu.png") );
-        _BackWhenDefeat .setVisible(true);
+        //_BackWhenDefeat .setVisible(true);
         _BackWhenDefeat .setBounds(400, 472, 217, 60);
         _BackWhenDefeat .addActionListener(this);
         _BackWhenDefeat .setBorderPainted(false);
@@ -65,7 +66,11 @@ public class DefeatMenu extends JFrame implements ActionListener, MouseMotionLis
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() ==_BackWhenDefeat  ){
+            this.dispose() ;
+            MainMenu aa= new MainMenu() ;
+            aa.setVisible(true) ;
+        }
     }
 
     @Override
@@ -80,10 +85,7 @@ public class DefeatMenu extends JFrame implements ActionListener, MouseMotionLis
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (e.getSource() ==_BackWhenDefeat  ){
-            this.dispose() ;
-            new MainMenu() ;
-        }
+
     }
 
     @Override
@@ -115,7 +117,5 @@ public class DefeatMenu extends JFrame implements ActionListener, MouseMotionLis
     public void run() {
 
     }
-    public static void main(String args[]){
-        new DefeatMenu() ;
-    }
+
 }

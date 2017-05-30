@@ -81,7 +81,14 @@ public void paint(Graphics g){
 }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() ==_Next )
+        {
 
+        }
+        else if (e.getSource() ==_BackWhenWin ){
+            this.dispose() ;
+            new MainMenu() ;
+        }
     }
 
     @Override
@@ -96,14 +103,7 @@ public void paint(Graphics g){
 
     @Override
     public void mousePressed(MouseEvent e) {
-    if(e.getSource() ==_Next )
-{
 
-}
-else if (e.getSource() ==_BackWhenWin ){
-    this.dispose() ;
-    new MainMenu() ;
-}
     }
 
     @Override

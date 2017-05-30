@@ -26,6 +26,10 @@ public class GameController extends Thread {
      * 当前生命值
      */
     private int _hp;
+    private GameMenu _gm;
+    private MonsterController _mc;
+    private AttackController _ac;
+    private MonsterGenerator _mongen;
     /**
      * 游戏地图
      */
@@ -38,27 +42,23 @@ public class GameController extends Thread {
      * 在场怪物
      */
     volatile LinkedList<Monster> _monsters;
-    volatile LinkedList<Monster> _surmonsters;
     /**
      *
      */
     volatile ArrayDeque<Point> _sepath;
-
-
-    volatile MonsterMoveController _mvc;
 
     /**
      * 构造游戏控制器
      *
      * @param map 地图
      */
-    public GameController(Map map) {
+    public GameController(Map map,GameMenu gm) {
         _map = map;
         _hp = _map.HP();
         _round = 0;
+        _gm = gm;
         _sepath = new ArrayDeque<>();
         _monsters = new LinkedList<>();
-        _surmonsters = new LinkedList<>();
         _pc = new PathController(this, _map.start(), _sepath);
         _pc.start();
     }
@@ -83,13 +83,26 @@ public class GameController extends Thread {
      * 游戏胜利
      */
     private void Win() {
-        new GameMenu().showWin();
+        _ac.interrupt();
+        _mc.interrupt();
+        _mongen.interrupt();
+        interrupt();
+        _gm.showWin();
     }
 
     /**
      * 游戏暂停
      */
     public void Pause() {
+        try {
+            _ac.wait();
+            _mc.wait();
+            _mongen.wait();
+            wait();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+
         try {
             wait();
         } catch (InterruptedException e) {
@@ -101,8 +114,12 @@ public class GameController extends Thread {
      * 游戏失败
      */
     public void Lose() {
-        GameMenu gameMenu = new GameMenu();
-        gameMenu.showDefeat();
+        _ac.interrupt();
+        _mc.interrupt();
+        _mongen.interrupt();
+        //interrupt();
+        GameMenu gm = new GameMenu();
+        gm.showDefeat();
     }
 
     /**
@@ -118,7 +135,7 @@ public class GameController extends Thread {
             }
             time++;
             if (_round <= _map.total() && _round >= 0 && time % _map.Period() == 0) {
-                MonsterGenerator _mongen = new MonsterGenerator(this, _round++);
+                _mongen = new MonsterGenerator(this, _round++);
                 _mongen.start();
             } else if (_monsters.size() == 0 && _round == _map.total()) {
                 Win();
@@ -128,22 +145,15 @@ public class GameController extends Thread {
                 break;
             }
             if (time > _map.Period()) {
-                AttackController _ac = new AttackController(this);
-                MonsterController _mc = new MonsterController(this);
+                _ac = new AttackController(this);
+                _mc = new MonsterController(this);
                 _ac.start();
-                //_mvc.start();
-                try {
-                    _mc.start();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    System.err.print(ex.getMessage() + ex.getLocalizedMessage());
-                }
-
+                _mc.start();
             }
         }
     }
 
     public LinkedList<Monster> getMonsterList() {
-        return _surmonsters;
+        return _monsters;
     }
 }

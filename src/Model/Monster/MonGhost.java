@@ -1,10 +1,8 @@
 package Model.Monster;
 
-import Controller.Thread.MonsterMoveController;
 import Model.BaseClass.*;
 
 import java.awt.*;
-import java.awt.Point;
 import java.util.ArrayDeque;
 
 /**

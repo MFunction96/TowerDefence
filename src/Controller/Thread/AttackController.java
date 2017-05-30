@@ -32,7 +32,7 @@ public class AttackController extends Thread {
      */
     public synchronized void run() {
         ArrayList<Monster> ad = new ArrayList<>();
-        for (Monster monster : _gc._surmonsters) {
+        for (Monster monster : _gc._monsters) {
             Block b = _gc._map.block(monster.GetOperationLocation());
             monster.Hurt(b.Attack(monster));
             if (monster.Gethp() <= 0) {

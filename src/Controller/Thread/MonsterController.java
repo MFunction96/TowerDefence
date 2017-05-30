@@ -2,6 +2,7 @@ package Controller.Thread;
 
 import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import java.util.LinkedList;
 
@@ -31,8 +32,9 @@ public class MonsterController extends Thread {
      * 怪物控制器主线程
      */
     public synchronized void run() {
-        if (_gc._surmonsters.size() > 0){
-            for (Monster monster : _gc._surmonsters) {
+        LinkedList<Monster> ll = new LinkedList<>();
+        if (_gc._monsters.size() > 0){
+            for (Monster monster : _gc._monsters) {
 
                 if (monster.PreMove() == _gc._map.end()) {
                     _gc._map.Damage();
@@ -40,6 +42,7 @@ public class MonsterController extends Thread {
                         _gc.Lose();
                         break;
                     }
+                    ll.addLast(monster);
                 }
 
                 LinkedList<Tower> tw = _gc._map.block(monster.GetOperationLocation()).GetAtkTw();
@@ -64,8 +67,8 @@ public class MonsterController extends Thread {
                 }
 
             }
-
-            for (Monster monster : _gc._surmonsters) {
+            _gc._monsters.removeAll(ll);
+            for (Monster monster : _gc._monsters) {
 
                 monster.SurfaceMove();
 
@@ -79,6 +82,5 @@ public class MonsterController extends Thread {
                 }
             }
         }
-
     }
 }

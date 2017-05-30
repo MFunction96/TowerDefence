@@ -2,31 +2,23 @@ package View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
-import javax.tools.Tool;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 
 import Controller.Thread.GameController;
-import Controller.Thread.MonsterMoveController;
 import Model.Audio.GameMusic;
-import Model.Audio.MenuMusic;
 import Model.Audio.TowerInstallMusic;
 import Model.BaseClass.*;
 import Model.Framework.Map;
-import Model.Map.Block;
 import Model.Tower.TwNormal;
 import Model.BaseClass.Point;
-
-import static java.awt.event.KeyEvent.VK_ESCAPE;
 
 
 /**
@@ -139,7 +131,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     private boolean _isdrawtower;
     private Map map = new Map();
     GameController _gc;
-    MonsterMoveController _mvc;
 
     ButtonGroup towerGroup;
     JRadioButton normalTower;
@@ -188,8 +179,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         _return.setBounds(870, 650, 145, 40);
         _return.setBorderPainted(false);
         this.getContentPane().add(_return);
-        _gc = new GameController(map);
-        _mvc = new MonsterMoveController(map, _gc);
+        _gc = new GameController(map,this);
         init();
         Thread thread = new Thread(this);
         thread.start();

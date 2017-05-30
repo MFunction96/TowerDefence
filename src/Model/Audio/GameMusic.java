@@ -11,7 +11,7 @@ public class GameMusic extends Thread{
             music=new MusicController("src/Audio/GameMusic.wav");
             music.start();
             try {
-                this.sleep(45000);
+                wait(45000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -20,7 +20,7 @@ public class GameMusic extends Thread{
     public void MusicSetting(boolean isOpen) {
         _isopen=isOpen;
         if(isOpen==false)
-            music.stop();
+            music.interrupt();
 
     }
 }

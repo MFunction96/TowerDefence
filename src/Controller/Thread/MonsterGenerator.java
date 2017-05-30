@@ -27,8 +27,6 @@ public class MonsterGenerator extends Thread {
      */
     private int _montyp;
 
-    volatile MonsterMoveController _mvc;
-
     /**
      * 怪物生成器构造函数
      *
@@ -49,24 +47,10 @@ public class MonsterGenerator extends Thread {
         try {
             for (int i = 0; i < _total; i++) {
                 if (_montyp == 1) {
-                    // _gc._monsters.addLast(new MonNormal(_gc._sepath));
-                    _gc._surmonsters.addLast(new MonNormal(_gc._sepath.clone()));
+                    _gc._monsters.addLast(new MonNormal(_gc._sepath.clone()));
                 } else if (_montyp == 2) {
-                    _gc._surmonsters.addLast(new MonGhost(_gc._sepath.clone()));
+                    _gc._monsters.addLast(new MonGhost(_gc._sepath.clone()));
                 }
-
-/*                if(_gc._surmonsters.size()<=5){
-                    for (int j = 0; j < _gc._surmonsters.size(); j++) {
-                        Monster monster = _gc._surmonsters.get(j);
-                        if (monster == null)
-                            break;
-                        else {
-                            monster.SurfaceMove();
-                            monster.OptMove();
-                            wait(100);
-                        }
-                    }
-                }*/
                 wait(_stime);
             }
 

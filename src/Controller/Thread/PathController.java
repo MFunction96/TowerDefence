@@ -10,7 +10,7 @@ import java.util.*;
  *
  * @author MFunction
  */
-public class PathController extends Thread {
+class PathController {
     /**
      * 搜索的起点
      */
@@ -19,11 +19,8 @@ public class PathController extends Thread {
      * 游戏控制器线程
      */
     private GameController _gc;
-    private ArrayDeque<Point> _ad;
-    private Point _dp[] = {new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)};
+    private final Point _dp[] = {new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)};
     private int[][] vis;
-
-    private final int INF = 0x7fffffff;
 
     /**
      * 线程类构造函数
@@ -31,10 +28,9 @@ public class PathController extends Thread {
      * @param gc 游戏控制器线程对象
      * @param p  搜索的怪物对象
      */
-    PathController(GameController gc, Point p, ArrayDeque<Point> ad) {
+    PathController(GameController gc, Point p) {
         _gc = gc;
         _p = p;
-        _ad = ad;
         vis = new int[30][30];
         for (int i = 0; i < 30; i++) {
             for (int j = 0; j < 30; j++) {
@@ -49,7 +45,7 @@ public class PathController extends Thread {
      * @param p 新坐标
      * @return 新坐标是否可前进
      */
-    private boolean CanGo(Point p) {
+    static boolean IsValid(Point p) {
         return p.x() >= 0 && p.y() >= 0 && p.x() < 12 && p.y() < 12;
     }
 
@@ -58,8 +54,10 @@ public class PathController extends Thread {
      *
      * @return 路径
      */
-    private ArrayDeque<Point> CalPath() {
+    ArrayDeque<Point> CalPath() {
+        final int INF = 0x7fffffff;
         boolean flag = false;
+        _gc._map.Reset();
         Queue<Point> q = new LinkedList<>();
         ArrayDeque<Point> ad = new ArrayDeque<>();
         q.offer(_p);
@@ -75,7 +73,7 @@ public class PathController extends Thread {
             Point p = q.poll();
             for (int i = 0; i < 4; i++) {
                 Point pp = p.Add(_dp[i]);
-                if (CanGo(pp) && vis[pp.y()][pp.x()] < 0) {
+                if (IsValid(pp) && vis[pp.y()][pp.x()] < 0) {
                     vis[pp.y()][pp.x()] = vis[p.y()][p.x()] + 1;
                     if (pp.Equal(_gc._map.end())) {
                         flag = true;
@@ -87,10 +85,11 @@ public class PathController extends Thread {
         }
         if (flag) {
             for (Point p = _gc._map.end(); !p.Equal(_gc._map.start()); ) {
+                _gc._map.block(p).SetPath();
                 ad.addFirst(p);
                 for (int i = 0; i < 4; i++) {
                     Point pp = p.Add(_dp[i]);
-                    if (CanGo(pp) && vis[pp.y()][pp.x()] == (vis[p.y()][p.x()] - 1)) {
+                    if (IsValid(pp) && vis[pp.y()][pp.x()] == (vis[p.y()][p.x()] - 1)) {
                         p = pp;
                         break;
                     }
@@ -98,15 +97,5 @@ public class PathController extends Thread {
             }
         }
         return ad;
-    }
-
-    /**
-     * 路径搜索主线程
-     */
-    public synchronized void run() {
-        ArrayDeque<Point> ad = CalPath();
-        while (!ad.isEmpty()) {
-            _ad.addLast(ad.removeFirst());
-        }
     }
 }

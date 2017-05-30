@@ -2,14 +2,13 @@ package Controller.Thread;
 
 import Model.BaseClass.Monster;
 import Model.BaseClass.Point;
+import Model.BaseClass.Tower;
 import Model.Framework.Map;
 
 import java.util.ArrayDeque;
 import java.util.LinkedList;
 
 import View.GameMenu;
-
-import javax.swing.text.View;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -29,7 +28,8 @@ public class GameController extends Thread {
     private GameMenu _gm;
     private MonsterController _mc;
     private AttackController _ac;
-    private MonsterGenerator _mongen;
+    private MonsterGenerator _monger;
+    private TowerController _tc;
     /**
      * 游戏地图
      */
@@ -37,30 +37,33 @@ public class GameController extends Thread {
     /**
      * 路径控制器线程组
      */
-    volatile PathController _pc;
+    private volatile PathController _pc;
     /**
      * 在场怪物
      */
     volatile LinkedList<Monster> _monsters;
+
+    volatile LinkedList<Tower> _towers;
     /**
      *
      */
-    volatile ArrayDeque<Point> _sepath;
+    volatile ArrayDeque<Point> _spath;
 
     /**
      * 构造游戏控制器
      *
      * @param map 地图
      */
-    public GameController(Map map,GameMenu gm) {
+    public GameController(Map map, GameMenu gm) {
         _map = map;
         _hp = _map.HP();
         _round = 0;
         _gm = gm;
-        _sepath = new ArrayDeque<>();
+        _spath = new ArrayDeque<>();
         _monsters = new LinkedList<>();
-        _pc = new PathController(this, _map.start(), _sepath);
-        _pc.start();
+        _towers = new LinkedList<>();
+        _pc = new PathController(this, _map.start());
+        _spath = _pc.CalPath();
     }
 
     /**
@@ -85,7 +88,7 @@ public class GameController extends Thread {
     private void Win() {
         _ac.interrupt();
         _mc.interrupt();
-        _mongen.interrupt();
+        _monger.interrupt();
         interrupt();
         _gm.showWin();
     }
@@ -97,9 +100,10 @@ public class GameController extends Thread {
         try {
             _ac.wait();
             _mc.wait();
-            _mongen.wait();
+            _monger.wait();
+            _pc.wait();
             wait();
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -113,10 +117,10 @@ public class GameController extends Thread {
     /**
      * 游戏失败
      */
-    public void Lose() {
+    void Lose() {
         _ac.interrupt();
         _mc.interrupt();
-        _mongen.interrupt();
+        _monger.interrupt();
         //interrupt();
         GameMenu gm = new GameMenu();
         gm.showDefeat();
@@ -135,8 +139,8 @@ public class GameController extends Thread {
             }
             time++;
             if (_round <= _map.total() && _round >= 0 && time % _map.Period() == 0) {
-                _mongen = new MonsterGenerator(this, _round++);
-                _mongen.start();
+                _monger = new MonsterGenerator(this, _round++);
+                _monger.start();
             } else if (_monsters.size() == 0 && _round == _map.total()) {
                 Win();
                 break;
@@ -153,7 +157,18 @@ public class GameController extends Thread {
         }
     }
 
-    public LinkedList<Monster> getMonsterList() {
+    public LinkedList<Monster> Monsters() {
         return _monsters;
+    }
+
+    public LinkedList<Tower> Towers() {
+        return _towers;
+    }
+
+    public void AddTower(Point p, Tower tower) {
+        tower.SetTower(p, p.SurConvOpt());
+        _tc = new TowerController(this, p.SurConvOpt(), tower);
+        _tc.setPriority(10);
+        _tc.start();
     }
 }

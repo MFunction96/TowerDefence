@@ -53,7 +53,8 @@ public class Block {
         _optlocation = operationPoint;
         _canpass = pass;
         _ispath = isPath;
-        _atktw =  new LinkedList<>();
+        _atktw = new LinkedList<>();
+        _tower = null;
     }
 
     public LinkedList<Tower> GetAtkTw() {
@@ -114,23 +115,21 @@ public class Block {
 
     /**
      * 更新
-     *
-     * @param isPath 更新的路径
      */
-    public void Update(boolean isPath) {
-        _ispath = isPath;
+    public void SetPath() {
+        _ispath = true;
     }
 
     /**
      * 在模块上安装塔
-     *
-     *
      */
-    public  void AddTower( ) {
+    public void AddTower(Tower tower) {
+        _atktw.addLast(tower);
+    }
+    public void SetTower() {
         _canpass = false;
         _ispath = false;
     }
-
     /**
      * 摧毁当前模块的塔
      */

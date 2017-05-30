@@ -56,22 +56,23 @@ abstract public class Tower {
     /**
      * 攻击目标
      */
-     protected Monster _target;
+    protected Monster _target;
 
     /**
      * 标记塔是否可用
      */
-    protected  boolean _canattack;
+    protected boolean _canattack;
 
     /**
      * 构造基础塔
-     *  @param name              塔的名称
-     * @param level             塔的等级
-     * @param damage            塔的伤害值
-     * @param price             塔的价格
-     * @param upgradePrice      塔的升级价格
-     * @param upgradeTime       塔的升级时间
-     * @param attackArea        塔的攻击范围
+     *
+     * @param name         塔的名称
+     * @param level        塔的等级
+     * @param damage       塔的伤害值
+     * @param price        塔的价格
+     * @param upgradePrice 塔的升级价格
+     * @param upgradeTime  塔的升级时间
+     * @param attackArea   塔的攻击范围
      */
     public Tower(String name, int level, int damage, int price, int upgradePrice, int upgradeTime, int attackArea) {
         _name = name;
@@ -82,35 +83,38 @@ abstract public class Tower {
         _upprice = upgradePrice;
         _uptime = upgradeTime;
         _atkarea = attackArea;
-        _canattack=false;
+        _canattack = false;
     }
 
 
     /**
      * 塔被放置后，调用此函数，设置塔的表现层和业务层坐标，并设置塔的状态为攻击。
-      * @param surfacelocation
+     *
+     * @param surfacelocation
      * @param optlocation
      */
-    public void SetTower(Point surfacelocation, Point optlocation){
-        _surflocation=surfacelocation;
-        _optlocation=optlocation;
-        _canattack=true;
+    public void SetTower(Point surfacelocation, Point optlocation) {
+        _surflocation = surfacelocation;
+        _optlocation = optlocation;
+        _canattack = true;
     }
 
     /**
      * 获取攻击目标
+     *
      * @return 攻击目标
      */
-    public Monster GetTarget(){
+    public Monster GetTarget() {
         return _target;
     }
+
     /**
      * 设置塔的攻击目标
      *
      * @param target
      */
-    public void SetTarget(Monster target){
-        _target=target;
+    public void SetTarget(Monster target) {
+        _target = target;
     }
 
     /**
@@ -198,9 +202,8 @@ abstract public class Tower {
      * 获取塔的UI位置
      *
      * @return 返回塔的UI位置
-     *
      */
-    public final Point GetSurfaceLocation( ) {
+    public final Point GetSurfaceLocation() {
         return _surflocation;
     }
 
@@ -215,15 +218,18 @@ abstract public class Tower {
 
     /**
      * 获取塔的状态
+     *
      * @return
      */
-    public final boolean GetCanAttack(){return _canattack;}
+    public final boolean GetCanAttack() {
+        return _canattack;
+    }
 
     /**
      * 提升塔的等级,此时,塔不能攻击目标
      */
     public void Upgrade() {
-        _canattack=false;
+        _canattack = false;
         _level++;
         _damage *= 2;
         _uptime *= 2;

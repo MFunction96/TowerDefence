@@ -123,7 +123,8 @@ public class GameController extends Thread {
         _mc.interrupt();
         _monger.interrupt();
         //interrupt();
-        _gm.showDefeat();
+        GameMenu gm = new GameMenu();
+        gm.showDefeat();
     }
 
     /**

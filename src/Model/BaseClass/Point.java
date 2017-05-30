@@ -53,7 +53,6 @@ public class Point {
     /**
      * 表现层坐标转换为业务层坐标
      *
-     * @param p 表现层坐标
      * @return 业务层坐标
      */
     public final Point SurConvOpt() {

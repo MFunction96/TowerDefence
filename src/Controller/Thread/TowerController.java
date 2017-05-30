@@ -32,7 +32,7 @@ public class TowerController extends Thread {
         final Point dp[] = {new Point(-1, -1), new Point(-1, 0), new Point(-1, 1), new Point(0, -1), new Point(0, 1), new Point(1, -1), new Point(1, 0), new Point(1, 1)};
         try {
             _gc._map.block(_p).AddTower(_tower);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -70,7 +70,7 @@ public class Map {
         _start = new Point(0, 0);
         _end = new Point(11, 11);
         _period = 10;
-        for (int i = 0,j=1; i <2 ; i++,j++) {
+        for (int i = 0, j = 1; i < 2; i++, j++) {
             _monster[i] = j;
         }
 
@@ -199,9 +199,10 @@ public class Map {
 
     /**
      * 周期时间
+     *
      * @return 周期时间
      */
-    public int Period(){
+    public int Period() {
         return _period;
     }
 

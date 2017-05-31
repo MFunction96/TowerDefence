@@ -106,7 +106,7 @@ public class Block {
     public int Attack(Monster monster) {
         int damage = 0;
         for (Tower tw : _atktw) {
-            if (tw.GetTarget().GetUUID() == monster.GetUUID()) {
+            if (tw.GetTarget() == monster) {
                 damage += tw.GetDamage();
             }
         }

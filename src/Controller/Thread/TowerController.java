@@ -31,7 +31,7 @@ public class TowerController extends Thread {
     public synchronized void run() {
         final Point dp[] = {new Point(-1, -1), new Point(-1, 0), new Point(-1, 1), new Point(0, -1), new Point(0, 1), new Point(1, -1), new Point(1, 0), new Point(1, 1)};
         try {
-            _gc._map.block(_p).AddTower(_tower);
+            _gc._map.block(_p).SetTower(_tower);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,11 +44,16 @@ public class TowerController extends Thread {
                 _gc._map.block(pp).AddTower(_tower);
             }
         }
-        _gc._map.Reset();
-        LinkedList<Monster> monsters = _gc.Monsters();
-        for (Monster monster : monsters) {
-            PathController _pc = new PathController(_gc, monster.GetOperationLocation());
-            monster.SetPath(_pc.CalPath());
+        if (_gc._map.block(_p).IsPath())
+        {
+            _gc._map.Reset();
+            PathController _pc = new PathController(_gc, _gc._map.start());
+            _gc._spath = _pc.CalPath();
+            LinkedList<Monster> monsters = _gc.Monsters();
+            for (Monster monster : monsters) {
+                _pc = new PathController(_gc, monster.GetOperationLocation());
+                monster.SetPath(new LinkedList<>(_pc.CalPath()));
+            }
         }
     }
 }

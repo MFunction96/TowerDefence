@@ -120,7 +120,9 @@ public class Block {
         _ispath = a;
     }
 
-    public void SetCanPass(boolean a){_canpass=a;}
+    public void SetCanPass(boolean a) {
+        _canpass = a;
+    }
 
     /**
      * 在模块上安装塔
@@ -129,7 +131,8 @@ public class Block {
         _atktw.addLast(tower);
     }
 
-    public void SetTower() {
+    public void SetTower(Tower tower) {
+        _tower = tower;
         _canpass = false;
         _ispath = false;
     }

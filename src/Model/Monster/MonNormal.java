@@ -5,6 +5,7 @@ import Model.BaseClass.Point;
 
 import java.awt.*;
 import java.util.ArrayDeque;
+import java.util.LinkedList;
 
 /**
  * Created by MFunction on 2017/4/19.
@@ -22,7 +23,7 @@ public class MonNormal extends Monster {
      *
      * @param ad 路径
      */
-    public MonNormal(ArrayDeque<Point> ad) {
+    public MonNormal(LinkedList<Point> ad) {
         //初始化父类
         super("普通怪", 5, 1, 1, 5, 2, 2, new Point(64, 64), new Point(0, 0));
         _nomal = Toolkit.getDefaultToolkit().getImage("src/Image/MonNormal.png");//得到怪物的图片

@@ -1,9 +1,11 @@
 package Model.Monster;
 
 import Model.BaseClass.*;
+import Model.BaseClass.Point;
 
 import java.awt.*;
 import java.util.ArrayDeque;
+import java.util.LinkedList;
 
 /**
  * Created by Chris Young on 2017/6/4.
@@ -19,7 +21,7 @@ public class MonPink extends Monster{
      *
      * @param ad 怪物的路径
      */
-    public MonPink(ArrayDeque<Model.BaseClass.Point> ad) {
+    public MonPink(LinkedList<Point> ad) {
         //初始化父类
         super("粉怪", 6, 4, 1, 5, 2, 2, new Model.BaseClass.Point(64, 64), new Model.BaseClass.Point(0, 0));
         //显示怪的样子

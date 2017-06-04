@@ -1,6 +1,9 @@
 package Controller.Thread;
 
+import Model.BaseClass.Point;
 import Model.Monster.*;
+
+import java.util.LinkedList;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -46,13 +49,13 @@ public class MonsterGenerator extends Thread {
         try {
             for (int i = 0; i < _total; i++) {
                 if (_montyp == 1) {
-                    _gc._monsters.addLast(new MonNormal(_gc._spath.clone()));
+                    _gc._monsters.addLast(new MonNormal(new LinkedList<>(_gc._spath)));
                 } else if (_montyp == 2) {
-                    _gc._monsters.addLast(new MonGhost(_gc._spath.clone()));
-                }else if(_montyp==3){
-                    _gc._monsters.addLast(new MonBlue(_gc._spath.clone()));
-                }else if(_montyp==4){
-                    _gc._monsters.addLast(new MonPink(_gc._spath.clone()));
+                    _gc._monsters.addLast(new MonGhost(new LinkedList<>(_gc._spath)));
+                } else if (_montyp == 3) {
+                    _gc._monsters.addLast(new MonBlue(new LinkedList<>(_gc._spath)));
+                } else if (_montyp == 4) {
+                    _gc._monsters.addLast(new MonPink(new LinkedList<>(_gc._spath)));
                 }
                 wait(_stime);
             }

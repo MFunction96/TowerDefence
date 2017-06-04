@@ -5,7 +5,6 @@ import Model.BaseClass.Point;
 import Model.BaseClass.Tower;
 import Model.Framework.Map;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 
 import View.DefeatMenu;
@@ -49,7 +48,7 @@ public class GameController extends Thread {
     /**
      *
      */
-    volatile ArrayDeque<Point> _spath;
+    volatile LinkedList<Point> _spath;
 
 
     /**
@@ -62,7 +61,7 @@ public class GameController extends Thread {
         _hp = _map.HP();
         _round = 0;
         _gm = gm;
-        _spath = new ArrayDeque<>();
+        _spath = new LinkedList<>();
         _monsters = new LinkedList<>();
         _towers = new LinkedList<>();
         _pc = new PathController(this, _map.start());

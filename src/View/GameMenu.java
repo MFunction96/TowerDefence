@@ -155,8 +155,8 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//关闭线程;
         this.setVisible(true);
         this.setSize(1024, 838);
-        _tk=Toolkit.getDefaultToolkit();
-        Image img= _tk.createImage("src/Image/logo.png");
+        _tk = Toolkit.getDefaultToolkit();
+        Image img = _tk.createImage("src/Image/logo.png");
         this.setIconImage(img);    //修改窗体默认图标
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置窗体关闭
 
@@ -341,23 +341,23 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         g2.fillRect(768, 768, 64, 64);//终点
 
         g2.setColor(Color.lightGray);
-        for(int i=1;i<5;i++){
-            g2.fillRect(64,64*(i+2),60,60);
+        for (int i = 1; i < 5; i++) {
+            g2.fillRect(64, 64 * (i + 2), 60, 60);
         }
-        for(int i=1;i<4;i++){
-            g2.fillRect(194,64*i,60,60);
+        for (int i = 1; i < 4; i++) {
+            g2.fillRect(194, 64 * i, 60, 60);
         }
-        for(int i=3;i<7;i++){
-            g2.fillRect(64*i,576,60,60);
+        for (int i = 3; i < 7; i++) {
+            g2.fillRect(64 * i, 576, 60, 60);
         }
-        for(int i=7;i<12;i++){
-            g2.fillRect(64*i,768,60,60);
+        for (int i = 7; i < 12; i++) {
+            g2.fillRect(64 * i, 768, 60, 60);
         }
-        for(int i=6;i<10;i++){
-            g2.fillRect(64*i,192,60,60);
+        for (int i = 6; i < 10; i++) {
+            g2.fillRect(64 * i, 192, 60, 60);
         }
-        for(int i=4;i<7;i++){
-            g2.fillRect(576,64*i,60,60);
+        for (int i = 4; i < 7; i++) {
+            g2.fillRect(576, 64 * i, 60, 60);
         }
 
 
@@ -425,29 +425,30 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
         Image image = null;
         Graphics g2 = images.createGraphics();
-        paintWin(g2) ;
+        paintWin(g2);
 
         this.setVisible(true);
     }
-public void paintWin(Graphics g){
 
-    BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-    Image image = null;
-    Graphics g2 = images.createGraphics();
-    //画_Next
-    try {
-        image = ImageIO.read(new File("src/Image/NExtGame.png"));
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    g2.drawImage(image, 510, 267, 217, 60, this);
-    //画_BackToWhenWin
-    try {
-        image = ImageIO.read(new File("src/Image/BackToMainMenu.png"));
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    g2.drawImage(image, 537, 508, 217, 60, this);
+    public void paintWin(Graphics g) {
+
+        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
+        Image image = null;
+        Graphics g2 = images.createGraphics();
+        //画_Next
+        try {
+            image = ImageIO.read(new File("src/Image/NExtGame.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        g2.drawImage(image, 510, 267, 217, 60, this);
+        //画_BackToWhenWin
+        try {
+            image = ImageIO.read(new File("src/Image/BackToMainMenu.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        g2.drawImage(image, 537, 508, 217, 60, this);
     /*
     try {
         image = ImageIO.read(new File("src/Image/YOUWIN.png"));
@@ -456,7 +457,7 @@ public void paintWin(Graphics g){
     }
     g.drawImage(image, 0,0,1024,838, this);
      */
-}
+    }
 
     /**
      * 绘制总生命
@@ -631,7 +632,7 @@ public void paintWin(Graphics g){
     @Override
     public void mouseClicked(MouseEvent e) {
         if (map.money() > new TwNormal().GetPrice() && focusX < 776 && normalTower.isSelected()) {
-            _gc.AddTower(new Point(focusX,focusY),new TwNormal());
+            _gc.AddTower(new Point(focusX, focusY), new TwNormal());
             if (SetMenu._isopenmusic) {
                 TowerInstallMusic m = new TowerInstallMusic();
                 m.start();

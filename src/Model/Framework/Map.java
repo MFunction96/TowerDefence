@@ -5,6 +5,7 @@ import Model.BaseClass.Monster;
 import Model.BaseClass.Tower;
 import Model.Map.Block;
 import Model.Monster.MonNormal;
+import Model.Tower.NonTower;
 import Model.Tower.TwNormal;
 
 import java.util.LinkedList;
@@ -71,7 +72,7 @@ public class Map {
         _end = new Point(11, 11);
         _period = 10;
         for (int i = 0; i < 4; i++) {
-            _monster[i] = i+1;
+            _monster[i] = i + 1;
         }
 
         for (int i = 0, y = 1; i < 12; i++, y++) {
@@ -80,34 +81,28 @@ public class Map {
             }
         }
 
-        for(int i=1;i<5;i++){
-            _blocks[i][0].SetPath(false);
-            _blocks[i][0].SetCanPass(false);
+        for (int i = 2; i < 6; i++) {
+            _blocks[i][0].SetTower(new NonTower());
         }
 
-        for(int i=0;i<3;i++){
-            _blocks[i][2].SetPath(false);
-            _blocks[i][2].SetCanPass(false);
+        for (int i = 0; i < 3; i++) {
+            _blocks[i][2].SetTower(new NonTower());
         }
 
-        for(int i=2;i<6;i++){
-            _blocks[8][i].SetPath(false);
-            _blocks[8][i].SetCanPass(false);
+        for (int i = 2; i < 6; i++) {
+            _blocks[8][i].SetTower(new NonTower());
         }
 
-        for(int i=6;i<10;i++){
-            _blocks[11][i].SetPath(false);
-            _blocks[11][i].SetCanPass(false);
+        for (int i = 5; i < 11; i++) {
+            _blocks[11][i].SetTower(new NonTower());
         }
 
-        for(int i=5;i<9;i++){
-            _blocks[2][i].SetPath(false);
-            _blocks[2][i].SetCanPass(false);
+        for (int i = 5; i < 9; i++) {
+            _blocks[2][i].SetTower(new NonTower());
         }
 
-        for(int i=3;i<6;i++){
-            _blocks[i][8].SetPath(false);
-            _blocks[i][8].SetCanPass(false);
+        for (int i = 3; i < 6; i++) {
+            _blocks[i][8].SetTower(new NonTower());
         }
     }
 

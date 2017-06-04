@@ -1,9 +1,11 @@
 package Model.Monster;
 
 import Model.BaseClass.*;
+import Model.BaseClass.Point;
 
 import java.awt.*;
 import java.util.ArrayDeque;
+import java.util.LinkedList;
 
 /**
  * Created by Chris Young on 2017/5/29.
@@ -19,7 +21,7 @@ public class MonGhost extends Monster {
      *
      * @param ad 怪物的路径
      */
-    public MonGhost(ArrayDeque<Model.BaseClass.Point> ad) {
+    public MonGhost(LinkedList<Point> ad) {
         //初始化父类
         super("鬼", 6, 2, 1, 5, 2, 2, new Model.BaseClass.Point(64, 64), new Model.BaseClass.Point(0, 0));
         //显示怪的样子

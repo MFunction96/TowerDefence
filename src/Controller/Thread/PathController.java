@@ -32,11 +32,6 @@ class PathController {
         _gc = gc;
         _p = p;
         vis = new int[30][30];
-        for (int i = 0; i < 30; i++) {
-            for (int j = 0; j < 30; j++) {
-                vis[i][j] = -1;
-            }
-        }
     }
 
     /**
@@ -54,14 +49,18 @@ class PathController {
      *
      * @return 路径
      */
-    ArrayDeque<Point> CalPath() {
+    LinkedList<Point> CalPath() {
         final int INF = 0x7fffffff;
         boolean flag = false;
         _gc._map.Reset();
-        Queue<Point> q = new LinkedList<>();
-        ArrayDeque<Point> ad = new ArrayDeque<>();
-        q.offer(_p);
-        vis[_p.y()][_p.x()] = 0;
+        LinkedList<Point> q = new LinkedList<>();
+        LinkedList<Point> ad = new LinkedList<>();
+        q.addLast(_p);
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                vis[i][j] = -1;
+            }
+        }
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 12; j++) {
                 if (!_gc._map.block(new Point(j, i)).CanPass()) {
@@ -69,8 +68,9 @@ class PathController {
                 }
             }
         }
+        vis[_p.y()][_p.x()] = 0;
         while (!q.isEmpty()) {
-            Point p = q.poll();
+            Point p = q.removeFirst();
             for (int i = 0; i < 4; i++) {
                 Point pp = p.Add(_dp[i]);
                 if (IsValid(pp) && vis[pp.y()][pp.x()] < 0) {
@@ -79,8 +79,11 @@ class PathController {
                         flag = true;
                         break;
                     }
-                    q.offer(pp);
+                    q.addLast(pp);
                 }
+            }
+            if (flag) {
+                break;
             }
         }
         if (flag) {

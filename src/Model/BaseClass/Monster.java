@@ -3,7 +3,7 @@ package Model.BaseClass;
 import Model.Framework.Map;
 
 import java.awt.*;
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.UUID;
 
 /**
@@ -58,7 +58,7 @@ abstract public class Monster {
     /**
      * 怪物行进路径
      */
-    protected ArrayDeque<Point> _ad;
+    protected LinkedList<Point> _ad;
     /**
      * 地图信息
      */
@@ -92,7 +92,7 @@ abstract public class Monster {
         _upprice = upgradePrice;
         _uphp = upgradehp;
         _hp = _curhp = hp;
-        _ad = new ArrayDeque<>();
+        _ad = new LinkedList<>();
     }
 
     /**
@@ -100,7 +100,7 @@ abstract public class Monster {
      *
      * @param ad 设置路径
      */
-    public void SetPath(ArrayDeque<Point> ad) {
+    public void SetPath(LinkedList<Point> ad) {
         _ad = ad;
     }
 
@@ -257,7 +257,7 @@ abstract public class Monster {
      *
      * @param ad 行进路径
      */
-    public void UpdatePath(ArrayDeque<Point> ad) {
+    public void UpdatePath(LinkedList<Point> ad) {
         _ad = ad;
     }
 

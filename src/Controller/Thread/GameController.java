@@ -8,7 +8,9 @@ import Model.Framework.Map;
 import java.util.ArrayDeque;
 import java.util.LinkedList;
 
+import View.DefeatMenu;
 import View.GameMenu;
+import View.WinMenu;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -91,7 +93,7 @@ public class GameController extends Thread {
         _mc.interrupt();
         _monger.interrupt();
         interrupt();
-        _gm.showWin();
+        new WinMenu(_gm);
     }
 
     /**
@@ -122,9 +124,9 @@ public class GameController extends Thread {
         _ac.interrupt();
         _mc.interrupt();
         _monger.interrupt();
-        //interrupt();
-        GameMenu gm = new GameMenu();
-        gm.showDefeat();
+        new DefeatMenu(_gm);
+        interrupt();
+
     }
 
     /**

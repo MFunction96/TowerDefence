@@ -24,8 +24,8 @@ public class MonNormal extends Monster {
      */
     public MonNormal(ArrayDeque<Point> ad) {
         //初始化父类
-        super("蘑菇怪", 5, 1, 1, 5, 2, 2, new Point(64, 64), new Point(0, 0));
-        _nomal = Toolkit.getDefaultToolkit().getImage("src/Image/NormalMonster.png");//得到怪物的图片
+        super("普通怪", 5, 1, 1, 5, 2, 2, new Point(64, 64), new Point(0, 0));
+        _nomal = Toolkit.getDefaultToolkit().getImage("src/Image/MonNormal.png");//得到怪物的图片
         SetPath(ad);
     }
 

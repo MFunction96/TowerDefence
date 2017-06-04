@@ -25,7 +25,7 @@ public class Map {
     /**
      * 怪物信息
      */
-    private int[] _monster = new int[2];
+    private int[] _monster = new int[4];
     /**
      * 塔信息
      */
@@ -70,14 +70,44 @@ public class Map {
         _start = new Point(0, 0);
         _end = new Point(11, 11);
         _period = 10;
-        for (int i = 0, j = 1; i < 2; i++, j++) {
-            _monster[i] = j;
+        for (int i = 0; i < 4; i++) {
+            _monster[i] = i+1;
         }
 
         for (int i = 0, y = 1; i < 12; i++, y++) {
             for (int j = 0, x = 1; j < 12; j++, x++) {
                 _blocks[i][j] = new Block(new Point(y * 64, x * 64), new Point(j, i), true, false);
             }
+        }
+
+        for(int i=1;i<5;i++){
+            _blocks[i][0].SetPath(false);
+            _blocks[i][0].SetCanPass(false);
+        }
+
+        for(int i=0;i<3;i++){
+            _blocks[i][2].SetPath(false);
+            _blocks[i][2].SetCanPass(false);
+        }
+
+        for(int i=2;i<6;i++){
+            _blocks[8][i].SetPath(false);
+            _blocks[8][i].SetCanPass(false);
+        }
+
+        for(int i=6;i<10;i++){
+            _blocks[11][i].SetPath(false);
+            _blocks[11][i].SetCanPass(false);
+        }
+
+        for(int i=5;i<9;i++){
+            _blocks[2][i].SetPath(false);
+            _blocks[2][i].SetCanPass(false);
+        }
+
+        for(int i=3;i<6;i++){
+            _blocks[i][8].SetPath(false);
+            _blocks[i][8].SetCanPass(false);
         }
     }
 

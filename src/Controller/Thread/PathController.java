@@ -85,7 +85,7 @@ class PathController {
         }
         if (flag) {
             for (Point p = _gc._map.end(); !p.Equal(_gc._map.start()); ) {
-                _gc._map.block(p).SetPath();
+                _gc._map.block(p).SetPath(true);
                 ad.addFirst(p);
                 for (int i = 0; i < 4; i++) {
                     Point pp = p.Add(_dp[i]);

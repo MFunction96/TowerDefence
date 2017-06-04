@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by hlys on 2017/5/29.
  */
-     public class WinMenu extends JFrame implements ActionListener, MouseMotionListener, MouseListener, ItemListener, Runnable {
+     public class WinMenu extends JFrame implements ActionListener{
     /**
      * 窗体宽
      */
@@ -28,7 +28,8 @@ import java.util.List;
     private int h;
     JButton _Next ;
     JButton _BackWhenWin ;
-    public WinMenu(){
+    GameMenu _gm;
+    public WinMenu( GameMenu gm){
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
         this.setSize(1024, 838);//设置窗体大小
@@ -38,11 +39,6 @@ import java.util.List;
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//关闭线程;
         this.setVisible(true);
         this.setSize(1024, 838);
-        this.setLayout(null);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.addMouseMotionListener(this);
-        this.addMouseListener(this);
         init();
         _Next = new JButton(new ImageIcon("src/image/NextGame.png") );
         _BackWhenWin = new JButton(new ImageIcon("src/image/BackToMainMenu.png") );
@@ -51,6 +47,7 @@ import java.util.List;
         _Next.addActionListener(this);
         _Next.setBorderPainted(false);
         this.getContentPane().add(_Next);
+        _gm=gm;
 
 
         _BackWhenWin.setBounds(527, 471, 217, 60);
@@ -69,7 +66,7 @@ public void paint(Graphics g){
     BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
     Image image = null;
     Graphics g2 = images.createGraphics();
-    //画地图
+
     try {
         image = ImageIO.read(new File("src/Image/YOUWIN.png"));
     } catch (Exception e) {
@@ -87,55 +84,10 @@ public void paint(Graphics g){
         }
         else if (e.getSource() ==_BackWhenWin ){
             this.dispose() ;
+            _gm.dispose();
             new MainMenu() ;
         }
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
 
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
-
-    @Override
-    public void run() {
-
-    }
-    public static void main(String args[]){
-        new WinMenu() ;
-    }
 }

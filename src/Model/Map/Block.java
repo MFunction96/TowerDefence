@@ -116,9 +116,11 @@ public class Block {
     /**
      * 更新
      */
-    public void SetPath() {
-        _ispath = true;
+    public void SetPath(boolean a) {
+        _ispath = a;
     }
+
+    public void SetCanPass(boolean a){_canpass=a;}
 
     /**
      * 在模块上安装塔

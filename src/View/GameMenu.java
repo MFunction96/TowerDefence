@@ -336,9 +336,29 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         drawLife(g2);
         drawRound(g2);
         g2.setColor(Color.CYAN);
-        g2.fillRect(64, 64, 64, 64);
+        g2.fillRect(64, 64, 64, 64);  //起点
         g2.setColor(Color.red);
-        g2.fillRect(768, 768, 64, 64);
+        g2.fillRect(768, 768, 64, 64);//终点
+
+        g2.setColor(Color.lightGray);
+        for(int i=1;i<5;i++){
+            g2.fillRect(64,64*(i+2),60,60);
+        }
+        for(int i=1;i<4;i++){
+            g2.fillRect(194,64*i,60,60);
+        }
+        for(int i=3;i<7;i++){
+            g2.fillRect(64*i,576,60,60);
+        }
+        for(int i=7;i<12;i++){
+            g2.fillRect(64*i,768,60,60);
+        }
+        for(int i=6;i<10;i++){
+            g2.fillRect(64*i,192,60,60);
+        }
+        for(int i=4;i<7;i++){
+            g2.fillRect(576,64*i,60,60);
+        }
 
 
         g2.dispose();//在此函数前面调用g2画笔画其它图
@@ -437,49 +457,7 @@ public void paintWin(Graphics g){
     g.drawImage(image, 0,0,1024,838, this);
      */
 }
-    public void showDefeat() {
 
-        JPanel youdefeat = new DefeatPanel();
-        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-        Image image = null;
-        Graphics g2 = images.createGraphics();
-        paintDefeat(g2) ;
-        _BackWhenDefeat = new JButton();
-        Container cont = getContentPane();
-        cont.add(youdefeat, BorderLayout.CENTER);
-
-        youdefeat.add(_BackWhenWin);
-        _BackWhenDefeat.setBounds(515, 508, 217, 60);
-        _BackWhenDefeat.setVisible(true);
-        _BackWhenDefeat.addActionListener(this);
-        _BackWhenDefeat.setBorderPainted(false);
-        this.getContentPane().add(_BackWhenDefeat);
-        youdefeat.setLocation(0, 0);
-        youdefeat.setLayout(null);
-        this.setBounds(0, 0, 1024, 838);
-
-
-        this.setVisible(true);
-    }
-    public void paintDefeat(Graphics g){
-
-        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-        Image image = null;
-        Graphics g2 = images.createGraphics();
-        //画_BackToWhenWin
-        try {
-            image = ImageIO.read(new File("src/Image/BackToMainMenu.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        g2.drawImage(image, 515, 508, 217, 60,this);
-        try {
-            image = ImageIO.read(new File("src/Image/YOUDEFEAT.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        g.drawImage(image, 0,0,1024,838, this);
-    }
     /**
      * 绘制总生命
      */
@@ -595,7 +573,7 @@ public void paintWin(Graphics g){
     }
 
     /**
-     * 据说是刷新图片的线程
+     * 刷新图片的线程
      */
     public void run() {
         try {

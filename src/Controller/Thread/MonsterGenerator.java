@@ -49,6 +49,10 @@ public class MonsterGenerator extends Thread {
                     _gc._monsters.addLast(new MonNormal(_gc._spath.clone()));
                 } else if (_montyp == 2) {
                     _gc._monsters.addLast(new MonGhost(_gc._spath.clone()));
+                }else if(_montyp==3){
+                    _gc._monsters.addLast(new MonBlue(_gc._spath.clone()));
+                }else if(_montyp==4){
+                    _gc._monsters.addLast(new MonPink(_gc._spath.clone()));
                 }
                 wait(_stime);
             }

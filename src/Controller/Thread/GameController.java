@@ -31,6 +31,7 @@ public class GameController extends Thread {
     private AttackController _ac;
     private MonsterGenerator _monger;
     private TowerController _tc;
+
     /**
      * 游戏地图
      */
@@ -110,22 +111,17 @@ public class GameController extends Thread {
             ex.printStackTrace();
         }
 
-        try {
-            wait();
-        } catch (InterruptedException e) {
-            System.err.print(e.getMessage());
-        }
     }
 
     /**
      * 游戏失败
      */
     void Lose() {
-        _ac.interrupt();
-        _mc.interrupt();
-        _monger.interrupt();
         new DefeatMenu(_gm);
-        interrupt();
+       // _ac.interrupt();
+       // _mc.interrupt();
+       // _monger.interrupt();
+        this.interrupt();
 
     }
 
@@ -140,6 +136,7 @@ public class GameController extends Thread {
             } catch (InterruptedException e) {
                 System.err.print(e.getMessage());
             }
+
             time++;
             if (_round <= _map.total() && _round >= 0 && time % _map.Period() == 0) {
                 _monger = new MonsterGenerator(this, _round++);
@@ -167,6 +164,8 @@ public class GameController extends Thread {
     public LinkedList<Tower> Towers() {
         return _towers;
     }
+
+
 
     public void AddTower(Point p, Tower tower) {
         tower.SetTower(p, p.SurConvOpt());

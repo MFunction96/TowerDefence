@@ -129,6 +129,9 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 绘制图片工具
      */
     Toolkit _tk;
+    private int _time;
+
+
 
     private Map map = new Map();
     GameController _gc;
@@ -185,6 +188,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         init();
         Thread thread = new Thread(this);
         thread.start();
+        _gc.Start();
 
 
     }
@@ -204,9 +208,9 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         focusY = -64;
         squaresSize = 64;
         drawMoney = true;
+        _time=map.Period();
 
 
-        _gc.Start();
     }
 
     /**
@@ -332,9 +336,10 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         }
         g2.setColor(Color.GREEN);
         g2.drawString("$5", 950, 390);
-        drawMonster(g2);
+        drawMonster(g2);  //显示怪物
         drawLife(g2);
-        drawRound(g2);
+        drawRound(g2); //显示波数
+        drawTime(g2);  //显示时间
         g2.setColor(Color.CYAN);
         g2.fillRect(64, 64, 64, 64);  //起点
         g2.setColor(Color.red);
@@ -359,6 +364,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         for (int i = 4; i < 7; i++) {
             g2.fillRect(576, 64 * i, 60, 60);
         }
+
 
 
         g2.dispose();//在此函数前面调用g2画笔画其它图
@@ -396,68 +402,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         }
     }
 
-    /**
-     * 绘制你赢了或你输了标语
-     */
-    public void showWin() {
-        JPanel youwin = new WinPanel();
 
-        _Next = new JButton();
-        _BackWhenWin = new JButton();
-        Container cont = getContentPane();
-        cont.add(youwin, BorderLayout.CENTER);
-        youwin.add(_Next);
-        _Next.setBounds(510, 267, 217, 60);
-        _Next.setVisible(true);
-        _Next.addActionListener(this);
-        _Next.setBorderPainted(false);
-        this.getContentPane().add(_Next);
-
-        youwin.add(_BackWhenWin);
-        _BackWhenWin.setBounds(537, 508, 217, 60);
-        _BackWhenWin.setVisible(true);
-        _BackWhenWin.addActionListener(this);
-        _BackWhenWin.setBorderPainted(false);
-        this.getContentPane().add(_BackWhenWin);
-        youwin.setLocation(0, 0);
-        youwin.setLayout(null);
-        this.setBounds(0, 0, 1024, 838);
-        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-        Image image = null;
-        Graphics g2 = images.createGraphics();
-        paintWin(g2);
-
-        this.setVisible(true);
-    }
-
-    public void paintWin(Graphics g) {
-
-        BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);
-        Image image = null;
-        Graphics g2 = images.createGraphics();
-        //画_Next
-        try {
-            image = ImageIO.read(new File("src/Image/NExtGame.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        g2.drawImage(image, 510, 267, 217, 60, this);
-        //画_BackToWhenWin
-        try {
-            image = ImageIO.read(new File("src/Image/BackToMainMenu.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        g2.drawImage(image, 537, 508, 217, 60, this);
-    /*
-    try {
-        image = ImageIO.read(new File("src/Image/YOUWIN.png"));
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    g.drawImage(image, 0,0,1024,838, this);
-     */
-    }
 
     /**
      * 绘制总生命
@@ -548,10 +493,24 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     private void drawMonster(Graphics g2) {
         LinkedList<Monster> ml = _gc.Monsters();
-        for (Monster monster : ml) {
-            monster.draw(g2);
+        for (Monster monster : ml) {  //遍历图中怪物链表
+            monster.draw(g2);   //绘画每一个怪物
         }
     }
+
+    /**
+     * 显示倒计时
+     * @param g 画笔
+     */
+    private void drawTime(Graphics g){
+        Font font = new Font("宋体", 30, 25); //新建字体对象
+        g.setColor(Color.white);//设置字体颜色
+        g.setFont(font); //设置字体
+
+        g.drawString("下一波：" + _time , 880, 520);//显示倒计时
+
+    }
+
 
     /**
      * 升级塔
@@ -577,10 +536,18 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      * 刷新图片的线程
      */
     public void run() {
+        int i=0;  //刷新次数
         try {
             while (true) {
-                repaint();
-                Thread.sleep(20);
+                Thread.sleep(20);  //每隔20毫秒刷新一次界面
+                repaint();     //重绘
+                if(i*20%1000==0&&_time>=0){  //每隔1秒时间减少1
+                    _time--;
+                }
+                else if(_time<0){  //当时间变量为0时，重新赋值
+                    _time=map.Period();
+                }
+                i++;   //刷新次数增1
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -616,17 +583,18 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     public void mouseDragged(MouseEvent e) {
     }
 
-    public void actionPerformed(ActionEvent e) {
+    public  void actionPerformed(ActionEvent e) {
         if (e.getSource() == _return) {
             this.dispose();
-            new MainMenu();
         } else if (e.getSource() == _Stop) {
             try {
                 _gc.wait();
+                this.wait();
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }
         }
+        new MainMenu().SetGameMenu(this);
     }
 
     @Override

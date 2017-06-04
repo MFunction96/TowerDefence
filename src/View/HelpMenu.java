@@ -26,12 +26,13 @@ public class HelpMenu extends JFrame implements ActionListener {
         this.setIconImage(img);    //修改窗体默认图标
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        JPanel imagePanel = (JPanel) this.getContentPane();
-        imagePanel.setOpaque(false);
+
 
         /*
         设置界面背景
          */
+        JPanel imagePanel = (JPanel) this.getContentPane();
+        imagePanel.setOpaque(false);
         JLabel label = new JLabel();
         ImageIcon icon = new ImageIcon("src/Image/Map.png");
         label.setIcon(icon);      //将图片填充到Label中

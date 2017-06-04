@@ -49,7 +49,7 @@ public class DefeatMenu extends JFrame implements ActionListener{
 
 
         _BackWhenDefeat = new JButton(new ImageIcon("src/Image/BackToMainMenu.png") );
-        _BackWhenDefeat .setBounds(400, 472, 217, 60);
+        _BackWhenDefeat .setBounds(400, 512, 217, 60);
         _BackWhenDefeat .addActionListener(this);
         _BackWhenDefeat .setBorderPainted(false);
         this.getContentPane().add(_BackWhenDefeat );

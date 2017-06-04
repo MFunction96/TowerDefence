@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Thread.GameController;
 import Model.Audio.MenuMusic;
 
 import javax.swing.*;
@@ -43,6 +44,8 @@ public class MainMenu extends JFrame implements ActionListener {
      * 背景音乐
      */
     public static MenuMusic music = new MenuMusic();
+
+    private GameMenu _gm;
 
     /**
      * 主菜单构造函数
@@ -122,16 +125,24 @@ public class MainMenu extends JFrame implements ActionListener {
             music.start();
         }
 
+
+    }
+    public void SetGameMenu(GameMenu gm){
+        _gm=gm;
     }
 
     /**
      * 按钮事件响应，实现界面跳转
      */
-    public void actionPerformed(ActionEvent e) {
+    public  void actionPerformed(ActionEvent e) {
         if (e.getSource() == _startBtn) {   //如果事件源为_startBtn按钮
             this.dispose(); //隐藏当前窗口
-            new GameMenu();  //新建GameMenu引用
+           new GameMenu();
         } else if (e.getSource() == _continueBtn) {
+            this.dispose();
+            _gm.setVisible(true);
+            _gm._gc.notifyAll();
+            _gm.notifyAll();
 
         } else if (e.getSource() == _setBtn) {
             this.dispose();

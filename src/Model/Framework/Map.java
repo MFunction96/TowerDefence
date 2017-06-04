@@ -71,16 +71,24 @@ public class Map {
         _start = new Point(0, 0);
         _end = new Point(11, 11);
         _period = 10;
+        /**
+         * 设置本地图怪物种类
+         */
         for (int i = 0; i < 4; i++) {
             _monster[i] = i + 1;
         }
-
+        /**
+         * 初始化每一个小砖块
+         */
         for (int i = 0, y = 1; i < 12; i++, y++) {
             for (int j = 0, x = 1; j < 12; j++, x++) {
                 _blocks[i][j] = new Block(new Point(y * 64, x * 64), new Point(j, i), true, false);
             }
         }
 
+        /**
+         * 一下循环为设置区块为墙（NonTower即为墙）
+         */
         for (int i = 2; i < 6; i++) {
             _blocks[i][0].SetTower(new NonTower());
         }

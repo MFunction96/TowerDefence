@@ -65,6 +65,7 @@ public class GameController extends Thread {
         _monsters = new LinkedList<>();
         _towers = new LinkedList<>();
         _pc = new PathController(this, _map.start());
+        _map.Reset();
         _spath = _pc.CalPath();
     }
 

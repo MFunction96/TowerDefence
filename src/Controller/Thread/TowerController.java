@@ -30,12 +30,12 @@ public class TowerController extends Thread {
      */
     public synchronized void run() {
         final Point dp[] = {new Point(-1, -1), new Point(-1, 0), new Point(-1, 1), new Point(0, -1), new Point(0, 1), new Point(1, -1), new Point(1, 0), new Point(1, 1)};
+        final boolean flag = _gc._map.block(_p).IsPath();
         try {
             _gc._map.block(_p).SetTower(_tower);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         _gc._map.SetMoney(_gc._map.money() - _tower.GetPrice());
         _gc._towers.addLast(_tower);
         for (int i = 0; i < 8; i++) {
@@ -44,8 +44,7 @@ public class TowerController extends Thread {
                 _gc._map.block(pp).AddTower(_tower);
             }
         }
-        if (_gc._map.block(_p).IsPath())
-        {
+        if (flag) {
             _gc._map.Reset();
             PathController _pc = new PathController(_gc, _gc._map.start());
             _gc._spath = _pc.CalPath();

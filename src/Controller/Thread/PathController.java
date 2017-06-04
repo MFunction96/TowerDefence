@@ -52,7 +52,6 @@ class PathController {
     LinkedList<Point> CalPath() {
         final int INF = 0x7fffffff;
         boolean flag = false;
-        _gc._map.Reset();
         LinkedList<Point> q = new LinkedList<>();
         LinkedList<Point> ad = new LinkedList<>();
         q.addLast(_p);

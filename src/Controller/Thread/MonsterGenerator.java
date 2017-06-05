@@ -46,7 +46,7 @@ public class MonsterGenerator extends Thread {
      */
     public synchronized void run() {
         try {
-            for (int i = 0; i < _total; i++) {
+            for (int i = 0; i < _total && _gc._flag; i++) {
                 if (_montyp == 1) {
                     _gc._monsters.addLast(new MonNormal(new LinkedList<>(_gc._spath)));
                 } else if (_montyp == 2) {

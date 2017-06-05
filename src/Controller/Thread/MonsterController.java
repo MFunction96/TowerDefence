@@ -32,10 +32,12 @@ public class MonsterController extends Thread {
      */
     public synchronized void run() {
         LinkedList<Monster> ll = new LinkedList<>();
-        if (_gc._monsters.size() > 0){
+        if (_gc._monsters.size() > 0 && _gc._flag){
             for (Monster monster : _gc._monsters) {
-
-                if (monster.PreMove() == _gc._map.end()) {
+                if (!_gc._flag) {
+                    break;
+                }
+                if (monster.PreMove() == _gc._map.end() && _gc._flag) {
                     _gc._map.Damage();
                     if (_gc._map.HP() <= 0) {
                         _gc.Lose();
@@ -46,7 +48,7 @@ public class MonsterController extends Thread {
 
                 LinkedList<Tower> tw = _gc._map.block(monster.GetOperationLocation()).GetAtkTw();
                 LinkedList<Tower> ptw = _gc._map.block(monster.PreMove()).GetAtkTw();
-                if (tw.size() > 0){
+                if (tw.size() > 0 && _gc._flag){
                     for (Tower tower : tw) {
                         if (tower.GetTarget() == monster) {
                             boolean flag = true;
@@ -68,11 +70,13 @@ public class MonsterController extends Thread {
             }
             _gc._monsters.removeAll(ll);
             for (Monster monster : _gc._monsters) {
-
+                if (!_gc._flag) {
+                    break;
+                }
                 monster.SurfaceMove();
 
                 LinkedList<Tower> ptw = _gc._map.block(monster.OptMove()).GetAtkTw();
-                if (ptw.size() > 0){
+                if (ptw.size() > 0 && _gc._flag){
                     for (Tower tower : ptw) {
                         if (tower.GetTarget() == null) {
                             tower.SetTarget(monster);

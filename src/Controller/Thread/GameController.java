@@ -32,6 +32,8 @@ public class GameController extends Thread {
     private MonsterGenerator _monger;
     private TowerController _tc;
 
+    volatile boolean _flag;
+
     /**
      * 游戏地图
      */
@@ -66,8 +68,10 @@ public class GameController extends Thread {
         _monsters = new LinkedList<>();
         _towers = new LinkedList<>();
         _pc = new PathController(this, _map.start());
+        _flag = true;
         _map.Reset();
         _spath = _pc.CalPath();
+        _flag = true;
     }
 
     /**
@@ -90,11 +94,7 @@ public class GameController extends Thread {
      * 游戏胜利
      */
     private void Win() {
-        _ac.interrupt();
-        _mc.interrupt();
-        _monger.interrupt();
-        _tc.interrupt();
-        interrupt();
+        _flag = false;
         new WinMenu(_gm);
     }
 
@@ -120,12 +120,7 @@ public class GameController extends Thread {
      */
     void Lose() {
         new DefeatMenu(_gm);
-        _ac.interrupt();
-        _mc.interrupt();
-        _tc.interrupt();
-        _monger.interrupt();
-        this.interrupt();
-
+        _flag = false;
     }
 
     /**
@@ -133,7 +128,7 @@ public class GameController extends Thread {
      */
     public synchronized void run() {
         int time = 0;
-        while (true) {
+        while (_flag) {
             try {
                 wait(1000);
             } catch (InterruptedException e) {

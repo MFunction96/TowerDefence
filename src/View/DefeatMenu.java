@@ -1,5 +1,7 @@
 package View;
 
+import Model.Audio.FailMusic;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
@@ -22,6 +24,7 @@ public class DefeatMenu extends JFrame implements ActionListener{
     private int h;
     Toolkit _tk;
     GameMenu _gm;
+    FailMusic failMusic=new FailMusic();
 
     JButton _BackWhenDefeat ;
     public DefeatMenu(GameMenu gm){
@@ -44,6 +47,7 @@ public class DefeatMenu extends JFrame implements ActionListener{
         label.setIcon(icon);      //将图片填充到Label中
         label.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
         this.getLayeredPane().add(label, new Integer(Integer.MIN_VALUE));
+        this.SetBackgroundMusic();
 
 
 
@@ -56,6 +60,11 @@ public class DefeatMenu extends JFrame implements ActionListener{
 
     }
 
+    private void SetBackgroundMusic(){
+        if(SetMenu._isopenmusic==true){
+            failMusic.start();
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() ==_BackWhenDefeat  ){

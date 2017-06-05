@@ -31,9 +31,8 @@ public class GameController extends Thread {
     private AttackController _ac;
     private MonsterGenerator _monger;
     private TowerController _tc;
-
     volatile boolean _flag;
-
+    private  boolean _gameover;
     /**
      * 游戏地图
      */
@@ -94,8 +93,13 @@ public class GameController extends Thread {
      * 游戏胜利
      */
     private void Win() {
+        _gameover=true;
         _flag = false;
         new WinMenu(_gm);
+    }
+
+    public boolean IsGameOver(){
+        return _gameover;
     }
 
     /**
@@ -119,6 +123,7 @@ public class GameController extends Thread {
      * 游戏失败
      */
     void Lose() {
+        _gameover=true;
         new DefeatMenu(_gm);
         _flag = false;
     }

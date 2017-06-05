@@ -130,6 +130,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
      */
     Toolkit _tk;
     private int _time;
+    private boolean _gameover;
 
 
 
@@ -189,6 +190,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         Thread thread = new Thread(this);
         thread.start();
         _gc.Start();
+        GameOver(_gc.IsGameOver());
 
 
     }
@@ -214,7 +216,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     }
 
     /**
-     * 设置背景
+     * 设置背景音乐
      */
     private void SetBackgroundMusic() {
         if (SetMenu._isopenmusic == false) {
@@ -224,7 +226,10 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
             MainMenu.music.MusicSetting(false);
         }
     }
-
+    public void GameOver(boolean gameOver){
+        if(gameOver==true)
+            gameMusic.MusicSetting(false);
+    }
     /***
      * 初始化塔
      */

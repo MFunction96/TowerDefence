@@ -93,6 +93,7 @@ public class GameController extends Thread {
         _ac.interrupt();
         _mc.interrupt();
         _monger.interrupt();
+        _tc.interrupt();
         interrupt();
         new WinMenu(_gm);
     }
@@ -105,6 +106,7 @@ public class GameController extends Thread {
             _ac.wait();
             _mc.wait();
             _monger.wait();
+            _tc.wait();
             _pc.wait();
             wait();
         } catch (Exception ex) {
@@ -118,9 +120,10 @@ public class GameController extends Thread {
      */
     void Lose() {
         new DefeatMenu(_gm);
-       // _ac.interrupt();
-       // _mc.interrupt();
-       // _monger.interrupt();
+        _ac.interrupt();
+        _mc.interrupt();
+        _tc.interrupt();
+        _monger.interrupt();
         this.interrupt();
 
     }

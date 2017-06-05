@@ -1,6 +1,5 @@
 package Controller.Thread;
 
-import Model.BaseClass.Point;
 import Model.Monster.*;
 
 import java.util.LinkedList;

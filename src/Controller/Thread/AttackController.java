@@ -3,7 +3,7 @@ package Controller.Thread;
 import Model.BaseClass.Monster;
 import Model.Map.Block;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by MFunction on 2017/5/20.
@@ -30,7 +30,7 @@ public class AttackController extends Thread {
      * 攻击控制器线程定义
      */
     public synchronized void run() {
-        ArrayList<Monster> ad = new ArrayList<>();
+        LinkedList<Monster> ad = new LinkedList<>();
         for (Monster monster : _gc._monsters) {
             Block b = _gc._map.block(monster.GetOperationLocation());
             monster.Hurt(b.Attack(monster));

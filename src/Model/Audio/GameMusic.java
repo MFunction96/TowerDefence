@@ -6,7 +6,7 @@ public class GameMusic extends Thread {
     private boolean _isopen = true;
     MusicController music;
 
-    public void run() {
+    public synchronized void run() {
         super.run();
         while (_isopen) {
             music = new MusicController("src/Audio/GameMusic.wav");

@@ -1,5 +1,7 @@
 package View;
 
+import Controller.Thread.MusicController;
+import Model.Audio.WinMusic;
 import sun.swing.ImageIconUIResource;
 
 import javax.imageio.ImageIO;
@@ -29,6 +31,8 @@ import java.util.List;
     JButton _Next ;
     JButton _BackWhenWin ;
     GameMenu _gm;
+    WinMusic winMusic=new WinMusic();
+
     public WinMenu( GameMenu gm){
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
@@ -88,6 +92,11 @@ public void paint(Graphics g){
             new MainMenu() ;
         }
     }
+    MusicController music;
 
+    public void run() {
+        music = new MusicController("src/Audio/InstallTower.wav");
+        music.start();
+    }
 
 }

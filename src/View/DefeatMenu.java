@@ -27,7 +27,7 @@ public class DefeatMenu extends JFrame implements ActionListener{
     public DefeatMenu(GameMenu gm){
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
-        this.setSize(1024, 838);//设置窗体大小
+        this.setSize(512, 419);//设置窗体大小
         this.setLayout(null);//设置为空布局
         this.setLocationRelativeTo(null);//设置为集中显示
         this.setResizable(false);//设置不可改变窗体大小
@@ -49,7 +49,7 @@ public class DefeatMenu extends JFrame implements ActionListener{
 
 
         _BackWhenDefeat = new JButton(new ImageIcon("src/Image/BackToMainMenu.png") );
-        _BackWhenDefeat .setBounds(400, 512, 217, 60);
+        _BackWhenDefeat .setBounds(200, 256, 108, 30);
         _BackWhenDefeat .addActionListener(this);
         _BackWhenDefeat .setBorderPainted(false);
         this.getContentPane().add(_BackWhenDefeat );

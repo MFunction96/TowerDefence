@@ -68,9 +68,9 @@ class PathController {
             }
         }
         vis[_p.y()][_p.x()] = 0;
-        while (!q.isEmpty()) {
+        while (!q.isEmpty() && _gc._flag) {
             Point p = q.removeFirst();
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 4 && _gc._flag; i++) {
                 Point pp = p.Add(_dp[i]);
                 if (IsValid(pp) && vis[pp.y()][pp.x()] < 0) {
                     vis[pp.y()][pp.x()] = vis[p.y()][p.x()] + 1;
@@ -85,8 +85,8 @@ class PathController {
                 break;
             }
         }
-        if (flag) {
-            for (Point p = _gc._map.end(); !p.Equal(_gc._map.start()); ) {
+        if (flag && _gc._flag) {
+            for (Point p = _gc._map.end(); !p.Equal(_gc._map.start()) && _gc._flag; ) {
                 _gc._map.block(p).SetPath(true);
                 ad.addFirst(p);
                 for (int i = 0; i < 4; i++) {

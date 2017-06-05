@@ -50,6 +50,9 @@ public class TowerController extends Thread {
             _gc._spath = _pc.CalPath();
             LinkedList<Monster> monsters = _gc.Monsters();
             for (Monster monster : monsters) {
+                if (!_gc._flag) {
+                    break;
+                }
                 _pc = new PathController(_gc, monster.GetOperationLocation());
                 monster.SetPath(new LinkedList<>(_pc.CalPath()));
             }

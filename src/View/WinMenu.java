@@ -36,7 +36,7 @@ import java.util.List;
     public WinMenu( GameMenu gm){
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
-        this.setSize(1024, 838);//设置窗体大小
+        this.setSize(512, 419);//设置窗体大小
         this.setLayout(null);//设置为空布局
         this.setLocationRelativeTo(null);//设置为集中显示
         this.setResizable(false);//设置不可改变窗体大小
@@ -46,7 +46,7 @@ import java.util.List;
         init();
         _Next = new JButton(new ImageIcon("src/image/NextGame.png") );
         _BackWhenWin = new JButton(new ImageIcon("src/image/BackToMainMenu.png") );
-        _Next.setBounds(250, 470, 217, 60);
+        _Next.setBounds(125, 235, 108, 30);
         _Next.setVisible(true);
         _Next.addActionListener(this);
         _Next.setBorderPainted(false);
@@ -54,7 +54,7 @@ import java.util.List;
         _gm=gm;
 
 
-        _BackWhenWin.setBounds(527, 471, 217, 60);
+        _BackWhenWin.setBounds(263, 235, 108, 30);
         _BackWhenWin.setVisible(true);
         _BackWhenWin.addActionListener(this);
         _BackWhenWin.setBorderPainted(false);
@@ -63,8 +63,8 @@ import java.util.List;
         }
 
     private void init() {
-        w = 1024;
-        h = 838;
+        w = 512;
+        h = 419;
     }
 public void paint(Graphics g){
     BufferedImage images = new BufferedImage(w, h, BufferedImage.TYPE_3BYTE_BGR);

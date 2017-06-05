@@ -30,15 +30,20 @@ public class AttackController extends Thread {
      * 攻击控制器线程定义
      */
     public synchronized void run() {
-        LinkedList<Monster> ad = new LinkedList<>();
-        for (Monster monster : _gc._monsters) {
-            Block b = _gc._map.block(monster.GetOperationLocation());
-            monster.Hurt(b.Attack(monster));
-            if (monster.Gethp() <= 0) {
-                ad.add(monster);
-                _gc._map.SetMoney(_gc._map.money() + monster.GetPrice());
+        if (_gc._flag){
+            LinkedList<Monster> ad = new LinkedList<>();
+            for (Monster monster : _gc._monsters) {
+                if (!_gc._flag) {
+                    break;
+                }
+                Block b = _gc._map.block(monster.GetOperationLocation());
+                monster.Hurt(b.Attack(monster));
+                if (monster.Gethp() <= 0) {
+                    ad.add(monster);
+                    _gc._map.SetMoney(_gc._map.money() + monster.GetPrice());
+                }
             }
+            _gc._monsters.removeAll(ad);
         }
-        _gc._monsters.removeAll(ad);
     }
 }

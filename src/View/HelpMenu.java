@@ -9,9 +9,8 @@ import java.awt.event.ActionListener;
  * Created by Chris Young on 2017/5/23.
  */
 public class HelpMenu extends JFrame implements ActionListener {
-    JButton _return;
-    Toolkit _tk;
-    JLabel _title;
+    private JButton _return;
+    private JLabel _title;
 
 
     HelpMenu() {
@@ -21,7 +20,7 @@ public class HelpMenu extends JFrame implements ActionListener {
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        _tk = Toolkit.getDefaultToolkit();
+        Toolkit _tk = Toolkit.getDefaultToolkit();
         Image img = _tk.createImage("src/Image/logo.png");
         this.setIconImage(img);    //修改窗体默认图标
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -15,31 +15,27 @@ public class MainMenu extends JFrame implements ActionListener {
     /**
      * 开始游戏按钮
      */
-    JButton _startBtn;
+    private JButton _startBtn;
     /**
      * 设置游戏按钮
      */
-    JButton _setBtn;
+    private JButton _setBtn;
     /**
      * 继续游戏按钮
      */
-    JButton _continueBtn;
+    private JButton _continueBtn;
     /**
      * 游戏帮助按钮
      */
-    JButton _helpBtn;
+    private JButton _helpBtn;
     /**
      * 游戏社区按钮
      */
-    JButton _communiteeBtn;
+    private JButton _communiteeBtn;
     /**
      * 游戏排行榜按钮
      */
-    JButton _ranklistBtn;
-    /**
-     * 绘制图片工具
-     */
-    Toolkit _tk;
+    private JButton _ranklistBtn;
     /**
      * 背景音乐
      */
@@ -58,7 +54,10 @@ public class MainMenu extends JFrame implements ActionListener {
         this.setLayout(null);     //设置为空布局
         this.setLocationRelativeTo(null);  //设置为在屏幕居中显示
         this.setResizable(false);   //设置为不可更改窗体大小
-        _tk = Toolkit.getDefaultToolkit();
+        /*
+      绘制图片工具
+     */
+        Toolkit _tk = Toolkit.getDefaultToolkit();
         Image img = _tk.createImage("src/Image/logo.png");
         this.setIconImage(img);    //修改窗体默认图标
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置窗体关闭
@@ -121,7 +120,7 @@ public class MainMenu extends JFrame implements ActionListener {
         this.getContentPane().add(_communiteeBtn);
 
         //播放背景音乐
-        if (music.isAlive() == false) {
+        if (!music.isAlive()) {
             music.start();
         }
 

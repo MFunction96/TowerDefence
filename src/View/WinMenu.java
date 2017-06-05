@@ -1,7 +1,7 @@
 package View;
 
 import Controller.Thread.MusicController;
-import Model.Audio.WinMusic;
+//import Model.Audio.WinMusic;
 import sun.swing.ImageIconUIResource;
 
 import javax.imageio.ImageIO;
@@ -18,6 +18,9 @@ import java.util.List;
 
 /**
  * Created by hlys on 2017/5/29.
+ * 显示胜利界面
+ *
+ * @auther hlys
  */
      public class WinMenu extends JFrame implements ActionListener{
     /**
@@ -28,10 +31,10 @@ import java.util.List;
      * 窗体长
      */
     private int h;
-    JButton _Next ;
-    JButton _BackWhenWin ;
-    GameMenu _gm;
-    WinMusic winMusic=new WinMusic();
+    private JButton _Next ;
+    private JButton _BackWhenWin ;
+    private GameMenu _gm;
+    //WinMusic winMusic=new WinMusic();
 
     public WinMenu( GameMenu gm){
         super("0度塔防");//设置标题
@@ -92,10 +95,9 @@ public void paint(Graphics g){
             new MainMenu() ;
         }
     }
-    MusicController music;
 
     public void run() {
-        music = new MusicController("src/Audio/InstallTower.wav");
+        MusicController music = new MusicController("src/Audio/InstallTower.wav");
         music.start();
     }
 

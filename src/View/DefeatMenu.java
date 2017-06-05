@@ -1,17 +1,16 @@
 package View;
 
 import Model.Audio.FailMusic;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 
 /**
  * Created by hlys on 2017/5/29.
+ * 失败界面类，显示玩家失败，并提供返回主菜单按钮
+ *
+ * @author hlys
  */
 public class DefeatMenu extends JFrame implements ActionListener{
     /**
@@ -22,11 +21,10 @@ public class DefeatMenu extends JFrame implements ActionListener{
      * 窗体长
      */
     private int h;
-    Toolkit _tk;
-    GameMenu _gm;
-    FailMusic failMusic=new FailMusic();
+    private GameMenu _gm;
+    private FailMusic failMusic=new FailMusic();
 
-    JButton _BackWhenDefeat ;
+    private JButton _BackWhenDefeat ;
     public DefeatMenu(GameMenu gm){
         super("0度塔防");//设置标题
         this.setVisible(true);//设置为可见
@@ -34,7 +32,7 @@ public class DefeatMenu extends JFrame implements ActionListener{
         this.setLayout(null);//设置为空布局
         this.setLocationRelativeTo(null);//设置为集中显示
         this.setResizable(false);//设置不可改变窗体大小
-        _tk = Toolkit.getDefaultToolkit();
+        Toolkit _tk = Toolkit.getDefaultToolkit();
         Image img = _tk.createImage("src/Image/logo.png");
         this.setIconImage(img);    //修改窗体默认图标
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置窗体关闭
@@ -61,7 +59,7 @@ public class DefeatMenu extends JFrame implements ActionListener{
     }
 
     private void SetBackgroundMusic(){
-        if(SetMenu._isopenmusic==true){
+        if(SetMenu._isopenmusic){
             failMusic.start();
         }
     }

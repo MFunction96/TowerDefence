@@ -22,7 +22,7 @@ public class MenuMusic extends Thread {
     public void MusicSetting(boolean isOpen) {
         _isopen = isOpen;
         if (isOpen == false)
-            music.interrupt();
+            music.stop();
 
     }
 }

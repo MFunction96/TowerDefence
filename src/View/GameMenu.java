@@ -147,7 +147,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
     JButton _Stop;
     JLabel Background;
     JLabel Tools;
-    GameMusic gameMusic = new GameMusic();
 
     public GameMenu() {
         super("0度塔防");//设置标题
@@ -168,7 +167,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         this.towerList = new ArrayList<>();
         this._caninstalltower = false;
         this.InitialTower();
-        this.SetBackgroundMusic();
         this.addMouseMotionListener(this);
         this.addMouseListener(this);
 
@@ -190,9 +188,6 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
         Thread thread = new Thread(this);
         thread.start();
         _gc.Start();
-        GameOver(_gc.IsGameOver());
-
-
     }
 
 
@@ -215,21 +210,7 @@ public class GameMenu extends JFrame implements ActionListener, MouseMotionListe
 
     }
 
-    /**
-     * 设置背景音乐
-     */
-    private void SetBackgroundMusic() {
-        if (SetMenu._isopenmusic == false) {
 
-        } else {
-            gameMusic.start();
-            MainMenu.music.MusicSetting(false);
-        }
-    }
-    public void GameOver(boolean gameOver){
-        if(gameOver==true)
-            gameMusic.MusicSetting(false);
-    }
     /***
      * 初始化塔
      */

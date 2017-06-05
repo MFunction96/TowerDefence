@@ -1,5 +1,6 @@
 package Controller.Thread;
 
+import Model.Audio.GameMusic;
 import Model.BaseClass.Monster;
 import Model.BaseClass.Point;
 import Model.BaseClass.Tower;
@@ -7,9 +8,7 @@ import Model.Framework.Map;
 
 import java.util.LinkedList;
 
-import View.DefeatMenu;
-import View.GameMenu;
-import View.WinMenu;
+import View.*;
 
 /**
  * Created by MFunction on 2017/4/17.
@@ -53,6 +52,7 @@ public class GameController extends Thread {
     volatile LinkedList<Point> _spath;
 
 
+    GameMusic gameMusic = new GameMusic();
     /**
      * 构造游戏控制器
      *
@@ -71,8 +71,19 @@ public class GameController extends Thread {
         _map.Reset();
         _spath = _pc.CalPath();
         _flag = true;
+        this.SetBackgroundMusic();
     }
+    /**
+     * 设置背景音乐
+     */
+    private void SetBackgroundMusic() {
+        if (SetMenu._isopenmusic == false) {
 
+        } else {
+            gameMusic.start();
+            MainMenu.music.MusicSetting(false);
+        }
+    }
     /**
      * 游戏开始
      */
@@ -93,6 +104,7 @@ public class GameController extends Thread {
      * 游戏胜利
      */
     private void Win() {
+        gameMusic.MusicSetting(false);
         _gameover=true;
         _flag = false;
         new WinMenu(_gm);
@@ -123,6 +135,7 @@ public class GameController extends Thread {
      * 游戏失败
      */
     void Lose() {
+        gameMusic.MusicSetting(false);
         _gameover=true;
         new DefeatMenu(_gm);
         _flag = false;

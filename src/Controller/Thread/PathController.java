@@ -49,12 +49,12 @@ class PathController {
      *
      * @return 路径
      */
-    LinkedList<Point> CalPath() {
+    ArrayList<Point> CalPath() {
         final int INF = 0x7fffffff;
         boolean flag = false;
-        LinkedList<Point> q = new LinkedList<>();
-        LinkedList<Point> ad = new LinkedList<>();
-        q.addLast(_p);
+        ArrayList<Point> q = new ArrayList<>();
+        ArrayList<Point> ad = new ArrayList<>();
+        q.add(_p);
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 12; j++) {
                 vis[i][j] = -1;
@@ -69,7 +69,8 @@ class PathController {
         }
         vis[_p.y()][_p.x()] = 0;
         while (!q.isEmpty() && _gc._flag) {
-            Point p = q.removeFirst();
+            Point p = q.get(0);
+            q.remove(0);
             for (int i = 0; i < 4 && _gc._flag; i++) {
                 Point pp = p.Add(_dp[i]);
                 if (IsValid(pp) && vis[pp.y()][pp.x()] < 0) {
@@ -78,7 +79,7 @@ class PathController {
                         flag = true;
                         break;
                     }
-                    q.addLast(pp);
+                    q.add(pp);
                 }
             }
             if (flag) {
@@ -88,7 +89,7 @@ class PathController {
         if (flag && _gc._flag) {
             for (Point p = _gc._map.end(); !p.Equal(_gc._map.start()) && _gc._flag; ) {
                 _gc._map.block(p).SetPath(true);
-                ad.addFirst(p);
+                ad.add(0,p);
                 for (int i = 0; i < 4; i++) {
                     Point pp = p.Add(_dp[i]);
                     if (IsValid(pp) && vis[pp.y()][pp.x()] == (vis[p.y()][p.x()] - 1)) {
